@@ -4,13 +4,13 @@
 - We chose to use a Private Limited Company structure as we felt it is suited best for our company.
 
 - Reasons:
-- Limited Liability: Founders’ personal assets are protected from business liabilities.
+- Limited Liability: Founders' personal assets are protected from business liabilities.
 - Scalability: Easier to raise funds from investors or issue shares in the future.
 - Credibility: Seen as more professional and reliable compared to sole proprietorships or partnerships.
 
 **Roles & Responsibilities:**
 
-- Chief Executive Officer (CEO) – [David]
+- Chief Executive Officer (CEO) - [David]
 - Responsibilities:
 - Overall company vision, strategy, and direction.
 - Lead business development and growth strategies.
@@ -20,7 +20,7 @@
 
 - Chief Product Officer (CPO) - [Kennice]
 - Responsibilities:
-- Define and communicate the product strategy and vision, ensuring it aligns with the company’s mission and goals.
+- Define and communicate the product strategy and vision, ensuring it aligns with the company's mission and goals.
 - Oversee the product development lifecycle, from ideation to launch and iteration, ensuring continuous improvement.
 - Prioritize and manage the product roadmap based on user feedback, market research, and business needs.
 - Lead and mentor the product team, fostering collaboration and ensuring alignment with company objectives.
@@ -29,7 +29,7 @@
 - Stay updated on industry trends and innovations to guide product strategy and ensure the platform remains competitive.
 - Ensure the product complies with relevant regulations (e.g., data privacy) and maintains ethical standards.
 
-- Chief Marketing Officer (CMO) – [Celine]
+- Chief Marketing Officer (CMO) - [Celine]
 - Responsibilities:
 - Develop and execute the marketing strategy to promote the platform.
 - Lead branding, social media, content marketing, and public relations.
@@ -37,6 +37,13 @@
 - Monitor and analyze marketing performance and adjust campaigns accordingly.
 - This role would suit the owner with a background in marketing, communications, or a passion for user engagement.
 
-- Danish
-- 
+- Chief Technology Officer (CTO) – [Danish]
+- Responsibilities:
+- Oversee the development and technical execution of the AI-powered platform.
+- Ensure the technology stack is robust, secure, and scalable.
+- Lead the AI development, integration, and technical innovation.
+- Coordinate with development teams, designers, and other tech stakeholders.
+- This role is ideal for the owner with a strong technical background in AI, coding, or software development.
 
+
+**Company & Product Name**
