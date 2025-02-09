@@ -66,6 +66,7 @@
 - `Justifications`
 
   - Pilot Programs: Offering free or discounted access for pilot testing is a strategic investment. It helps us build credibility and refining the platform based on real feedback, ensures we deliver a polished product that schools and institutions are more likely to pay for later. By securing early institutional buy-in, we increase the chances of long-term contracts, reducing financial risk.
+  
   - Curriculum Integration: Aligning with MOE’s focus on student well-being increases our platform’s chances of being integrated into school curriculums. Once embedded in an institution’s educational framework, our platform becomes a necessity rather than an optional tool, leading to consistent revenue through institutional licensing.
   - Instead of spending heavily on ads, cold outreach, or marketing campaigns, workshops and live demos allow you to directly showcase the platform to educators and decision-makers. This speeds up the adoption process and strengthens our credibility, leading to quicker institutional deals and reducing the need for expensive marketing campaigns.
 
