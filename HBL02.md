@@ -85,12 +85,12 @@
 
   - By offering flexible packages based on institution size and needs, we reduce barriers to entry while maximizing sales potential. This ensures that we can quickly recoup development costs and achieve profitability through high-volume institutional deals.
 
-c.`Sponsored Content`
+- c.`Sponsored Content`
 
-- Mental health and wellness brands are actively looking for ways to engage younger audiences. By offering sponsored scenarios, we provide a platform for these brands to connect with our users in a meaningful and ethical way, generating a steady income stream.
+  - Mental health and wellness brands are actively looking for ways to engage younger audiences. By offering sponsored scenarios, we provide a platform for these brands to connect with our users in a meaningful and ethical way, generating a steady income stream.
 
 - d.`Workshops and Training`
 
   - Many educators, counselors, and parents lack structured training on how to support youth with anxiety. Offering paid workshops allows us to monetize our expertise while positioning our platform as an essential learning tool.
-  
+
   - Certification programs create an additional revenue stream while incentivizing participation. Schools and organizations value recognized credentials, making these programs a profitable way to establish our brand as a leader in youth mental health education.
