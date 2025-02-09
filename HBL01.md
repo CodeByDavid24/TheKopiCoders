@@ -50,20 +50,22 @@
 - Coordinate with development teams, designers, and other tech stakeholders.
 - This role is ideal for the owner with a strong technical background in AI, coding, or software development.
 
-
 **Company & Product Name**
 
 *Company Name:*
-- The Kopi Coders 
+
+- The Kopi Coders
 - We chose The Kopi Coders as our company name as we are an AI company that codes and to give our company name a Singaporean kick to it, we decided to add Kopi in our name, hence the name The Kopi Coders.
 - Coffee is a coder's best friend anyways.
 
 *Product Name:*
+
 - SootheAI
 - Soothe resonates with reducing Anxiety, Stress, and Mental Discomfort which emphasizes the platform's focus on mental health education and awareness.
 
 **Selected SSIC & Reason:**
 
 *SSIC 85509 -  Educational support services n.e.c. (excluding online marketplaces)*
+
 - As E-learning and Digital Educational Tools falls under Educational support services n.e.c
 - It Aligns with our plan to Develop a interactive educational software to educate youths on anxiety, this SSIC code best represents our company business objective.
