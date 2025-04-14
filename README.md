@@ -1,4 +1,4 @@
-# Capstone Project
+# SootheAI
 
 ## Problem Statement:
 - Singaporean youths (15-35) not having any knowledge about anxiety.
