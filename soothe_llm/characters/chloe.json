@@ -1,76 +1,75 @@
 {
-    "name": "Chloe",
-    "gender": "Female",
-    "personality": {
-      "mbti": "ESTJ",
-      "mbti_description": "Assertive, achievement-driven, and organized, Chloe thrives in high-pressure environments and expects the same from those around her.",
-      "traits": {
-        "attitudes": "Highly structured and focused on results, she tends to measure success through external validation.",
-        "perception": "Future-oriented, always thinking about university, scholarships, and long-term success.",
-        "judgement": "Values efficiency, clarity, and achievement over emotional nuance.",
-        "orientation": "Prefers routine, consistency, and order in all aspects of life."
-      }
+  "name": "Chloe",
+  "gender": "Female",
+  "personality": {
+    "mbti": "ESTJ",
+    "mbti_description": "Assertive, achievement-driven, and organized, Chloe thrives in high-pressure environments and expects the same from those around her.",
+    "traits": {
+      "attitudes": "Highly structured and focused on results, she tends to measure success through external validation.",
+      "perception": "Future-oriented, always thinking about university, scholarships, and long-term success.",
+      "judgement": "Values efficiency, clarity, and achievement over emotional nuance.",
+      "orientation": "Prefers routine, consistency, and order in all aspects of life."
+    }
+  },
+  "physical": {
+    "race": {
+      "name": "Chinese-Singaporean",
+      "description": "Comes from a well-to-do family in Singapore with strong academic traditions."
     },
-    "physical": {
-      "race": {
-        "name": "Chinese-Singaporean",
-        "description": "Comes from a well-to-do family in Singapore with strong academic traditions."
-      },
-      "age": {
-        "years": 16,
-        "lifespan": "Can live up to 120 years",
-        "maturity": "Teenager"
-      },
-      "measurements": {
-        "height": 160,
-        "weight": 48,
-        "bmi": 18.8
-      },
-      "appearance": "Always impeccably dressed in a pressed school uniform, with neat hair tied into a ponytail, and a composed expression. Carries a sleek planner and a stack of color-coded notes."
+    "age": {
+      "years": 16,
+      "lifespan": "Can live up to 120 years",
+      "maturity": "Teenager"
     },
-    "class": {
-      "name": "Student",
-      "description": "Top-performing student at a competitive  school in Singapore, well-known for academic excellence and high-stakes exam culture."
+    "measurements": {
+      "height": 160,
+      "weight": 48,
+      "bmi": 18.8
     },
-    "location": {
-      "locations": [
-        "School",
-        "Library",
-        "Tuition Centre",
-        "Home",
-        "Study Cafes"
-      ]
-    },
-    "mental_health_issues": {
-      "Perfectionism": true,
-      "Fear of Failure": true,
-      "Comparison Anxiety": false,
-      "Workaholism": true,
-      "Repressed Emotions": true
-    },
-    "backstory": {
-      "description": "Chloe is a straight-A student from a high-expectation household. She's driven to succeed but often masks her anxiety with perfectionism.",
-      "goals": [
-        "Be valedictorian",
-        "Get into a top UK university",
-        "Maintain a flawless academic record"
-      ],
-      "history": [
-        "Chloe has been topping her class since primary school, constantly pushed by her parents to excel in every subject.",
-        "Though she appears composed, Chloe deals with immense pressure at home and feels her worth is tied to her academic results.",
-        "She struggles to form deep emotional connections and views vulnerability as weakness.",
-        "She believes that if she’s not the best, she’s nothing."
-      ]
-    },
-    "behaviour": [
-      "Subtly compares Serena’s grades to hers in conversations.",
-      "Always seems to know the answers before anyone else in class.",
-      "Frequently humble-brags about her achievements or the number of hours she studies.",
-      "Invites Serena to study together but with an edge of competition.",
-      "Gives unsolicited advice that often makes Serena feel inferior.",
-      "Tends to dismiss emotional struggles as excuses or lack of effort.",
-      "Feels uncomfortable when things go off-plan or when others show vulnerability.",
-      "Avoids discussing her own anxieties or stress, fearing it will tarnish her perfect image."
+    "appearance": "Always impeccably dressed in a pressed school uniform, with neat hair tied into a ponytail, and a composed expression. Carries a sleek planner and a stack of color-coded notes."
+  },
+  "class": {
+    "name": "Student",
+    "description": "Top-performing student at a competitive  school in Singapore, well-known for academic excellence and high-stakes exam culture."
+  },
+  "location": {
+    "locations": [
+      "School",
+      "Library",
+      "Tuition Centre",
+      "Home",
+      "Study Cafes"
     ]
-  }
-  
+  },
+  "mental_health_issues": {
+    "Perfectionism": true,
+    "Fear of Failure": true,
+    "Comparison Anxiety": false,
+    "Workaholism": true,
+    "Repressed Emotions": true
+  },
+  "backstory": {
+    "description": "Chloe is a straight-A student from a high-expectation household. She's driven to succeed but often masks her anxiety with perfectionism.",
+    "goals": [
+      "Be valedictorian",
+      "Get into a top UK university",
+      "Maintain a flawless academic record"
+    ],
+    "history": [
+      "Chloe has been topping her class since primary school, constantly pushed by her parents to excel in every subject.",
+      "Though she appears composed, Chloe deals with immense pressure at home and feels her worth is tied to her academic results.",
+      "She struggles to form deep emotional connections and views vulnerability as weakness.",
+      "She believes that if she’s not the best, she’s nothing."
+    ]
+  },
+  "behaviour": [
+    "Subtly compares Serena’s grades to hers in conversations.",
+    "Always seems to know the answers before anyone else in class.",
+    "Frequently humble-brags about her achievements or the number of hours she studies.",
+    "Invites Serena to study together but with an edge of competition.",
+    "Gives unsolicited advice that often makes Serena feel inferior.",
+    "Tends to dismiss emotional struggles as excuses or lack of effort.",
+    "Feels uncomfortable when things go off-plan or when others show vulnerability.",
+    "Avoids discussing her own anxieties or stress, fearing it will tarnish her perfect image."
+  ]
+}
