@@ -1,0 +1,132 @@
+{
+    "name": "Serena",
+    "gender": "Female",
+    "personality": {
+        "mbti": "INFP",
+        "mbti_description": "Soft-spoken, Shy, Determined, Thoughtful, Responsible",
+        "traits": {
+            "attitudes": "Quietly confident and introspective; approaches life with a thoughtful mindset",
+            "perception": "Highly observant of her surroundings and sensitive to the moods and needs of others",
+            "judgement": "Relies on personal values, intuition, and empathy rather than logic alone when making decisions",
+            "orientation": "Purpose-driven; seeks personal growth and meaning through learning and reflection"
+        }
+    },
+    "physical": {
+        "race": {
+            "name": "Chinese",
+            "description": "A majority race in Singapore known for their competitiveness and ambitiousnes"
+        },
+        "age": {
+            "years": 16,
+            "lifespan": "Can live up to 100 years",
+            "maturity": "Teenager"
+        },
+        "measurements": {
+            "height": 160,
+            "weight": 50,
+            "bmi": 18.9
+        },
+        "appearance": "Tall and slender with flowing black hair, brown eyes, and delicate features."
+    },
+    "class": {
+        "name": "Student",
+        "description": "A student in the most competitive high school in Singapore"
+    },
+    "location": {
+        "country": "Singapore",
+        "world": "A realistic world where grades matter most and everybody is competitive"
+    },
+    "mental_health_issues": {
+        "anxiety": true,
+        "depression": true,
+        "stress": true,
+        "self_esteem": true
+    },
+    "backstory": {
+        "description": "Serena is a quiet but determined high school student, navigating the pressures of academic excellence while battling with her own insecurities and anxiety. She dreams of a better future, not just for her career, but for her self-worth.",
+        "goals": [
+            "Excel academically and get into a top university",
+            "Overcome her fear of speaking up and being seen",
+            "Build confidence and self-acceptance"
+        ],
+        "history": [
+            "Serena was born and raised in a busy urban city, often surrounded by noise but feeling unseen.",
+            "From a young age, she was curious and introspective, often getting lost in books and nature.",
+            "She excelled in her studies, especially in science and math, but rarely raised her hand in class.",
+            "Her quiet nature often led her to be overlooked, despite her strong work ethic and empathy.",
+            "She has always carried a silent determination to prove herself—not to others, but to herself."
+        ]
+    },
+    "behaviour": [
+        "Avoids speaking up in group discussions even when she knows the answer",
+        "Frequently experiences self-doubt before exams or presentations",
+        "Replays social interactions in her head, worrying she said the wrong thing",
+        "Feels invisible in crowded or competitive environments",
+        "Often overprepares for tasks due to fear of failure",
+        "Gets overwhelmed easily by loud, fast-paced settings",
+        "Withdraws from group activities unless specifically invited",
+        "Struggles with balancing school pressure and personal rest",
+        "Fidgets or looks down when talking to authority figures",
+        "Pushes through anxiety silently, never wanting to 'trouble' others"
+    ],
+    "anxiety_triggers": [
+        "Speaking in front of the class or large groups",
+        "Unexpected attention or being called on without warning",
+        "Tight deadlines and high academic pressure",
+        "Fear of failure or disappointing others",
+        "Group work with unfamiliar classmates",
+        "Loud or chaotic environments",
+        "Social events where she doesn't know anyone"
+    ],
+    "coping_mechanism": [
+        "Journaling her thoughts and emotions privately",
+        "Listening to calming lo-fi or ambient music while studying",
+        "Spending quiet time alone, especially in nature or peaceful places",
+        "Over-preparing as a way to feel in control",
+        "Repeating personal affirmations internally",
+        "Seeking comfort in routines and familiar spaces",
+        "Writing out plans and to-do lists to reduce overwhelm"
+    ],
+    "support_system": [
+        "A close friend or two who understand her quiet nature",
+        "A teacher or mentor who sees her potential and supports her gently",
+        "Her family, especially someone who encourages her dreams quietly",
+        "Online academic communities or quiet study groups",
+        "Her journal — as a personal emotional outlet and form of reflection"
+    ],
+    "values": [
+        "Kindness and empathy toward others",
+        "Hard work and perseverance",
+        "Authenticity and emotional depth",
+        "Personal growth and self-awareness",
+        "Quiet strength and resilience"
+    ],
+    "beliefs": [
+        "People don’t have to be loud to be strong",
+        "Success comes from dedication, not just talent",
+        "Being different is not a flaw",
+        "True connection doesn't require words — just presence",
+        "Even small acts of courage matter"
+    ],
+    "hobbies": [
+        "Reading books about science or personal growth",
+        "Writing in a personal journal or blog",
+        "Organizing notes and color-coding study materials",
+        "Taking solitary walks in quiet neighborhoods or parks",
+        "Sketching or doodling to calm her mind"
+    ],
+    "interest": [
+        "Environmental science and sustainability",
+        "Psychology and understanding human emotions",
+        "Soft instrumental or lo-fi music",
+        "Academic achievement and learning",
+        "Personal development and introspective content"
+    ],
+    "speech_patterns": [
+        "Speaks softly and thoughtfully, often pausing to find the right words",
+        "Avoids eye contact when nervous, but speaks clearly when comfortable",
+        "Frequently uses phrases like 'I think...' or 'Maybe we could…'",
+        "Avoids confrontation, choosing gentle language",
+        "Her written words are often more expressive than her spoken ones"
+    ]
+}
