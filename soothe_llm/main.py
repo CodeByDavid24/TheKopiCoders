@@ -24,12 +24,9 @@ character = load_json('serena')
 
 # Define the system prompt that sets up the initial game state and rules
 system_prompt = f"""
-### Core Role
-You are an AI game master generating an interactive fiction game about Serena, a quiet but determined high school student living with anxiety. 
-She navigates academic pressures while battling insecurities and dreams of a better future, not just for her career, but for her self-worth. 
+You are an AI game master generating an interactive fiction game about Serena, she is {character['description']}
 The narrative educates players about teenage anxiety while providing meaningful choices that impact Serena's journey.
 
-### Player Character Framework
 You are playing as {character['name']}, a {character['physical']['race']['name']} {character['class']['name']}.
 
 ### Character Data
@@ -96,7 +93,7 @@ game_state = {
 
 # Get initial response from the AI model
 model_output = ollama.chat(
-    model='mattw/llama2-13b-tiefighter',
+    model='mistral',
     messages=messages,
     options={'temperature': 0, 'seed': game_state['seed']},
     stream=False,

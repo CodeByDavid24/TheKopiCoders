@@ -1,0 +1,73 @@
+{
+    "id": "npc_therapist_001",
+    "name": "Dr. Amal Rahman",
+    "age": 34,
+    "gender": "Female",
+    "occupation": "School Counselor / Therapist",
+    "location": "School Wellness Room",
+    "personality_traits": ["empathetic", "calm", "professional", "non-judgmental", "patient"],
+    "appearance": {
+      "hair": "dark brown, tied back",
+      "attire": "soft-coloured blouse, blazer, glasses",
+      "voice": "soothing and steady"
+    },
+    "introduction": "Hi Serena, I’m Dr. Amal. This is a safe space — you can talk to me about anything.",
+    "interactions": [
+      {
+        "trigger": "first_visit",
+        "dialogue": [
+          {
+            "speaker": "Dr. Amal",
+            "text": "It's completely okay to feel overwhelmed. You're not alone, and we can work through this together."
+          },
+          {
+            "speaker": "Player",
+            "options": [
+              {
+                "text": "I'm scared of failing.",
+                "effect": { "anxiety": -5, "trust": 2 }
+              },
+              {
+                "text": "I don’t know why I’m here.",
+                "effect": { "anxiety": 0, "trust": 1 }
+              },
+              {
+                "text": "Everything’s fine, actually.",
+                "effect": { "anxiety": 2, "trust": -1 }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "trigger": "high_anxiety_event",
+        "dialogue": [
+          {
+            "speaker": "Dr. Amal",
+            "text": "Let’s try a grounding technique. Can you name three things you see, two things you hear, and one thing you feel?"
+          },
+          {
+            "speaker": "Player",
+            "options": [
+              {
+                "text": "Yes, I’ll try.",
+                "effect": { "anxiety": -10, "trust": 3 }
+              },
+              {
+                "text": "This won’t work.",
+                "effect": { "anxiety": 1, "trust": -2 }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "functions": {
+      "reduce_anxiety": true,
+      "increase_trust": true,
+      "unlock_journal_prompt": true,
+      "affects_ending": true
+    },
+    "notes": "Therapy sessions are optional but helpful. Player can attend up to 3 sessions max. Trust score influences how much Serena opens up, which affects available dialogue later in the story.",
+    "motivations": "Dr. Amal became a therapist because she struggled with her own anxiety during her teen years, which no one noticed. She wants to ensure other young people feel seen, heard, and supported in a way she never was."
+  }
