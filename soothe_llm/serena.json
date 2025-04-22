@@ -14,27 +14,27 @@
     "physical": {
         "race": {
             "name": "Chinese",
-            "description": "A majority race in Singapore known for their competitiveness and ambitiousnes"
+            "description": "An ethnic group that forms the majority in Singapore, often associated with strong cultural values and academic drive."
         },
         "age": {
             "years": 16,
-            "lifespan": "Can live up to 100 years",
-            "maturity": "Teenager"
+            "lifespan": "Typically lives up to around 85–100 years with modern healthcare.",
+            "maturity": "Teenager in the midst of emotional and academic development."
         },
         "measurements": {
             "height": 160,
             "weight": 50,
-            "bmi": 18.9
+            "bmi": 19.5
         },
-        "appearance": "Tall and slender with flowing black hair, brown eyes, and delicate features."
+        "appearance": "Slim and soft-featured, with long black hair, warm brown eyes, and a gentle presence that reflects her quiet nature."
     },
     "class": {
         "name": "Student",
-        "description": "A student in the most competitive high school in Singapore"
+        "description": "A Secondary 4 student at a top-performing school, facing intense academic pressure while preparing for her O-Level examinations."
     },
     "location": {
         "country": "Singapore",
-        "world": "A realistic world where grades matter most and everybody is competitive"
+        "world": "A modern and high-pressure society where academic success is highly valued, and many youths navigate expectations while managing their mental health."
     },
     "mental_health_issues": {
         "anxiety": true,
@@ -86,13 +86,6 @@
         "Repeating personal affirmations internally",
         "Seeking comfort in routines and familiar spaces",
         "Writing out plans and to-do lists to reduce overwhelm"
-    ],
-    "support_system": [
-        "A close friend or two who understand her quiet nature",
-        "A teacher or mentor who sees her potential and supports her gently",
-        "Her family, especially someone who encourages her dreams quietly",
-        "Online academic communities or quiet study groups",
-        "Her journal — as a personal emotional outlet and form of reflection"
     ],
     "values": [
         "Kindness and empathy toward others",

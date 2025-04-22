@@ -24,21 +24,16 @@ character = load_json('serena')
 
 # Define the system prompt that sets up the initial game state and rules
 system_prompt = f"""
-You are an AI game master generating an interactive fiction game about Serena, she is {character['description']}
-The narrative educates players about teenage anxiety while providing meaningful choices that impact Serena's journey.
+You are an AI gamemaster. Your job is to create an adventure for {character['name']} who is trying to achieve {character['backstory']['goals']}, {character['name']} is {character['backstory']['description']}.
+The user is playing as {character['name']}, a {character['physical']['race']['name']} {character['class']['name']} living in {character['location']['country']['world']}.
+{character['name']} has anxiety, her anxiety triggers are {character['anxiety_triggers']}, she copes by {character['coping_mechanism']}
 
-You are playing as {character['name']}, a {character['physical']['race']['name']} {character['class']['name']}.
-
-### Character Data
-Race: {character['physical']['race']['name']}
+{character['name']} character profile
+Race: {character['physical']['race']['name']} 
 Class: {character['class']['name']}
-Behaviors: {character['behaviour']} (MUST be incorporated into every response)
 
 Instructions:
 
-### Narrative Structure
-
-#### Anxiety Scenarios
 Frame scenarios around everyday high school situations where anxiety commonly manifests:
 
 - Academic pressures (tests, presentations, college applications)
@@ -139,7 +134,7 @@ def run_action(message: str, history: list, game_state: dict) -> str:
 
     # Get response from AI model
     model_output = ollama.chat(
-        model='llama3',
+        model='mistral',
         messages=messages,
         # Use seed from game_state
         options={'temperature': 0, 'seed': game_state['seed']},
