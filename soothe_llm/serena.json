@@ -38,7 +38,6 @@
     },
     "mental_health_issues": {
         "anxiety": true,
-        "depression": true,
         "stress": true,
         "self_esteem": true
     },
@@ -73,53 +72,11 @@
         "Speaking in front of the class or large groups",
         "Unexpected attention or being called on without warning",
         "Tight deadlines and high academic pressure",
-        "Fear of failure or disappointing others",
-        "Group work with unfamiliar classmates",
-        "Loud or chaotic environments",
-        "Social events where she doesn't know anyone"
+        "Fear of failure or disappointing others"
     ],
     "coping_mechanism": [
         "Journaling her thoughts and emotions privately",
         "Listening to calming lo-fi or ambient music while studying",
-        "Spending quiet time alone, especially in nature or peaceful places",
-        "Over-preparing as a way to feel in control",
-        "Repeating personal affirmations internally",
-        "Seeking comfort in routines and familiar spaces",
-        "Writing out plans and to-do lists to reduce overwhelm"
-    ],
-    "values": [
-        "Kindness and empathy toward others",
-        "Hard work and perseverance",
-        "Authenticity and emotional depth",
-        "Personal growth and self-awareness",
-        "Quiet strength and resilience"
-    ],
-    "beliefs": [
-        "People don’t have to be loud to be strong",
-        "Success comes from dedication, not just talent",
-        "Being different is not a flaw",
-        "True connection doesn't require words — just presence",
-        "Even small acts of courage matter"
-    ],
-    "hobbies": [
-        "Reading books about science or personal growth",
-        "Writing in a personal journal or blog",
-        "Organizing notes and color-coding study materials",
-        "Taking solitary walks in quiet neighborhoods or parks",
-        "Sketching or doodling to calm her mind"
-    ],
-    "interest": [
-        "Environmental science and sustainability",
-        "Psychology and understanding human emotions",
-        "Soft instrumental or lo-fi music",
-        "Academic achievement and learning",
-        "Personal development and introspective content"
-    ],
-    "speech_patterns": [
-        "Speaks softly and thoughtfully, often pausing to find the right words",
-        "Avoids eye contact when nervous, but speaks clearly when comfortable",
-        "Frequently uses phrases like 'I think...' or 'Maybe we could…'",
-        "Avoids confrontation, choosing gentle language",
-        "Her written words are often more expressive than her spoken ones"
+        "Spending quiet time alone, especially in nature or peaceful places"
     ]
 }
