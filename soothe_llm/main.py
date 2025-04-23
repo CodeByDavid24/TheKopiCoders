@@ -48,6 +48,17 @@ Format choices as numbered options:
 4. Ask Serena about her favorite class this semester
 """
 
+# Define the consent message
+consent_message = """
+**Start Game - Important Information**
+
+**Warning & Consent:**
+This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
+
+Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience. By starting the game, you agree to these terms.
+
+Type 'I agree' to continue.
+"""
 
 # Initialize conversation with system prompt
 messages = [
@@ -59,7 +70,8 @@ messages = [
 game_state = {
     'seed': np.random.randint(0, 1000000),  # Initial seed
     'character': character,  # Store character data
-    'history': []  # Track conversation history
+    'history': [],  # Track conversation history
+    'consent_given': False  # Track whether user has given consent
 }
 
 # Get initial response from the AI model
@@ -86,6 +98,14 @@ def run_action(message: str, history: list, game_state: dict) -> str:
     Returns:
         String containing AI's response to player action
     """
+    # Check if consent has been given
+    if not game_state['consent_given']:
+        if message.lower() == 'i agree':
+            game_state['consent_given'] = True
+            return "Thank you for agreeing to the terms. Type 'start game' to begin."
+        else:
+            return consent_message
+
     # Check if this is the start of the game
     if message.lower() == 'start game':
         return game_state['start']
@@ -132,6 +152,9 @@ def main_loop(message: str, history: list) -> str:
     Returns:
         String containing AI's response
     """
+    if not history:
+        # First message in conversation, show consent message
+        return consent_message
     return run_action(message, history, game_state)
 
 
@@ -153,17 +176,17 @@ def start_game(main_loop: callable, share: bool = False) -> None:
         main_loop,
         chatbot=gr.Chatbot(
             height=500,
-            placeholder="Type 'start game' to begin",
+            placeholder="Type 'I agree' and then 'start game' to begin",
             bubble_full_width=False,
             show_copy_button=True,
             render_markdown=True
         ),
-        textbox=gr.Textbox(placeholder="What do you do next?",
+        textbox=gr.Textbox(placeholder="Type 'I agree' to continue...",
                            container=False, scale=7),
         title="SootheAI",
-        # description=f"You are playing as {character['name']}. {character['backstory']['description']}",
         theme="soft",
-        examples=["Look around", "Continue the story"],
+        examples=["I agree", "Start game",
+                  "Look around", "Continue the story"],
         cache_examples=False,
         retry_btn="Retry",
         undo_btn="Undo",
