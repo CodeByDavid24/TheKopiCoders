@@ -1,8 +1,8 @@
 import gradio as gr  # Import Gradio for creating web interfaces
-import ollama  # Import Ollama for AI model interactions
+import anthropic  # Import Anthropic for Claude API interactions
 import json  # Import JSON for handling configuration files
 import numpy as np
-
+import os
 
 def load_json(filename: str) -> dict:
     """
@@ -18,6 +18,14 @@ def load_json(filename: str) -> dict:
     except FileNotFoundError:
         return {}
 
+def load_api_key_from_file(filename="claude_api_key.txt"):
+    """Load API key from a text file"""
+    try:
+        with open(filename, 'r') as file:
+            api_key = file.read().strip()
+            return api_key
+    except FileNotFoundError:
+        return ""  # Return empty string if file doesn't exist
 
 # Load character data from JSON file
 character = load_json('serena')
@@ -58,33 +66,69 @@ Your choices and input will directly shape the direction of the story. Your deci
 Type 'I agree' then 'Start game' to continue.
 """
 
-# Initialize conversation with system prompt
+# Get API key from text file or environment variable
+CLAUDE_API_KEY = load_api_key_from_file() or os.getenv("CLAUDE_API_KEY", "")
+
+# Initialize Claude client with API key (if available)
+claude_client = None
+if CLAUDE_API_KEY:
+    claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
+
+# Initialize conversation with system prompt for Claude format
 messages = [
     {"role": "system", "content": system_prompt},
-    {"role": "user", "content": f'Your Start:'}
 ]
 
-# Initialize game state first
+# Initialize game state
 game_state = {
     'seed': np.random.randint(0, 1000000),  # Initial seed
     'character': character,  # Store character data
     'history': [],  # Track conversation history
-    'consent_given': False  # Track whether user has given consent
+    'consent_given': False,  # Track whether user has given consent
+    'start': None  # Will store the starting narrative
 }
-
-# Get initial response from the AI model
-model_output = ollama.chat(
-    model='mistral',
-    messages=messages,
-    options={'temperature': 0, 'seed': game_state['seed']},
-    stream=False,
-)
-
-# Store the starting narrative
-game_state['start'] = model_output['message']['content']
 
 demo = None  # Global variable to store Gradio interface instance for restart capability
 
+def initialize_claude_client(api_key):
+    """Initialize or update the Claude client with the given API key"""
+    global claude_client
+    claude_client = anthropic.Anthropic(api_key=api_key)
+    return "Claude API key configured successfully!"
+
+def save_api_key_to_file(api_key, filename="claude_api_key.txt"):
+    """Save API key to a text file"""
+    try:
+        with open(filename, 'w') as file:
+            file.write(api_key)
+        return True
+    except Exception as e:
+        return False
+
+def get_initial_response():
+    """Get the initial game narrative from Claude"""
+    global game_state, claude_client
+    
+    if not claude_client:
+        return "Claude API key not configured. Please set it in the API Key tab."
+    
+    try:
+        # Create the initial message for Claude
+        response = claude_client.messages.create(
+            model="claude-3-7-sonnet-20250219",  # Use an appropriate Claude model
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content": "Start the game with a brief introduction to Serena."}
+            ],
+            temperature=0,
+            max_tokens=1000
+        )
+        
+        # Store the starting narrative
+        game_state['start'] = response.content[0].text
+        return game_state['start']
+    except Exception as e:
+        return f"Error communicating with Claude API: {str(e)}"
 
 def run_action(message: str, history: list, game_state: dict) -> str:
     """
@@ -96,6 +140,12 @@ def run_action(message: str, history: list, game_state: dict) -> str:
     Returns:
         String containing AI's response to player action
     """
+    global claude_client
+    
+    # Check if Claude client is configured
+    if not claude_client:
+        return "Claude API key not configured. Please set it in the API Key tab."
+    
     # Check if consent has been given
     if not game_state['consent_given']:
         if message.lower() == 'i agree':
@@ -106,40 +156,40 @@ def run_action(message: str, history: list, game_state: dict) -> str:
 
     # Check if this is the start of the game
     if message.lower() == 'start game':
+        # If we haven't generated the start yet, do it now
+        if game_state['start'] is None:
+            game_state['start'] = get_initial_response()
         return game_state['start']
 
-    # Initialize new messages list with the gameplay system prompt
-    messages = [
-        {"role": "system", "content": system_prompt}
-    ]
-
-    # Add the game's start message and appropriate history
-    if len(game_state['history']) > 0 or len(history) > 0:
-        # First add the game start message
-        messages.append({"role": "assistant", "content": game_state['start']})
-
-        # Then add conversation history from game_state
-        for user_msg, assistant_msg in game_state['history']:
-            messages.append({"role": "user", "content": user_msg})
-            messages.append({"role": "assistant", "content": assistant_msg})
-
-    # Add current message to conversation
-    messages.append({"role": "user", "content": message})
-
-    # Get response from AI model
-    model_output = ollama.chat(
-        model='mistral',
-        messages=messages,
-        # Use seed from game_state
-        options={'temperature': 0, 'seed': game_state['seed']},
-        stream=False,
-    )
-
-    # Process and store result
-    result = model_output['message']['content']
-    game_state['history'].append((message, result))
-    return result
-
+    try:
+        # Prepare message history for Claude
+        claude_messages = []
+        
+        # Add conversation history from game_state
+        if len(game_state['history']) > 0 or len(history) > 0:
+            for user_msg, assistant_msg in game_state['history']:
+                claude_messages.append({"role": "user", "content": user_msg})
+                claude_messages.append({"role": "assistant", "content": assistant_msg})
+        
+        # Add current message to conversation
+        claude_messages.append({"role": "user", "content": message})
+        
+        # Get response from Claude API
+        response = claude_client.messages.create(
+            model="claude-3-7-sonnet-20250219",  # Use an appropriate Claude model
+            system=system_prompt,
+            messages=claude_messages,
+            temperature=0,
+            max_tokens=1000
+        )
+        
+        # Process and store result
+        result = response.content[0].text
+        game_state['history'].append((message, result))
+        return result
+        
+    except Exception as e:
+        return f"Error communicating with Claude API: {str(e)}"
 
 def main_loop(message: str, history: list) -> str:
     """
@@ -155,22 +205,67 @@ def main_loop(message: str, history: list) -> str:
         return consent_message
     return run_action(message, history, game_state)
 
+def set_api_key(api_key: str):
+    """
+    Set the Claude API key, initialize the client, and save to file
+    Args:
+        api_key: The API key to use for Claude
+    Returns:
+        Success or error message
+    """
+    global CLAUDE_API_KEY, claude_client
+    
+    if not api_key.strip():
+        return "API key cannot be empty"
+    
+    try:
+        # Try to initialize the client with the provided key
+        CLAUDE_API_KEY = api_key.strip()
+        # Save API key to file
+        if save_api_key_to_file(CLAUDE_API_KEY):
+            return initialize_claude_client(CLAUDE_API_KEY)
+        else:
+            return "API key saved to memory but could not be saved to file. It will work for this session only."
+    except Exception as e:
+        return f"Error setting API key: {str(e)}"
 
-def start_game(main_loop: callable, share: bool = False) -> None:
+def start_game() -> None:
     """
     Initialize and launch the Gradio interface for the game
-    Args:
-        main_loop: Function handling the main game logic
-        share: Boolean indicating whether to create a shareable link
     """
-    # Access global demo variable for restart functionality
     global demo
+    
     # Close existing demo if it exists
     if demo is not None:
         demo.close()
-
-    # Create new Gradio interface with specified configuration
-    demo = gr.ChatInterface(
+    
+    # Create API key configuration tab
+    with gr.Blocks(theme="soft") as api_block:
+        gr.Markdown("# Claude API Configuration")
+        with gr.Row():
+            api_key_input = gr.Textbox(
+                placeholder="Enter your Claude API Key", 
+                type="password",
+                label="Claude API Key"
+            )
+            api_submit = gr.Button("Set API Key")
+        api_result = gr.Textbox(label="Status", interactive=False)
+        
+        gr.Markdown("""
+        ## How to Use
+        1. Enter your Claude API key in the field above and click "Set API Key"
+        2. The key will be saved to a file named "claude_api_key.txt" in the same directory
+        3. Switch to the "Game" tab to start playing
+        """)
+        
+        api_submit.click(
+            fn=set_api_key,
+            inputs=api_key_input,
+            outputs=api_result
+        )
+    
+    # Create game interface
+    chat_interface = gr.ChatInterface(
         main_loop,
         chatbot=gr.Chatbot(
             height=500,
@@ -180,8 +275,8 @@ def start_game(main_loop: callable, share: bool = False) -> None:
             render_markdown=True
         ),
         textbox=gr.Textbox(placeholder="Type 'I agree' to continue...",
-                           container=False, scale=7),
-        title="SootheAI",
+                        container=False, scale=7),
+        title="SootheAI Game",
         theme="soft",
         examples=["Listen to music", "Journal", "Continue the story"],
         cache_examples=False,
@@ -189,9 +284,17 @@ def start_game(main_loop: callable, share: bool = False) -> None:
         undo_btn="Undo",
         clear_btn="Clear",
     )
+    
+    # Combine everything into tabs
+    demo = gr.TabbedInterface(
+        [api_block, chat_interface],
+        ["API Key", "Game"],
+        title="SootheAI"
+    )
+    
     # Launch the interface
     demo.launch(share=True, server_name="0.0.0.0", server_port=7861)
 
-
-# Start the game when script is run
-start_game(main_loop)
+# Start the application when script is run
+if __name__ == "__main__":
+    start_game()
