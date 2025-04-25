@@ -18,14 +18,6 @@ def load_json(filename: str) -> dict:
     except FileNotFoundError:
         return {}
 
-def load_api_key_from_file(filename="claude_api_key.txt"):
-    """Load API key from a text file"""
-    try:
-        with open(filename, 'r') as file:
-            api_key = file.read().strip()
-            return api_key
-    except FileNotFoundError:
-        return ""  # Return empty string if file doesn't exist
 
 # Load character data from JSON file
 character = load_json('serena')
@@ -66,13 +58,10 @@ Your choices and input will directly shape the direction of the story. Your deci
 Type 'I agree' then 'Start game' to continue.
 """
 
-# Get API key from text file or environment variable
-CLAUDE_API_KEY = load_api_key_from_file() or os.getenv("CLAUDE_API_KEY", "")
+CLAUDE_API_KEY = "your-api-key-here"
 
-# Initialize Claude client with API key (if available)
-claude_client = None
-if CLAUDE_API_KEY:
-    claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
+
+claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
 
 # Initialize conversation with system prompt for Claude format
 messages = [
@@ -96,15 +85,6 @@ def initialize_claude_client(api_key):
     claude_client = anthropic.Anthropic(api_key=api_key)
     return "Claude API key configured successfully!"
 
-def save_api_key_to_file(api_key, filename="claude_api_key.txt"):
-    """Save API key to a text file"""
-    try:
-        with open(filename, 'w') as file:
-            file.write(api_key)
-        return True
-    except Exception as e:
-        return False
-
 def get_initial_response():
     """Get the initial game narrative from Claude"""
     global game_state, claude_client
@@ -115,7 +95,7 @@ def get_initial_response():
     try:
         # Create the initial message for Claude
         response = claude_client.messages.create(
-            model="claude-3-7-sonnet-20250219",  # Use an appropriate Claude model
+            model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
             system=system_prompt,
             messages=[
                 {"role": "user", "content": "Start the game with a brief introduction to Serena."}
@@ -176,7 +156,7 @@ def run_action(message: str, history: list, game_state: dict) -> str:
         
         # Get response from Claude API
         response = claude_client.messages.create(
-            model="claude-3-7-sonnet-20250219",  # Use an appropriate Claude model
+            model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
             system=system_prompt,
             messages=claude_messages,
             temperature=0,
@@ -207,7 +187,7 @@ def main_loop(message: str, history: list) -> str:
 
 def set_api_key(api_key: str):
     """
-    Set the Claude API key, initialize the client, and save to file
+    Set the Claude API key and initialize the client
     Args:
         api_key: The API key to use for Claude
     Returns:
@@ -221,11 +201,7 @@ def set_api_key(api_key: str):
     try:
         # Try to initialize the client with the provided key
         CLAUDE_API_KEY = api_key.strip()
-        # Save API key to file
-        if save_api_key_to_file(CLAUDE_API_KEY):
-            return initialize_claude_client(CLAUDE_API_KEY)
-        else:
-            return "API key saved to memory but could not be saved to file. It will work for this session only."
+        return initialize_claude_client(CLAUDE_API_KEY)
     except Exception as e:
         return f"Error setting API key: {str(e)}"
 
@@ -251,13 +227,6 @@ def start_game() -> None:
             api_submit = gr.Button("Set API Key")
         api_result = gr.Textbox(label="Status", interactive=False)
         
-        gr.Markdown("""
-        ## How to Use
-        1. Enter your Claude API key in the field above and click "Set API Key"
-        2. The key will be saved to a file named "claude_api_key.txt" in the same directory
-        3. Switch to the "Game" tab to start playing
-        """)
-        
         api_submit.click(
             fn=set_api_key,
             inputs=api_key_input,
@@ -270,7 +239,6 @@ def start_game() -> None:
         chatbot=gr.Chatbot(
             height=500,
             placeholder="Type 'I agree' to begin",
-            bubble_full_width=False,
             show_copy_button=True,
             render_markdown=True
         ),
@@ -280,15 +248,12 @@ def start_game() -> None:
         theme="soft",
         examples=["Listen to music", "Journal", "Continue the story"],
         cache_examples=False,
-        retry_btn="Retry",
-        undo_btn="Undo",
-        clear_btn="Clear",
     )
     
     # Combine everything into tabs
     demo = gr.TabbedInterface(
-        [api_block, chat_interface],
-        ["API Key", "Game"],
+        [chat_interface],
+        ["Game"],
         title="SootheAI"
     )
     
