@@ -5,6 +5,7 @@ An interactive mental health education platform that helps Singaporean youths un
 ## Problem Statement
 
 Youths (15-35) often lack knowledge about anxiety and mental health issues, leading to:
+
 - Difficulty recognizing symptoms in themselves and others
 - Inadequate support for peers experiencing anxiety
 - Stigma surrounding mental health challenges
@@ -20,11 +21,12 @@ SootheAI is an AI-powered interactive fiction platform that educates through sim
 
 ## Features
 
-- Text-based interactive storytelling powered by large language models
+- Text-based interactive storytelling powered by Claude 3.5 Sonnet
 - Character-driven narrative focusing on mental health themes in a Singaporean context
 - Clean, accessible web interface built with Gradio
 - Persistent conversation history to track progress
 - Detailed character framework with realistic anxiety behaviors and triggers
+- API key configuration interface for Claude access
 
 ## Project Structure
 
@@ -39,42 +41,47 @@ soothe_llm/
 ## Technical Implementation
 
 SootheAI uses:
-- **Ollama**: Local LLM deployment for generating responsive, contextual narrative
+
+- **Anthropic's Claude API**: Cloud-based LLM for generating responsive, contextual narrative
 - **Gradio**: Web interface for user interaction
 - **JSON Configuration**: Character attributes and behaviors defined in structured format
 
 ## Setup Instructions
 
-### 1. Install Ollama
-First, make sure you have [Ollama](https://ollama.ai/) installed on your system.
+### 1. Claude API Key
 
-### 2. Pull the Required Model
-```bash
-ollama pull llama3
-```
+You'll need an API key from Anthropic. Sign up at [Anthropic's website](https://www.anthropic.com/) to obtain one.
 
-### 3. Set Up Virtual Environment
+### 2. Set Up Virtual Environment
+
 ```bash
 conda create --prefix=venv python=3.11 -y
 conda activate ./venv
 ```
 
-### 4. Install Dependencies
+### 3. Install Dependencies
+
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### 5. Run the Application
+### 4. Run the Application
+
 ```bash
 cd soothe_llm
 python main.py
 ```
+
+### 5. Configure API Key
+
+Once the application is running, go to the "API Key" tab and enter your Claude API key before starting the game.
 
 ## Gameplay
 
 In SootheAI, users interact with a narrative centered around Serena, a Chinese high school student in Singapore dealing with anxiety in a competitive academic environment. The game presents authentic scenarios where Serena faces various anxiety triggers, and users choose how she responds.
 
 Each scenario offers multiple options representing:
+
 - Healthy coping mechanisms
 - Avoidance behaviors
 - Unhealthy coping strategies

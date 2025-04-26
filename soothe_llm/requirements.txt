@@ -1,3 +1,4 @@
 ollama==0.4.7
 gradio==4.44.1
 numpy==1.26.1
+anthropic = 0.50.0
