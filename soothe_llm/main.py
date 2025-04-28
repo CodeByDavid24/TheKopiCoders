@@ -82,30 +82,10 @@ Format choices as numbered options:
 """
 
 # Define the API key (replace with your actual API key or use environment variables)
-CLAUDE_API_KEY = "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"
-
-<<<<<<< HEAD
-# Initialize Claude client
-claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
-=======
-**Warning & Consent:**
-This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
-
-Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience. By starting the game, you agree to these terms.
-
-Type 'I agree' then 'Start game' to continue.
-"""
-
 CLAUDE_API_KEY = "your-api-key-here"
 
-
-claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
-
-# Initialize conversation with system prompt for Claude format
-messages = [
-    {"role": "system", "content": system_prompt},
-]
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
+# Initialize Claude client - using a simpler initialization to avoid the proxies error
+claude_client = None
 
 # Initialize game state
 game_state = {
@@ -121,13 +101,14 @@ demo = None  # Global variable to store Gradio interface instance for restart ca
 def initialize_claude_client(api_key):
     """Initialize or update the Claude client with the given API key"""
     global claude_client
-    claude_client = anthropic.Anthropic(api_key=api_key)
-    return "Claude API key configured successfully!"
+    try:
+        # Simple initialization without extra parameters
+        claude_client = anthropic.Anthropic(api_key=api_key)
+        return "Claude API key configured successfully!"
+    except Exception as e:
+        return f"Error initializing Claude client: {str(e)}"
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
 def get_initial_response():
     """Get the initial game narrative from Claude"""
     global game_state, claude_client
@@ -138,11 +119,7 @@ def get_initial_response():
     try:
         # Create the initial message for Claude
         response = claude_client.messages.create(
-<<<<<<< HEAD
-            model="claude-3.5-sonnet-20240620",  # Use Claude 3.5 Sonnet
-=======
-            model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
+            model="claude-3-5-sonnet-20240620",  # Use Claude 3.5 Sonnet
             system=system_prompt,
             messages=[
                 {"role": "user", "content": "Your Start:"}
@@ -203,11 +180,7 @@ def run_action(message: str, history: list, game_state: dict) -> str:
 
         # Get response from Claude API
         response = claude_client.messages.create(
-<<<<<<< HEAD
-            model="claude-3.5-sonnet-20240620",  # Use Claude 3.5 Sonnet
-=======
-            model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
+            model="claude-3-5-sonnet-20240620",  # Use Claude 3.5 Sonnet
             system=system_prompt,
             messages=claude_messages,
             temperature=0,
@@ -231,15 +204,17 @@ def set_api_key(api_key: str):
     Returns:
         Success or error message
     """
-    global CLAUDE_API_KEY, claude_client
+    global CLAUDE_API_KEY
 
     if not api_key.strip():
         return "API key cannot be empty"
 
     try:
-        # Try to initialize the client with the provided key
+        # Store the API key
         CLAUDE_API_KEY = api_key.strip()
-        return initialize_claude_client(CLAUDE_API_KEY)
+        # Initialize the client
+        result = initialize_claude_client(CLAUDE_API_KEY)
+        return result
     except Exception as e:
         return f"Error setting API key: {str(e)}"
 
@@ -255,28 +230,6 @@ def main_loop(message: str, history: list) -> str:
     """
     return run_action(message, history, game_state)
 
-<<<<<<< HEAD
-=======
-def set_api_key(api_key: str):
-    """
-    Set the Claude API key and initialize the client
-    Args:
-        api_key: The API key to use for Claude
-    Returns:
-        Success or error message
-    """
-    global CLAUDE_API_KEY, claude_client
-    
-    if not api_key.strip():
-        return "API key cannot be empty"
-    
-    try:
-        # Try to initialize the client with the provided key
-        CLAUDE_API_KEY = api_key.strip()
-        return initialize_claude_client(CLAUDE_API_KEY)
-    except Exception as e:
-        return f"Error setting API key: {str(e)}"
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
 
 def start_game() -> None:
     """
@@ -299,11 +252,7 @@ def start_game() -> None:
             )
             api_submit = gr.Button("Set API Key")
         api_result = gr.Textbox(label="Status", interactive=False)
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
         api_submit.click(
             fn=set_api_key,
             inputs=api_key_input,
@@ -315,12 +264,8 @@ def start_game() -> None:
         main_loop,
         chatbot=gr.Chatbot(
             height=500,
-<<<<<<< HEAD
             placeholder="Type 'start game' to begin",
             bubble_full_width=False,
-=======
-            placeholder="Type 'I agree' to begin",
->>>>>>> 53556bae2da13f7a61f88ced271fa4d3e1186f8f
             show_copy_button=True,
             render_markdown=True
         ),
@@ -330,12 +275,15 @@ def start_game() -> None:
         theme="soft",
         examples=["Look around", "Continue the story"],
         cache_examples=False,
+        retry_btn="Retry",
+        undo_btn="Undo",
+        clear_btn="Clear",
     )
 
     # Combine everything into tabs
     demo = gr.TabbedInterface(
-        [chat_interface],
-        ["Game"],
+        [api_block, chat_interface],
+        ["API Key", "Game"],
         title="SootheAI"
     )
 
@@ -345,4 +293,5 @@ def start_game() -> None:
 
 # Start the application when script is run
 if __name__ == "__main__":
+    # We don't initialize claude_client here anymore - it will be initialized when the API key is provided
     start_game()
