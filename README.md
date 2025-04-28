@@ -1,102 +1,68 @@
-# SootheAI
+# SootheAI: Interactive Mental Health Narrative Game
 
-An interactive mental health education platform that helps Singaporean youths understand anxiety through immersive narrative experiences.
+An AI-driven interactive narrative experience that explores themes of teenage anxiety through the character of Serena, a JC student in Singapore navigating academic pressures while managing her mental health.
 
-## Problem Statement
+## About the Project
 
-Youths (15-35) often lack knowledge about anxiety and mental health issues, leading to:
+SootheAI creates an immersive, choice-based narrative that:
 
-- Difficulty recognizing symptoms in themselves and others
-- Inadequate support for peers experiencing anxiety
-- Stigma surrounding mental health challenges
-- Limited awareness of healthy coping strategies
-
-## Solution
-
-SootheAI is an AI-powered interactive fiction platform that educates through simulation and storytelling:
-
-- **Interactive Scenarios**: Users navigate situations where they make choices on how to help someone experiencing anxiety, learning effective communication and support strategies.
-- **Empathy Training**: Users can experience scenarios from the perspective of someone with anxiety, gaining insight into the challenges and emotions associated with the condition.
-- **Educational Content**: Through engaging storytelling and realistic scenarios, users learn about anxiety symptoms, triggers, and healthy coping mechanisms.
+- Educates players about teenage anxiety in a relatable context
+- Presents realistic scenarios based on everyday JC student situations
+- Offers meaningful choices that demonstrate different coping strategies
+- Provides a safe space to explore mental health challenges
 
 ## Features
 
-- Text-based interactive storytelling powered by Claude 3.5 Sonnet
-- Character-driven narrative focusing on mental health themes in a Singaporean context
-- Clean, accessible web interface built with Gradio
-- Persistent conversation history to track progress
-- Detailed character framework with realistic anxiety behaviors and triggers
-- API key configuration interface for Claude access
-
-## Project Structure
-
-```
-soothe_llm/
-├── main.py              # Core application logic
-├── serena.json          # Character definition file
-├── requirements.txt     # Python dependencies for the project
-└── README.md            # Technical documentation
-```
-
-## Technical Implementation
-
-SootheAI uses:
-
-- **Anthropic's Claude API**: Cloud-based LLM for generating responsive, contextual narrative
-- **Gradio**: Web interface for user interaction
-- **JSON Configuration**: Character attributes and behaviors defined in structured format
+- Text-based interactive storytelling powered by large language models
+- Character-driven narrative focusing on mental health themes
+- Clean web interface built with Gradio
+- Persistent game state and conversation history
+- Detailed character framework defined via JSON configuration
 
 ## Setup Instructions
 
-### 1. Claude API Key
-
-You'll need an API key from Anthropic. Sign up at [Anthropic's website](https://www.anthropic.com/) to obtain one.
-
-### 2. Set Up Virtual Environment
+### 1. Install Dependencies
 
 ```bash
 conda create --prefix=venv python=3.11 -y
 conda activate ./venv
-```
-
-### 3. Install Dependencies
-
-```bash
 python -m pip install -r requirements.txt
 ```
 
-### 4. Run the Application
+### 2. API Configuration
+
+Create a `.env` file with your API key:
+
+```
+ANTHROPIC_API_KEY=your_api_key_here
+```
+
+### 3. Run the Application
 
 ```bash
-cd soothe_llm
 python main.py
 ```
 
-### 5. Configure API Key
-
-Once the application is running, go to the "API Key" tab and enter your Claude API key before starting the game.
-
 ## Gameplay
 
-In SootheAI, users interact with a narrative centered around Serena, a Chinese high school student in Singapore dealing with anxiety in a competitive academic environment. The game presents authentic scenarios where Serena faces various anxiety triggers, and users choose how she responds.
+In SootheAI, you interact with a narrative centered around Serena, a dedicated JC1 student at Raffles Junior College dealing with unacknowledged anxiety in Singapore's competitive academic environment. The game presents scenarios where Serena faces various anxiety triggers, and you choose how she responds.
 
-Each scenario offers multiple options representing:
+Each scenario presents multiple options representing:
 
 - Healthy coping mechanisms
 - Avoidance behaviors
 - Unhealthy coping strategies
 - Neutral actions
 
-User choices influence Serena's journey while teaching valuable lessons about managing anxiety.
+Your choices influence Serena's journey and teach valuable lessons about managing anxiety, even when the character doesn't recognize her experiences as anxiety.
 
 ## Character Customization
 
-The character attributes are defined in `serena.json`. This file can be modified to adjust character traits, behavior patterns, anxiety triggers, and coping mechanisms to create different scenarios or characters.
+The character attributes are defined in `characters/serena.json`. You can modify this file to adjust character traits, behavior patterns, anxiety triggers, and coping mechanisms.
 
-## Contributing
+## Project Structure
 
-Contributions to SootheAI are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
+- `main.py`: Core application with game logic and Gradio interface
+- `characters/`: Directory containing character definitions
+  - `serena.json`: Primary character definition and attributes
+- `requirements.txt`: Required Python packages
