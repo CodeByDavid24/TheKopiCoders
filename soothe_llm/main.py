@@ -21,7 +21,7 @@ def load_json(filename: str) -> dict:
 
 
 # Load character data from JSON file
-character = load_json('characters/serena.json')
+character = load_json('characters/serena')
 
 # Define the system prompt that sets up the initial game state and rules
 system_prompt = f"""
@@ -279,7 +279,7 @@ def start_game() -> None:
         ),
         textbox=gr.Textbox(placeholder="Type 'I agree' to continue...",
                            container=False, scale=7),
-        title="SootheAI Game",
+        title="SootheAI",
         theme="soft",
         examples=["Listen to music", "Journal", "Continue the story"],
         cache_examples=False,

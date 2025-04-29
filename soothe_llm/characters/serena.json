@@ -13,70 +13,105 @@
     },
     "physical": {
         "race": {
-            "name": "chinese",
+            "name": "Chinese Singaporean",
             "description": "An ethnic group that forms the majority in Singapore, often associated with strong cultural values and academic drive."
         },
         "age": {
-            "years": 16,
+            "years": 17,
             "lifespan": "Typically lives up to around 85–100 years with modern healthcare.",
-            "maturity": "Teenager in the midst of emotional and academic development."
+            "maturity": "Young adult transitioning from adolescence, facing important life decisions."
         },
         "measurements": {
             "height": 160,
             "weight": 50,
             "bmi": 19.5
         },
-        "appearance": "Slim and soft-featured, with long black hair, warm brown eyes, and a gentle presence that reflects her quiet nature."
+        "appearance": "Slim and soft-featured, with long black hair often tied in a neat ponytail, warm brown eyes, and a gentle presence that reflects her quiet nature."
     },
     "class": {
-        "name": "Student",
-        "description": "A Secondary 4 student at a top-performing school, facing intense academic pressure while preparing for her O-Level examinations."
+        "name": "JC Student",
+        "description": "A JC1 student at a prestigious junior college in Singapore, taking H2 Chemistry, Biology, Mathematics and H1 General Paper, balancing heavy academic workload with CCA commitments.",
+        "subjects": [
+            "H2 Chemistry",
+            "H2 Biology",
+            "H2 Mathematics",
+            "H1 General Paper"
+        ],
+        "cca": "Environmental Club (Secretary)",
+        "academic_standing": "Consistently in the top quartile of her cohort, but constantly feels she needs to do better"
     },
     "location": {
         "country": "Singapore",
+        "school": "Raffles Junior College",
+        "home": "HDB flat in Tampines where she lives with her parents and younger brother",
+        "study_spots": [
+            "School library",
+            "Quiet corner in the canteen",
+            "Neighborhood community center"
+        ],
         "world": "A modern and high-pressure society where academic success is highly valued, and many youths navigate expectations while managing their mental health."
     },
     "mental_health_issues": {
         "anxiety": true,
         "stress": true,
-        "self_esteem": true
+        "self_esteem": true,
+        "self_awareness": "Limited - attributes symptoms to normal student life pressures"
     },
     "backstory": {
-        "description": "Serena is a quiet but determined high school student, navigating the pressures of academic excellence while battling with her own insecurities and anxiety. She dreams of a better future, not just for her career, but for her self-worth.",
+        "description": "Serena is a dedicated JC student who earned her place at a prestigious junior college through hard work and determination. Despite her academic capabilities, she constantly battles with feeling inadequate compared to her seemingly effortless peers. She balances her parents' high expectations with her own desire for self-improvement, all while navigating the intense JC curriculum.",
         "goals": [
-            "Excel academically and get into a top university",
-            "Overcome her fear of speaking up and being seen",
-            "Build confidence and self-acceptance"
+            "Score straight As for A-levels and secure a place in NUS Medicine",
+            "Overcome her hesitation to contribute during class discussions and presentations",
+            "Balance academic excellence with personal wellbeing",
+            "Build meaningful friendships despite her reserved nature"
         ],
         "history": [
-            "Serena was born and raised in a busy urban city, often surrounded by noise but feeling unseen.",
-            "From a young age, she was curious and introspective, often getting lost in books and nature.",
-            "She excelled in her studies, especially in science and math, but rarely raised her hand in class.",
-            "Her quiet nature often led her to be overlooked, despite her strong work ethic and empathy.",
-            "She has always carried a silent determination to prove herself—not to others, but to herself."
+            "Graduated from a well-regarded secondary school with 7 distinctions in O-levels",
+            "Has always been academically strong but socially reserved",
+            "Selected for leadership positions due to her reliability, but often feels overwhelmed by the visibility",
+            "Experienced a panic attack before a major presentation in secondary school but never acknowledged it as such",
+            "Has a supportive but achievement-oriented family who don't fully understand her internal struggles"
         ]
     },
     "behaviour": [
-        "Avoids speaking up in group discussions even when she knows the answer",
-        "Frequently experiences self-doubt before exams or presentations",
-        "Replays social interactions in her head, worrying she said the wrong thing",
-        "Feels invisible in crowded or competitive environments",
-        "Often overprepares for tasks due to fear of failure",
-        "Gets overwhelmed easily by loud, fast-paced settings",
-        "Withdraws from group activities unless specifically invited",
-        "Struggles with balancing school pressure and personal rest",
-        "Fidgets or looks down when talking to authority figures",
-        "Pushes through anxiety silently, never wanting to 'trouble' others"
+        "Arrives early to lectures to secure a seat at the back where she won't be noticed",
+        "Takes meticulous notes but rarely asks questions despite not fully understanding concepts",
+        "Spends lunch breaks studying alone instead of socializing with classmates",
+        "Obsessively checks and rechecks assignments before submission",
+        "Rehearses what to say before speaking up in tutorial discussions",
+        "Frequently declines social invitations to focus on studying or recover from social fatigue",
+        "Experiences physical symptoms like headaches and stomach aches before tests or presentations",
+        "Compares herself unfavorably to peers who seem to grasp concepts more quickly",
+        "Apologizes excessively for minor mistakes or inconveniences",
+        "Sets unrealistic standards for herself and feels disappointed when falling short"
     ],
     "anxiety_triggers": [
-        "Speaking in front of the class or large groups",
-        "Unexpected attention or being called on without warning",
-        "Tight deadlines and high academic pressure",
-        "Fear of failure or disappointing others"
+        "Being called on unexpectedly during tutorials or lectures",
+        "Group projects, especially when she has to present the findings",
+        "Receiving grades lower than her personal expectations",
+        "Tight deadlines for multiple subjects simultaneously",
+        "Social gatherings with unfamiliar people",
+        "Comparisons with high-achieving classmates"
     ],
     "coping_mechanism": [
-        "Journaling her thoughts and emotions privately",
-        "Listening to calming lo-fi or ambient music while studying",
-        "Spending quiet time alone, especially in nature or peaceful places"
-    ]
+        "Creating highly detailed study schedules to feel in control",
+        "Taking solitary walks in the school garden between classes",
+        "Listening to lo-fi music while studying to calm her thoughts",
+        "Writing reflective entries in her journal about daily challenges",
+        "Reading fiction books as an escape from academic pressure",
+        "Deep breathing exercises she learned from a YouTube video (though she doesn't recognize this as anxiety management)"
+    ],
+    "daily_routine": {
+        "morning": "Wakes up at 5:30 AM to review notes before school",
+        "school_hours": "Attends lectures and tutorials, often feeling overwhelmed by the pace and volume",
+        "after_school": "Stays in the library until it closes, afraid of falling behind",
+        "evening": "Studies at home until late, often sacrificing sleep for revision",
+        "weekend": "Dedicates most hours to studying, with brief breaks for family meals"
+    },
+    "relationships": {
+        "parents": "Supportive but have high expectations; father is a businessman, mother is a teacher",
+        "friends": "A small circle of 2-3 close friends who share similar academic interests",
+        "teachers": "Viewed positively by teachers for her diligence, though they wish she would participate more",
+        "peers": "Respected for her intelligence but perceived as somewhat aloof due to her reserved nature"
+    }
 }
