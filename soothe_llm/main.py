@@ -210,7 +210,7 @@ def run_action(message: str, history: list, game_state: dict) -> str:
 
             # Get response from Claude API
             response = claude_client.messages.create(
-                model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
+                model="claude-3-5-sonnet-20240620",  # Use an appropriate Claude model
                 system=system_prompt,
                 messages=claude_messages,
                 temperature=0,
@@ -226,7 +226,7 @@ def run_action(message: str, history: list, game_state: dict) -> str:
 
             response = claude_client.completion(
                 prompt=prompt,
-                model="claude-3.5-sonnet-20240620",
+                model="claude-3-5-sonnet-20240620",
                 temperature=0,
                 max_tokens_to_sample=1000,
                 stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
