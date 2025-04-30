@@ -250,19 +250,21 @@ def main_loop(message: str, history: list) -> str:
     Returns:
         String containing AI's response
     """
-    if not history:
-        # First message in conversation, show consent message
-        return consent_message
-    return run_action(message, history, game_state)
+    global game_state
 
-# Remove the set_api_key function since we're not using it anymore
+    # Process the action using the game state
+    return run_action(message, history, game_state)
 
 
 def start_game() -> None:
     """
     Initialize and launch the Gradio interface for the game
     """
-    global demo
+    global demo, game_state
+
+    # Ensure game state is initialized with consent_given as False
+    if 'consent_given' not in game_state:
+        game_state['consent_given'] = False
 
     # Close existing demo if it exists
     if demo is not None:
@@ -275,7 +277,9 @@ def start_game() -> None:
             height=500,
             placeholder="Type 'I agree' to begin",
             show_copy_button=True,
-            render_markdown=True
+            render_markdown=True,
+            # Start with consent message already shown
+            value=[[None, consent_message]]
         ),
         textbox=gr.Textbox(placeholder="Type 'I agree' to continue...",
                            container=False, scale=7),
