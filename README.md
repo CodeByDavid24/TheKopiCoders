@@ -19,6 +19,20 @@ SootheAI creates an immersive, choice-based narrative that:
 - Persistent game state and conversation history
 - Detailed character framework defined via JSON configuration
 
+## Project Structure
+
+- `soothe_app/`: Core application directory
+  - `main.py`: Core application with game logic and Gradio interface
+  - `characters/`: Directory containing character definitions
+    - `serena.json`: Primary character definition and attributes
+    - `chloe.json`: Supporting character definition
+    - `mother.json`: Family member character definition
+    - `therapist.json`: Supporting character for mental health guidance
+- `doc/`: Documentation files
+  - `anthropic-prompt-cheatsheet.md`: Guide for structuring Claude API prompts
+  - `code-breakdown.md`: Detailed explanation of application code
+- `requirements.txt`: Required Python packages
+
 ## Setup Instructions
 
 ### 1. Install Dependencies
@@ -40,6 +54,7 @@ ANTHROPIC_API_KEY=your_api_key_here
 ### 3. Run the Application
 
 ```bash
+cd soothe_app
 python main.py
 ```
 
@@ -58,11 +73,8 @@ Your choices influence Serena's journey and teach valuable lessons about managin
 
 ## Character Customization
 
-The character attributes are defined in `characters/serena.json`. You can modify this file to adjust character traits, behavior patterns, anxiety triggers, and coping mechanisms.
+The character attributes are defined in the JSON files located in the `soothe_app/characters/` directory. You can modify these files to adjust character traits, behavior patterns, anxiety triggers, and coping mechanisms.
 
-## Project Structure
+## Development Notes
 
-- `main.py`: Core application with game logic and Gradio interface
-- `characters/`: Directory containing character definitions
-  - `serena.json`: Primary character definition and attributes
-- `requirements.txt`: Required Python packages
+See `doc/anthropic-prompt-cheatsheet.md` for guidance on structuring prompts for the Claude API, and `doc/code-breakdown.md` for a detailed explanation of the application's architecture.
