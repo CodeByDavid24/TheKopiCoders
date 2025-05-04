@@ -29,6 +29,8 @@ SootheAI creates an immersive, choice-based narrative that:
     - `mother.json`: Family member character definition
     - `therapist.json`: Supporting character for mental health guidance
 - `doc/`: Documentation files
+  - `features/`: Detailed documentation for each feature in my requirements gathering
+    - `feature_1.md`: User input function with ethics and software requirements
   - `anthropic-prompt-cheatsheet.md`: Guide for structuring Claude API prompts
   - `code-breakdown.md`: Detailed explanation of application code
 - `requirements.txt`: Required Python packages
