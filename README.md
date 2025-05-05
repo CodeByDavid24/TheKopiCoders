@@ -47,10 +47,10 @@ python -m pip install -r requirements.txt
 
 ### 2. API Configuration
 
-Create a `.env` file with your API key:
+Create a `.env` file with your API key in the `soothe_app` folder:
 
-```
-ANTHROPIC_API_KEY=your_api_key_here
+```bash
+CLAUDE_API_KEY=your_api_key_here
 ```
 
 ### 3. Run the Application
