@@ -29,19 +29,19 @@ system_prompt = f"""
 You are an AI gamemaster. Your job is to create an immersive adventure for the user playing as Serena, a 17-year-old Chinese Singaporean JC1 student working toward her goal of securing a place in NUS Medicine.
 
 Serena's character profile:
-- Name: {character['name']}
-- Race: {character['physical']['race']['name']}
-- Class: {character['class']['name']}
-- Location: {character['location']['school']} in Singapore
+- Name: {character.get('name', 'Serena')}  # Use get() with default value for safety
+- Race: {character.get('physical', {}).get('race', {}).get('name', 'Chinese')}
+- Class: {character.get('class', {}).get('name', 'JC1')}
+- Location: {character.get('location', {}).get('school', 'Unknown')} in Singapore
 
 Instructions:
-- Begin with a brief introduction about Serena's life as a dedicated JC1 student taking {character['class']['subjects'][0]}, {character['class']['subjects'][1]}, {character['class']['subjects'][2]}, and {character['class']['subjects'][3]}, while serving as {character['class']['cca']}. Mention her academic standing and ambitions without revealing her internal struggles.
+- Begin with a brief introduction about Serena's life as a dedicated JC1 student taking {character.get('class', {}).get('subjects', ['Unknown'])[0]}, {character.get('class', {}).get('subjects', ['Unknown'])[1]}, {character.get('class', {}).get('subjects', ['Unknown'])[2]}, and {character.get('class', {}).get('subjects', ['Unknown'])[3]}, while serving as {character.get('class', {}).get('cca', 'Unknown')}. Mention her academic standing and ambitions without revealing her internal struggles.
 - Limit the introduction to one paragraph focusing on her academic environment, outward achievements, and goals.
 - DO NOT explicitly mention anxiety, mental health issues, or her coping mechanisms - these should be subtly woven into the narrative for the player to discover.
 - Create scenarios that naturally incorporate her behaviors (arriving early to sit at the back, taking meticulous notes but rarely asking questions, studying alone during breaks) without labeling them as anxiety-related.
 - Occasionally introduce situations involving her triggers (being called on unexpectedly, group projects, receiving grades lower than expected, tight deadlines, social gatherings, comparisons with classmates) and observe how the player responds.
-- Incorporate elements from her daily routine ({character['daily_routine']['morning']}, {character['daily_routine']['school_hours']}, {character['daily_routine']['after_school']}) to create realistic scenarios.
-- Include interactions with her parents who are {character['relationships']['parents']}, her small circle of {character['relationships']['friends']}, and her teachers who {character['relationships']['teachers']}.
+- Incorporate elements from her daily routine ({character.get('daily_routine', {}).get('morning', 'Unknown')}, {character.get('daily_routine', {}).get('school_hours', 'Unknown')}, {character.get('daily_routine', {}).get('after_school', 'Unknown')}) to create realistic scenarios.
+- Include interactions with her parents who are {character.get('relationships', {}).get('parents', 'Unknown')}, her small circle of {character.get('relationships', {}).get('friends', 'Unknown')}, and her teachers who {character.get('relationships', {}).get('teachers', 'Unknown')}.
 - Allow the user to respond freely to your scenarios and ask questions about Serena's life, background, and environment.
 - After each significant interaction, present 4 clear options for what the player can do next that reflect realistic choices Serena might consider. Examples:
   1. Stay in the library until closing time to perfect your chemistry assignment
@@ -305,9 +305,10 @@ def main():
     """, unsafe_allow_html=True)
 
     # App title and description with improved visibility
-    st.markdown("<h1 class='main-header'>SootheAI Game</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-header'>SootheAI Game</h1>",
+                unsafe_allow_html=True)
     st.markdown("<p style='font-size: 1.2rem; color: #000000; margin-bottom: 20px;'>An interactive story experience about anxiety awareness.</p>", unsafe_allow_html=True)
-    
+
     # Initialize session state variables
     if 'messages' not in st.session_state:
         st.session_state.messages = []
@@ -328,11 +329,13 @@ def main():
         display_message(consent_message, is_user=False)
 
     # Create a sidebar with example actions - improved styling
-    st.sidebar.markdown("<h2 style='color: #000000; font-weight: bold; margin-bottom: 15px;'>Suggested Actions</h2>", unsafe_allow_html=True)
-    
+    st.sidebar.markdown(
+        "<h2 style='color: #000000; font-weight: bold; margin-bottom: 15px;'>Suggested Actions</h2>", unsafe_allow_html=True)
+
     # Add a description
-    st.sidebar.markdown("<p style='color: #000000; margin-bottom: 20px;'>Click any action below to quickly respond in the story:</p>", unsafe_allow_html=True)
-    
+    st.sidebar.markdown(
+        "<p style='color: #000000; margin-bottom: 20px;'>Click any action below to quickly respond in the story:</p>", unsafe_allow_html=True)
+
     # Create custom styled buttons
     example_actions = ["Listen to music", "Journal", "Continue the story"]
     for i, action in enumerate(example_actions):
@@ -341,23 +344,24 @@ def main():
             # Use the action as user input
             user_input = action
             display_message(user_input, is_user=True)
-            
+
             # Get AI response
             conversation_history = st.session_state.messages.copy()
             ai_response = run_action(user_input, conversation_history)
-            
+
             # Display AI response
             display_message(ai_response, is_user=False)
-            
+
             # Save to conversation history
             st.session_state.messages.append((user_input, ai_response))
-            
+
             # Force a rerun to update the UI
             st.experimental_rerun()
-    
+
     # Add separator and instructions
     st.sidebar.markdown("<hr style='margin: 20px 0;'>", unsafe_allow_html=True)
-    st.sidebar.markdown("<p style='color: #000000;'>You can also type your own responses in the chat box below.</p>", unsafe_allow_html=True)
+    st.sidebar.markdown(
+        "<p style='color: #000000;'>You can also type your own responses in the chat box below.</p>", unsafe_allow_html=True)
 
     # Input field for user messages
     placeholder_text = "Type 'I agree' to continue..." if not st.session_state.consent_given else "Type your message..."
@@ -366,14 +370,14 @@ def main():
     # Process user input when submitted
     if user_input:
         display_message(user_input, is_user=True)
-        
+
         # Get AI response
         conversation_history = st.session_state.messages.copy()
         ai_response = run_action(user_input, conversation_history)
-        
+
         # Display AI response
         display_message(ai_response, is_user=False)
-        
+
         # Save to conversation history
         st.session_state.messages.append((user_input, ai_response))
 
