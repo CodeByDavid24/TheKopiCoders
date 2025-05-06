@@ -1,227 +1,283 @@
-# SootheAI: Understanding the Code Behind an Anxiety Awareness Game
+# SootheAI Application - Lecture Notes
 
-## 1. Introduction
+## Introduction
 
-SootheAI is an interactive narrative game designed to help users understand anxiety through a character-driven story. The application uses the Claude LLM (Large Language Model) to create an immersive experience where players take on the role of "Serena," a 17-year-old Singaporean student dealing with unacknowledged anxiety while pursuing academic excellence.
+SootheAI is an interactive, conversational application that leverages the Claude AI API to create an immersive narrative experience focused on mental health awareness. The application simulates interactions with a character named Serena, a 17-year-old Chinese Singaporean JC1 student who is experiencing anxiety but doesn't recognize it as such. The game aims to help users understand anxiety through interactive storytelling.
 
-This document provides a comprehensive breakdown of the code structure, explaining how it works and the key components that power this psychological awareness tool.
+## Application Architecture
 
-## 2. Technical Overview
+The application is built with:
 
-The application is built using:
+- **Python** - Core programming language
+- **Gradio** - Web interface framework
+- **Anthropic Claude API** - AI model for generating narrative responses
+- **Logging** - For application monitoring and debugging
 
-- **Gradio**: For the web interface
-- **Anthropic's Claude API**: For the AI-driven conversation
-- **JSON**: For storing character data and configurations
-- **NumPy**: For random seed generation
+## Code Structure and Key Components
 
-## 3. Code Structure Analysis
-
-### 3.1 Imports and Dependencies
+### 1. Imports and Dependencies
 
 ```python
-import gradio as gr  # Web interface creation
-import anthropic  # Claude API interactions
-import json  # Configuration handling
-import numpy as np  # For random seed generation
-import os  # Environment variable access
+import gradio as gr  # Web interface
+import anthropic  # Claude API client
+import json  # For configuration files
+import numpy as np  # For random number generation
+import os  # For environment variables
+import logging  # Application monitoring
+import logging.handlers  # For log file rotation
+import httpx  # HTTP client
+import sys  # System parameters
+from dotenv import load_dotenv  # Environment variables
 ```
 
-### 3.2 Configuration and Setup Functions
+### 2. Logging Configuration
 
-#### Character Data Loading
+The application uses Python's built-in logging module with a rotating file handler:
+
+```python
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.handlers.RotatingFileHandler(
+            'soothe_app.log',
+            maxBytes=1024*1024,  # 1MB per file
+            backupCount=5  # Keep 5 backup files
+        ),
+        logging.StreamHandler(sys.stdout)  # Also log to console
+    ]
+)
+```
+
+### 3. Character Data Management
+
+Character data is loaded from JSON files:
 
 ```python
 def load_json(filename: str) -> dict:
-    """
-    Load and parse a JSON file, returning an empty dict if file not found
-    Args:
-        filename: Name of the JSON file without extension
-    Returns:
-        Dict containing parsed JSON data or empty dict if file not found
-    """
+    """Load and parse a JSON file, returning an empty dict if file not found."""
     try:
-        with open(f'{filename}.json', 'r') as file:
+        with open(f'{filename}.json', 'r', encoding='utf-8') as file:
+            logger.info(f"Loading JSON file: {filename}.json")
             return json.load(file)
     except FileNotFoundError:
+        logger.warning(f"JSON file not found: {filename}.json")
         return {}
+    # Additional error handling...
 
-# Load character data from JSON file
+# Load character data
 character = load_json('characters/serena')
 ```
 
-This function loads character data from a JSON file, which contains information about Serena's background, personality traits, relationships, and daily routines.
+### 4. Claude API Integration
 
-### 3.3 System Prompt Configuration
+The application connects to the Claude API for AI-powered responses:
 
-The system prompt is a crucial component that sets the behavior of the AI. It contains detailed instructions for the Claude model on how to act as a gamemaster:
+```python
+def initialize_claude_client() -> tuple[anthropic.Anthropic | None, str]:
+    """Initialize the Claude API client with proper error handling."""
+    # Get API key from environment variable
+    api_key = os.environ.get("CLAUDE_API_KEY")
+    if not api_key:
+        logger.error("CLAUDE_API_KEY environment variable not set")
+        return None, "CLAUDE_API_KEY environment variable not set"
+
+    try:
+        # Standard initialization
+        return anthropic.Anthropic(api_key=api_key), ""
+    except TypeError as e:
+        # Handle proxy configuration issues
+        if "unexpected keyword argument 'proxies'" in str(e):
+            try:
+                # Try with custom http client
+                http_client = httpx.Client()
+                return anthropic.Anthropic(api_key=api_key, http_client=http_client), ""
+            except Exception as e:
+                return None, f"Failed to initialize Claude client: {str(e)}"
+        else:
+            return None, f"TypeError: {str(e)}"
+    except Exception as e:
+        return None, f"Unexpected error: {str(e)}"
+```
+
+### 5. System Prompt Configuration
+
+The system prompt defines the game's rules and character details:
 
 ```python
 system_prompt = f"""
 You are an AI gamemaster. Your job is to create an immersive adventure for the user playing as Serena, a 17-year-old Chinese Singaporean JC1 student working toward her goal of securing a place in NUS Medicine.
 
 Serena's character profile:
-- Name: {character['name']}
-- Race: {character['physical']['race']['name']}
-- Class: {character['class']['name']}
-- Location: {character['location']['school']} in Singapore
+- Name: {character.get('name', 'Serena')}
+- Race: {character.get('physical', {}).get('race', {}).get('name', 'Chinese')}
+- Class: {character.get('class', {}).get('name', 'JC1')}
+- Location: {character.get('location', {}).get('school', 'Unknown')} in Singapore
 
-Instructions:
-[... detailed instructions for the AI about how to present scenarios, handle the character's anxiety, etc.]
+# Additional instructions...
 """
 ```
 
-This prompt:
+### 6. Game State Management
 
-1. Defines the character's basic information
-2. Provides instructions on how to present the narrative
-3. Sets rules for incorporating anxiety elements without explicit labeling
-4. Outlines how to present choices to the player
-
-### 3.4 API Authentication and Client Initialization
+The application maintains a game state to track conversation history and user preferences:
 
 ```python
-# Get API key from environment variable
-CLAUDE_API_KEY = os.environ.get("CLAUDE_API_KEY", "REPLACE_WITH_YOUR_API_KEY_BEFORE_RUNNING")
+GameState = dict[str, int | dict | list | bool | None]  # Type alias
 
-# Initialize Claude client with error handling for different SDK versions
-try:
-    # First attempt with standard initialization
-    claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
-except TypeError as e:
-    if "unexpected keyword argument 'proxies'" in str(e):
-        # Handle proxy issues with alternative initialization methods
-        # ...
-    else:
-        # Different type error
-        print(f"Error initializing Claude client: {e}")
-        claude_client = None
-except Exception as e:
-    print(f"Error initializing Claude client: {e}")
-    claude_client = None
-```
-
-The code carefully handles the initialization of the Claude client with robust error handling for different versions of the Anthropic SDK.
-
-### 3.5 Game State Management
-
-```python
-# Initialize game state
-game_state = {
-    'seed': np.random.randint(0, 1000000),  # Initial seed
+game_state: GameState = {
+    'seed': np.random.randint(0, 1000000),  # For reproducibility
     'character': character,  # Store character data
     'history': [],  # Track conversation history
-    'consent_given': False,  # Track whether user has given consent
+    'consent_given': False,  # Track user consent
     'start': None  # Will store the starting narrative
 }
 ```
 
-The game state dictionary keeps track of:
+### 7. Initial Response Generation
 
-- A random seed for potential randomization
-- The character data
-- Conversation history
-- Whether the user has consented to playing
-- The initial narrative from Claude
-
-### 3.6 Initial Response Generation
+The application gets the initial game narrative from Claude:
 
 ```python
-def get_initial_response():
-    """Get the initial game narrative from Claude"""
+def get_initial_response() -> str:
+    """Get the initial game narrative from Claude."""
     global game_state, claude_client
 
     if not claude_client:
+        logger.error("Claude client not initialized")
         return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
 
     try:
         # Create the initial message for Claude
-        # Check which version of the SDK we're using based on the client type
-        if isinstance(claude_client, anthropic.Anthropic):
-            # New SDK version API call
-            # ...
+        logger.info("Requesting initial narrative from Claude API")
+        
+        # Check which version of the SDK we're using
+        if hasattr(claude_client, 'messages'):
+            # New SDK version (>=0.18.1)
+            response = claude_client.messages.create(
+                model="claude-3-5-sonnet-20240620",
+                max_tokens=1000,
+                temperature=0,
+                messages=[{
+                    "role": "user",
+                    "content": "Start the game with a brief introduction to Serena."
+                }],
+                system=system_prompt
+            )
+            game_state['start'] = response.content[0].text
         else:
-            # Older SDK version API call
-            # ...
+            # Older SDK version
+            response = claude_client.completion(
+                prompt=f"\n\nHuman: Start the game with a brief introduction to Serena.\n\nAssistant:",
+                model="claude-2.1",
+                temperature=0,
+                max_tokens_to_sample=1000,
+                stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
+            )
+            game_state['start'] = response.completion
 
         return game_state['start']
     except Exception as e:
-        return f"Error communicating with Claude API: {str(e)}"
+        error_msg = f"Error communicating with Claude API: {str(e)}"
+        logger.error(error_msg)
+        return error_msg
 ```
 
-This function generates the initial narrative by making an API call to Claude, handling both new and older SDK versions.
+### 8. Action Processing
 
-### 3.7 Action Processing
+The application processes user actions and generates appropriate responses:
 
 ```python
-def run_action(message: str, history: list, game_state: dict) -> str:
-    """
-    Process player actions and generate appropriate responses
-    """
-    # Check Claude client configuration
-    # Check consent status
-    # Check for game start command
-    
+def run_action(message: str, history: list[tuple[str, str]], game_state: GameState) -> str:
+    """Process player actions and generate appropriate responses."""
+    global claude_client
+
+    # Check if Claude client is configured
+    if not claude_client:
+        return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
+
+    # Check if consent has been given
+    if not game_state['consent_given']:
+        if message.lower() == 'i agree':
+            game_state['consent_given'] = True
+            return "Thank you for agreeing to the terms. Type 'start game' to begin."
+        else:
+            return consent_message
+
+    # Check if this is the start of the game
+    if message.lower() == 'start game':
+        # If we haven't generated the start yet, do it now
+        if game_state['start'] is None:
+            game_state['start'] = get_initial_response()
+        return game_state['start']
+
     try:
-        # Handle different SDK versions for API calls
-        # ...
-        
+        # Handle different SDK versions
+        if hasattr(claude_client, 'messages'):
+            # New SDK version - prepare message history and get response
+            # ...
+        else:
+            # Older SDK version
+            # ...
+
+        # Update game state and return result
         game_state['history'].append((message, result))
         return result
+
     except Exception as e:
-        return f"Error communicating with Claude API: {str(e)}"
+        error_msg = f"Error communicating with Claude API: {str(e)}"
+        logger.error(error_msg)
+        return error_msg
 ```
 
-This function:
+### 9. Main Game Loop
 
-1. Checks if the Claude client is configured correctly
-2. Verifies that the user has consented to playing
-3. Handles the "start game" command
-4. Makes API calls to Claude with the user's input
-5. Updates the conversation history
-
-### 3.8 Main Game Loop
+The main game loop processes player input and returns AI responses:
 
 ```python
-def main_loop(message: str, history: list) -> str:
-    """
-    Main game loop that processes player input and returns AI responses
-    """
-    if not history:
-        # First message in conversation, show consent message
+def main_loop(message: str | None, history: list[tuple[str, str]]) -> str:
+    """Main game loop that processes player input and returns AI responses."""
+    global game_state
+
+    # Handle None message
+    if message is None:
         return consent_message
+
+    # Process the action using the game state
     return run_action(message, history, game_state)
 ```
 
-The main_loop function serves as the entry point for the Gradio chat interface, showing the consent message first and then processing actions.
+### 10. Gradio Web Interface
 
-### 3.9 Gradio Interface Setup
+The application uses Gradio to create a user-friendly web interface:
 
 ```python
 def start_game() -> None:
-    """
-    Initialize and launch the Gradio interface for the game
-    """
-    global demo
-
-    # Close existing demo if it exists
-    if demo is not None:
-        demo.close()
+    """Initialize and launch the Gradio interface for the game."""
+    global demo, game_state
 
     # Create game interface
     chat_interface = gr.ChatInterface(
-        main_loop,
+        main_loop,  # Main processing function
         chatbot=gr.Chatbot(
             height=500,
             placeholder="Type 'I agree' to begin",
             show_copy_button=True,
-            render_markdown=True
+            render_markdown=True,
+            value=[[None, consent_message]]  # Start with consent message
         ),
-        textbox=gr.Textbox(placeholder="Type 'I agree' to continue...",
-                           container=False, scale=7),
+        textbox=gr.Textbox(
+            placeholder="Type 'I agree' to continue...",
+            container=False,
+            scale=7
+        ),
         title="SootheAI",
         theme="soft",
-        examples=["Listen to music", "Journal", "Continue the story"],
+        examples=[
+            "Listen to music",
+            "Journal",
+            "Continue the story"
+        ],
         cache_examples=False,
     )
 
@@ -229,62 +285,103 @@ def start_game() -> None:
     demo = chat_interface
 
     # Launch the interface
-    demo.launch(share=True, server_name="0.0.0.0", server_port=7861)
+    try:
+        demo.launch(
+            share=True,
+            server_name="0.0.0.0",
+            server_port=7861
+        )
+    except Exception as e:
+        logger.error(f"Failed to launch game interface: {str(e)}")
+        raise
 ```
 
-This function creates and launches the Gradio web interface for the game, configuring:
+### 11. Application Startup
 
-- The chat interface appearance
-- Example messages
-- The server configuration
+The application starts when the script is run:
 
-## 4. Flow of Execution
+```python
+if __name__ == "__main__":
+    logger.info("Starting SootheAI application")
+    try:
+        start_game()  # Launch the game interface
+    except Exception as e:
+        logger.critical(f"Critical error in main application: {str(e)}")
+        raise
+```
 
-1. When the script is run, `start_game()` is called
-2. Gradio interface is initialized and launched
-3. User sees consent message and must type "I agree"
-4. After agreement, user types "start game" to begin
-5. Initial narrative is generated from Claude API
-6. User interacts with the game by typing messages
-7. Claude responds with narrative and 4 choices for the player
-8. Game continues as a conversation, with history maintained
+## Log Analysis
 
-## 5. Mental Health Design Elements
+The application logs reveal several important insights:
 
-### Character Design
+1. **Environment Variable Issues**: Initially, the application had issues with the CLAUDE_API_KEY environment variable not being set.
+2. **Client Initialization**: There were some attempts with proxy configuration problems.
+3. **SDK Version Compatibility**: The logs indicate issues with different versions of the Anthropic SDK.
+4. **Successful API Calls**: Eventually, after fixing configuration issues, the application successfully communicated with the Claude API.
 
-- Serena is designed as a high-achieving student with unacknowledged anxiety
-- Her behaviors (sitting at the back, studying alone) subtly indicate anxiety without labeling
-- The game avoids explicitly mentioning mental health issues until the player discovers them
+## Key Concepts
 
-### Educational Purpose
+### Error Handling
 
-- The game helps users understand how anxiety manifests in everyday situations
-- Players learn to recognize anxiety patterns by making choices for Serena
-- The narrative presents realistic anxiety triggers in an academic setting
+The application implements comprehensive error handling with:
 
-## 6. Technical Implementation Considerations
+- Try-except blocks for all API calls
+- Detailed logging of errors
+- Graceful fallbacks when operations fail
+- User-friendly error messages
 
-### API Compatibility
+### API Version Compatibility
 
-- The code handles both new and old versions of the Anthropic SDK
-- Error handling for API initialization is robust
-- Response formatting accounts for API version differences
+The code handles different versions of the Anthropic SDK:
+
+- It checks for the presence of the `messages` attribute to determine SDK version
+- It provides alternate code paths for older versions using `completion` API
+- It includes fallbacks for proxy configuration issues
 
 ### State Management
 
-- Game state tracks conversation history, consent status, and character data
-- Conversation flow is maintained between interactions
-- Character information is injected into the system prompt for consistency
+The application maintains game state to track:
 
-## 7. Deployment Information
+- Conversation history
+- User consent status
+- Character data
+- Initial narrative
 
-The application is configured to run on:
+### User Consent Flow
 
-- Server address: 0.0.0.0 (all network interfaces)
-- Port: 7861
-- With sharing enabled for remote access
+The application implements a consent flow:
 
-## 8. Conclusion
+1. Display consent message
+2. Require user to type "I agree"
+3. Prompt user to type "start game"
+4. Begin the narrative
 
-SootheAI demonstrates how LLMs can be used for mental health education through interactive storytelling. The code combines web technologies, AI, and careful prompt engineering to create an experience that helps users understand anxiety in a simulated but realistic context.
+## Execution Flow
+
+1. Load environment variables and configure logging
+2. Load character data from JSON files
+3. Initialize Claude API client
+4. Set up game state
+5. Start Gradio web interface
+6. Wait for user to provide consent
+7. Generate initial narrative
+8. Process user actions and generate responses
+9. Update game state with conversation history
+
+## Conclusion
+
+SootheAI demonstrates a well-structured application that:
+
+- Combines web technologies with AI capabilities
+- Implements proper error handling and logging
+- Provides a user-friendly interface for interactive storytelling
+- Addresses sensitive topics (mental health) in an educational format
+- Uses external configuration for character data and system prompts
+
+The application shows good software engineering practices including:
+
+- Type hints for better code readability
+- Comprehensive error handling
+- Detailed logging
+- Clear documentation
+- Modular design
