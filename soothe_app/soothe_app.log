@@ -163,3 +163,10 @@
 2025-05-06 15:08:59,998 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
 2025-05-06 15:09:02,331 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
 2025-05-06 15:09:03,781 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-06 15:35:28,678 - __main__ - INFO - Processing message in main loop: I agree...
+2025-05-06 15:35:28,681 - __main__ - INFO - User consent received
+2025-05-06 15:36:48,093 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-06 15:36:48,094 - __main__ - INFO - Starting new game
+2025-05-06 15:36:48,095 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-06 15:36:53,233 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-06 15:36:53,254 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
