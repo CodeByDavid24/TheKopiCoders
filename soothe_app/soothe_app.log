@@ -170,3 +170,28 @@
 2025-05-06 15:36:48,095 - __main__ - INFO - Requesting initial narrative from Claude API
 2025-05-06 15:36:53,233 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-05-06 15:36:53,254 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
+2025-05-08 12:04:50,770 - blacklist - INFO - Loaded 16 additional blacklisted phrases from blacklist.txt
+2025-05-08 12:04:50,771 - __main__ - INFO - Loaded 47 blacklisted phrases
+2025-05-08 12:04:50,772 - __main__ - INFO - Loading character data from JSON file
+2025-05-08 12:04:50,791 - __main__ - INFO - Loading JSON file: characters/serena.json
+2025-05-08 12:04:50,792 - __main__ - INFO - Checking Anthropic SDK version
+2025-05-08 12:04:50,793 - __main__ - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-08 12:04:50,995 - __main__ - INFO - Starting SootheAI application
+2025-05-08 12:04:50,996 - __main__ - INFO - Initializing game interface
+2025-05-08 12:04:51,057 - __main__ - INFO - Launching game interface
+2025-05-08 12:04:51,413 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-08 12:04:52,203 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-08 12:04:53,512 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-08 12:04:55,790 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-08 12:04:56,884 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-08 12:05:30,669 - __main__ - INFO - Processing message in main loop: I agree...
+2025-05-08 12:05:30,670 - __main__ - INFO - User consent received
+2025-05-08 12:05:33,035 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-08 12:05:33,036 - __main__ - INFO - Starting new game
+2025-05-08 12:05:33,038 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-08 12:05:39,428 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-08 12:05:39,443 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
+2025-05-08 12:05:59,583 - __main__ - INFO - Processing message in main loop: Visit the Environmental Club room to work on upcom...
+2025-05-08 12:05:59,585 - __main__ - INFO - Sending message to Claude API: Visit the Environmental Club room to work on upcom...
+2025-05-08 12:06:05,933 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-08 12:06:05,938 - __main__ - INFO - Received and filtered response from Claude API: As you enter the Environmental Club room after cla...
