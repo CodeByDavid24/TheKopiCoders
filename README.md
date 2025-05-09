@@ -13,8 +13,9 @@ SootheAI creates an immersive, choice-based narrative that:
 
 ## Features
 
-- Interactive story experience powered by Claude AI
-- Web interface available in both Streamlit and HTML/CSS/JS versions
+- Interactive story experience powered by Claude AI (using Anthropic's latest Claude 3.5 Sonnet model)
+- Web interface available in both Streamlit and HTML/CSS/JS versions with Gradio as the primary interface
+- Text-to-speech integration via ElevenLabs for audio narration
 - Character-driven narrative focusing on mental health themes
 - Content safety filtering to protect vulnerable users
 - Culturally relevant storytelling set in Singapore educational context
@@ -82,9 +83,10 @@ Characters are defined through detailed JSON files that specify:
 
 ### 3. AI Integration
 
-The application integrates with Anthropic's Claude API to:
+The application integrates with Anthropic's Claude API and ElevenLabs for TTS:
 
-- Generate narrative responses based on user choices
+- Generate narrative responses based on user choices using Claude 3.5 Sonnet
+- Text-to-speech conversion for an immersive audio experience
 - Maintain conversation history and context
 - Filter responses for safety compliance
 - Present realistic character behaviors
@@ -104,10 +106,11 @@ pip install -r requirements.txt
 
 ### 2. API Configuration
 
-Create a `.env` file in the project root with your API key:
+Create a `.env` file in the project root with your API keys:
 
 ```
-CLAUDE_API_KEY=your_api_key_here
+CLAUDE_API_KEY=your_anthropic_api_key_here
+ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 ```
 
 ### 3. Run the Application
@@ -130,6 +133,7 @@ python soothe_app/main.py
 2. Type "start game" to begin the narrative.
 3. Read the story descriptions and make choices to navigate Serena's journey.
 4. Type custom responses or select from available options to shape the narrative.
+5. Listen to the narration through the text-to-speech feature (if enabled).
 
 ## Testing
 

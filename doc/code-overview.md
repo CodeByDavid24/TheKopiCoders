@@ -12,8 +12,8 @@ SootheAI is an interactive application that uses AI to create personalized narra
 
 SootheAI offers two user interfaces:
 
+- **Gradio Interface** (`soothe_app/main.py`): A chatbot-style interface with conversation history and audio narration
 - **Streamlit Interface** (`soothe_interface_dev/stream.py`): A simple, user-friendly interface
-- **Gradio Interface** (`soothe_app/main.py`): A chatbot-style interface with conversation history
 - **HTML/CSS Prototype** (`soothe_interface_dev/digital_prototype/`): A static demo version
 
 ### 2. Character Data System
@@ -66,7 +66,39 @@ The AI is guided by a detailed system prompt that defines:
 - Content safety guidelines
 - Rules for depicting anxiety without clinical labels
 
-### 4. Content Safety System
+### 4. Text-to-Speech Integration
+
+SootheAI now features audio narration using ElevenLabs:
+
+```python
+def speak_text(text: str) -> None:
+    """Stream text to speech using ElevenLabs API and play with ffmpeg"""
+    # Create streaming audio from text
+    audio_stream = elevenlabs_client.text_to_speech.convert_as_stream(
+        voice_id="21m00Tcm4TlvDq8ikWAM",
+        output_format="mp3_44100_128",
+        text=text,
+        model_id="eleven_flash_v2_5"
+    )
+    
+    # Play the audio using ffmpeg
+    process = subprocess.Popen(
+        ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
+        stdin=subprocess.PIPE
+    )
+    
+    # Stream audio chunks to ffplay
+    for chunk in audio_stream:
+        process.stdin.write(chunk)
+```
+
+The TTS system:
+
+- Runs in a separate thread to avoid blocking the UI
+- Converts Claude's responses to natural speech
+- Creates a more immersive experience for users
+
+### 5. Content Safety System
 
 The application includes a comprehensive safety system:
 
@@ -89,7 +121,7 @@ Key safety features:
 - Safety disclaimers and helpline information
 - Redirection for potentially harmful topics
 
-### 5. Consent Flow
+### 6. Consent Flow
 
 The application implements a mandatory consent process:
 
@@ -110,7 +142,7 @@ Users must explicitly agree to terms before starting the experience, acknowledgi
 - Warning against harmful actions
 - Data handling practices
 
-### 6. Game State Management
+### 7. Game State Management
 
 The application tracks user progress and contextual information:
 
@@ -132,7 +164,7 @@ This allows the application to:
 - Track consent status
 - Store character data
 
-### 7. Error Handling and Logging
+### 8. Error Handling and Logging
 
 The application includes comprehensive error handling:
 
@@ -168,7 +200,7 @@ Here's the typical flow of data through the application:
 3. If safe, message is sent to Claude API with conversation history
 4. Claude generates a response based on the system prompt
 5. Response is filtered for safety
-6. Safe response is displayed to the user
+6. Safe response is displayed to the user and converted to speech
 7. User interaction and AI response are added to conversation history
 
 ## Testing Framework
@@ -186,7 +218,9 @@ The application includes several testing components:
 3. **Ethical Considerations**: Consent flow and proper disclaimers are necessary.
 4. **Conversation Management**: Tracking history provides context for AI responses.
 5. **Error Handling**: Robust error handling prevents application failures.
-6. **Testing**: Comprehensive testing ensures application reliability.
+6. **Multimodal Interfaces**: Text-to-speech adds another dimension to AI interactions.
+7. **Asynchronous Operations**: Running TTS in separate threads keeps the UI responsive.
+8. **Testing**: Comprehensive testing ensures application reliability.
 
 ## Simple Execution Flow
 
@@ -195,7 +229,8 @@ The application includes several testing components:
 3. Wait for user to agree to terms
 4. Start narrative once user types "start game"
 5. Process user inputs and generate narrative responses
-6. Filter all content for safety
-7. Maintain conversation history for context
+6. Convert responses to speech and play audio
+7. Filter all content for safety
+8. Maintain conversation history for context
 
 This architecture allows for an interactive, educational experience while maintaining strict safety standards for sensitive topics like mental health.

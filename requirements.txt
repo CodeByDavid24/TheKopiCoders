@@ -1,4 +1,5 @@
 anthropic==0.19.1  # Latest version compatible with Claude-3
+elevenlabs==0.2.26  # Text-to-speech API client
 gradio==4.44.1  # Interactive interface framework for the chatbot UI
 numpy==1.26.1  # Used for random number generation and data operations
 python-dotenv==1.0.0  # For loading environment variables from .env file
