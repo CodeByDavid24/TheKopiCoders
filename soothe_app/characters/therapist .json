@@ -1,73 +1,146 @@
 {
-    "id": "npc_therapist_001",
-    "name": "Dr. Amal Rahman",
-    "age": 34,
-    "gender": "Female",
-    "occupation": "School Counselor / Therapist",
-    "location": "School Wellness Room",
-    "personality_traits": ["empathetic", "calm", "professional", "non-judgmental", "patient"],
-    "appearance": {
-      "hair": "dark brown, tied back",
-      "attire": "soft-coloured blouse, blazer, glasses",
-      "voice": "soothing and steady"
-    },
-    "introduction": "Hi Serena, I’m Dr. Amal. This is a safe space — you can talk to me about anything.",
-    "interactions": [
-      {
-        "trigger": "first_visit",
-        "dialogue": [
-          {
-            "speaker": "Dr. Amal",
-            "text": "It's completely okay to feel overwhelmed. You're not alone, and we can work through this together."
-          },
-          {
-            "speaker": "Player",
-            "options": [
-              {
-                "text": "I'm scared of failing.",
-                "effect": { "anxiety": -5, "trust": 2 }
-              },
-              {
-                "text": "I don’t know why I’m here.",
-                "effect": { "anxiety": 0, "trust": 1 }
-              },
-              {
-                "text": "Everything’s fine, actually.",
-                "effect": { "anxiety": 2, "trust": -1 }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "trigger": "high_anxiety_event",
-        "dialogue": [
-          {
-            "speaker": "Dr. Amal",
-            "text": "Let’s try a grounding technique. Can you name three things you see, two things you hear, and one thing you feel?"
-          },
-          {
-            "speaker": "Player",
-            "options": [
-              {
-                "text": "Yes, I’ll try.",
-                "effect": { "anxiety": -10, "trust": 3 }
-              },
-              {
-                "text": "This won’t work.",
-                "effect": { "anxiety": 1, "trust": -2 }
-              }
-            ]
-          }
-        ]
-      }
+  "name": "Dr. Aisha Rahman",
+  "role": "School Counselor",
+  "age": 34,
+  "gender": "Female",
+  "personality": {
+    "mbti": "INFJ",
+    "mbti_description": "Empathetic, insightful, intuitive, and methodical",
+    "traits": [
+      "compassionate",
+      "attentive",
+      "patient",
+      "perceptive",
+      "non-judgmental",
+      "empathetic"
     ],
-    "functions": {
-      "reduce_anxiety": true,
-      "increase_trust": true,
-      "unlock_journal_prompt": true,
-      "affects_ending": true
+    "communication_style": "Calm, warm, and deliberate. Fully focusing on the client, showing understanding through verbal and non-verbal cues. Encouraging deeper reflection rather than simple yes/no answers. Mirroring the client's feelings and validating their experiences to build trust and self-awareness."
+  },
+  "physical": {
+    "race": {
+      "name": "Malay Singaporean",
+      "description": "Represents the ethnic diversity in Singapore's professional environment"
     },
-    "notes": "Therapy sessions are optional but helpful. Player can attend up to 3 sessions max. Trust score influences how much Serena opens up, which affects available dialogue later in the story.",
-    "motivations": "Dr. Amal became a therapist because she struggled with her own anxiety during her teen years, which no one noticed. She wants to ensure other young people feel seen, heard, and supported in a way she never was."
+    "appearance": "Warm brown eyes, neat shoulder-length hair often pulled back, professional but approachable attire in soft colors, minimal jewelry, comfortable shoes"
+  },
+  "background": {
+    "education": "PhD in Clinical Psychology from NUS, specialized training in adolescent mental health and cultural competence",
+    "personal_experience": "Struggled with academic pressure and anxiety during her JC years, which influenced her career path",
+    "years_at_school": 6,
+    "motivation": "Believes in early intervention and the power of helping young people understand their mental processes before patterns become deeply ingrained"
+  },
+  "therapy_approach": {
+    "primary_method": "Integration of Cognitive Behavioral Therapy with culturally-sensitive mindfulness practices",
+    "strengths": [
+      "Creating a safe, judgment-free environment",
+      "Explaining complex psychological concepts in accessible terms",
+      "Balancing Western psychological approaches with Asian cultural understanding",
+      "Breaking down stigma around mental health in academic settings"
+    ],
+    "techniques": [
+      "Guided breathing exercises adapted for students to use discreetly in classrooms",
+      "Thought challenging worksheets designed for Singapore's educational context",
+      "Body scan practices for physical manifestations of anxiety",
+      "Graded exposure exercises for academic anxiety triggers",
+      "Culturally-adapted stress management techniques"
+    ]
+  },
+  "counseling_room": {
+    "location": "Fourth floor of the school building, away from classrooms but accessible",
+    "environment": "Natural light, plants, comfortable seating, neutral colors, subtle Malay design elements",
+    "elements": [
+      "Box of tissues positioned within reach",
+      "Sand timer for grounding exercises",
+      "Small relaxation corner with cushions",
+      "Calming artwork by local artists",
+      "Bookshelf with resources in multiple languages"
+    ],
+    "ambiance": "A deliberate contrast to the high-pressure academic environment - peaceful without being clinical"
+  },
+  "therapeutic_relationship": {
+    "initial_phase": {
+      "approach": "Gently normalizing Serena's experiences while respecting her academic drive",
+      "challenges": "Overcoming Serena's hesitation to admit vulnerability and fear of being 'diagnosed'",
+      "breakthroughs": "Helping Serena recognize physical symptoms as connected to her thoughts and feelings"
+    },
+    "middle_phase": {
+      "focus": "Building concrete coping skills while honoring Serena's academic goals",
+      "activities": "Teaching mindful study techniques that improve both wellbeing and performance",
+      "progress_markers": "Serena beginning to identify early warning signs of overwhelming stress"
+    },
+    "advanced_phase": {
+      "development": "Guiding Serena to see the connection between perfectionism and anxiety",
+      "insights": "Supporting self-compassion without compromising ambition",
+      "tools": "Sustainable anxiety management techniques compatible with high achievement"
+    }
+  },
+  "cultural_competence": {
+    "understanding": "Deep awareness of Singapore's academic pressures, Chinese family expectations, and the 'face' concept",
+    "adaptations": "Therapy approaches modified to address filial piety considerations and academic success values",
+    "language": "Occasionally incorporates Mandarin phrases when helpful, understands the cultural implications of Serena's experiences",
+    "family_approach": "Skilled at explaining mental health concepts to traditional parents without challenging core values"
+  },
+  "narrative_moments": [
+    {
+      "title": "First Session Hesitation",
+      "description": "Dr. Aisha creates safety by discussing wellbeing rather than 'problems,' using academic performance optimization as an entry point to discuss Serena's experiences",
+      "key_dialogue": "We're not here to fix something broken, Serena. We're here to understand the incredible mind you have, and how to help it work with you rather than against you sometimes."
+    },
+    {
+      "title": "Physical Symptoms Recognition",
+      "description": "Helps Serena connect her recurring headaches and stomach discomfort to specific academic situations through gentle observation",
+      "key_dialogue": "You've mentioned this tightness happens before presentations. Our bodies often send us messages before our minds recognize what's happening. What might your body be trying to tell you?"
+    },
+    {
+      "title": "Perfectionism Discussion",
+      "description": "Uses drawing exercise to visualize the gap between Serena's perceived standards and reality",
+      "key_dialogue": "The interesting thing about perfectionism is that it doesn't actually help us achieve more. It often holds us back from doing our best work."
+    },
+    {
+      "title": "Family Expectations Session",
+      "description": "Validates the importance of family honor while exploring how to establish healthy boundaries",
+      "key_dialogue": "Respecting your parents' wishes and taking care of yourself aren't mutually exclusive. Let's think about how both can exist together."
+    },
+    {
+      "title": "Courage Affirmation",
+      "description": "Reframes Serena's decision to seek help as a sign of strength rather than weakness",
+      "key_dialogue": "Coming here takes more courage than pushing through alone. That's not weakness, Serena - that's wisdom and strength."
+    }
+  ],
+  "impact_on_serena": {
+    "short_term": [
+      "Initial relief from being able to speak openly about her experiences",
+      "Learning to identify physical anxiety symptoms as they begin rather than after escalation",
+      "Small experiments with setting boundaries around study time"
+    ],
+    "medium_term": [
+      "Reduced frequency of panic responses before tests",
+      "Improved sleep patterns during exam periods",
+      "Beginning to question perfectionist thoughts",
+      "Selective sharing of feelings with trusted friends"
+    ],
+    "long_term": [
+      "Integration of achievement goals with wellbeing practices",
+      "Development of sustainable study habits",
+      "Ability to recognize anxiety triggers independently",
+      "Healthier relationship with academic performance",
+      "Building identity beyond academic achievement",
+      "Skills for navigating future university challenges"
+    ]
+  },
+  "user_experience_design": {
+    "session_progression": {
+      "session_1": "Focus on creating safety and normalizing experiences without labeling",
+      "session_2": "Physical anxiety symptoms recognition and initial grounding techniques",
+      "session_3": "Exploration of thought patterns and introduction to gentle challenging",
+      "session_4": "Developing personalized coping strategies for academic situations",
+      "session_5": "Family dynamics and cultural expectation navigation"
+    },
+    "player_choice_impacts": {
+      "frequency_choices": "Player can choose therapy frequency, affecting depth vs. independence balance",
+      "openness_level": "Player can determine how much Serena reveals, affecting therapeutic progress",
+      "homework_completion": "Player choices about practicing techniques between sessions affects skill development",
+      "parental_involvement": "Player can choose whether to involve Serena's mother, creating different narrative branches"
+    }
   }
+}
