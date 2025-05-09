@@ -8,6 +8,11 @@ import logging.handlers  # Import logging handlers for file rotation
 import httpx  # Import httpx for HTTP client functionality
 import sys  # Import sys for system-specific parameters and functions
 from dotenv import load_dotenv  # Import dotenv for loading environment variables
+import threading
+import time
+import subprocess
+from elevenlabs import ElevenLabs
+from typing import Optional
 
 # Import the blacklist module for content filtering
 from blacklist import (
@@ -23,6 +28,23 @@ load_dotenv()  # Load environment variables from .env file
 logger = logging.getLogger(__name__)  # Create logger instance before using it
 # Log environment loading
 logger.info("Loading environment variables from .env file")
+
+# Set ElevenLabs API key from environment variables
+elevenlabs_api_key = os.environ.get("ELEVENLABS_API_KEY")
+elevenlabs_client = None
+
+if elevenlabs_api_key:
+    # Log ElevenLabs API key setup
+    logger.info("Setting up ElevenLabs client")
+    try:
+        elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key)
+        logger.info("ElevenLabs client initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize ElevenLabs client: {str(e)}")
+        elevenlabs_client = None
+else:
+    # Log missing ElevenLabs API key
+    logger.warning("ELEVENLABS_API_KEY environment variable not set, TTS will be disabled")
 
 # Configure logging with rotating file handler
 logging.basicConfig(
@@ -297,11 +319,6 @@ def initialize_claude_client() -> tuple[anthropic.Anthropic | None, str]:
         tuple: (claude_client, error_message)
             - claude_client: Anthropic client instance or None if initialization fails
             - error_message: Error message string if initialization fails, empty string otherwise
-
-    Example:
-        >>> client, error = initialize_claude_client()
-        >>> if client is None:
-        ...     print(f"Failed to initialize client: {error}")
     """
     try:
         # Log version check attempt
@@ -320,34 +337,23 @@ def initialize_claude_client() -> tuple[anthropic.Anthropic | None, str]:
         return None, "CLAUDE_API_KEY environment variable not set"
 
     try:
-        # First attempt with standard initialization
         # Log initialization attempt
-        logger.info(
-            "Attempting to initialize Claude client with standard configuration")
-        return anthropic.Anthropic(api_key=api_key), ""
-    except TypeError as e:
-        if "unexpected keyword argument 'proxies'" in str(e):
-            # Log proxy error
-            logger.warning(
-                "Proxy configuration error, attempting alternative initialization")
-            try:
-                # Try with custom http client
+        logger.info("Attempting to initialize Claude client with standard configuration")
+        
+        # For Anthropic SDK versions < 0.51.0, use this initialization
+        try:
+            return anthropic.Anthropic(api_key=api_key), ""
+        except TypeError as e:
+            if "unexpected keyword argument 'proxies'" in str(e):
+                # Log proxy error
+                logger.warning("Proxy configuration error, attempting alternative initialization")
                 http_client = httpx.Client()
                 return anthropic.Anthropic(api_key=api_key, http_client=http_client), ""
-            except Exception as e:
-                # Log initialization failure
-                logger.error(
-                    f"Failed to initialize Claude client with custom HTTP client: {str(e)}")
-                return None, f"Failed to initialize Claude client: {str(e)}"
-        else:
-            # Log type error
-            logger.error(
-                f"TypeError during Claude client initialization: {str(e)}")
-            return None, f"TypeError: {str(e)}"
+            else:
+                raise e
     except Exception as e:
         # Log unexpected error
-        logger.error(
-            f"Unexpected error during Claude client initialization: {str(e)}")
+        logger.error(f"Unexpected error during Claude client initialization: {str(e)}")
         return None, f"Unexpected error: {str(e)}"
 
 
@@ -512,6 +518,9 @@ def get_initial_response() -> str:
         # Log successful response
         logger.info(
             "Successfully received and filtered initial narrative from Claude API")
+        # Stream TTS for initial narrative
+        run_tts_in_thread(safe_narrative)
+        logger.info("Streaming TTS for initial narrative")
         return safe_narrative
     except Exception as e:
         error_msg = f"Error communicating with Claude API: {str(e)}"
@@ -632,11 +641,16 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
 
         # Filter the response for safety
         safe_result = filter_response_safety(result)
+        # Stream TTS for Claude's response
+        run_tts_in_thread(safe_result)
+    
 
         # Log successful response and update game state
         # Log response received
         logger.info(
             f"Received and filtered response from Claude API: {safe_result[:50]}...")
+        logger.info(
+            f"Streaming TTS for response: {safe_result[:50]}...")
         game_state['history'].append((message, safe_result))
         return safe_result
 
@@ -675,6 +689,70 @@ def main_loop(message: str | None, history: list[tuple[str, str]]) -> str:
         f"Processing message in main loop: {message[:50] if message else ''}...")
     # Process the action using the game state
     return run_action(message, history, game_state)
+
+def speak_text(text: str) -> None:
+    """
+    Stream text to speech using ElevenLabs API and play with ffmpeg.
+    
+    Args:
+        text (str): Text to convert to speech
+    """
+    global elevenlabs_client
+    
+    if not elevenlabs_client:
+        logger.warning("TTS disabled: ElevenLabs client not initialized")
+        return
+        
+    try:
+        logger.info("[DEBUG] Starting TTS stream with ffmpeg pipe...")
+        stream_start = time.time()
+
+        process = subprocess.Popen(
+            ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
+            stdin=subprocess.PIPE
+        )
+
+        for chunk in elevenlabs_client.text_to_speech.convert_as_stream(
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            output_format="mp3_44100_128",
+            text=text,
+            model_id="eleven_flash_v2_5"
+        ):
+            if process.stdin:
+                process.stdin.write(chunk)
+        if process.stdin:
+            process.stdin.close()
+
+        process.wait()
+        stream_elapsed = time.time() - stream_start
+        logger.info(f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
+
+    except Exception as tts_error:
+        logger.error(f"TTS Error: {tts_error}")
+
+def delayed_tts(text: str) -> None:
+    """
+    Delay TTS by a short time to allow UI to update first.
+    
+    Args:
+        text (str): Text to speak
+    """
+    time.sleep(0.1)
+    speak_text(text)
+
+def run_tts_in_thread(text: str) -> None:
+    """
+    Run TTS in a separate thread to avoid blocking the main thread.
+    
+    Args:
+        text (str): Text to convert to speech
+    """
+    if not elevenlabs_client:
+        logger.debug("TTS is disabled: ElevenLabs client not initialized")
+        return
+    
+    threading.Thread(target=delayed_tts, args=(text,), daemon=True).start()
+    logger.info(f"Started TTS thread for text: {text[:50]}...")
 
 
 def start_game() -> None:
