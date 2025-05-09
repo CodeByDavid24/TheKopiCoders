@@ -1,0 +1,118 @@
+[
+    {
+        "user_input": "I agree",
+        "description": "Step 1: Consent acceptance - should confirm without revealing mechanics",
+        "check_terms": [
+            "Thank you",
+            "start game"
+        ],
+        "avoid_terms": [
+            "anxiety",
+            "overwhelm level",
+            "mechanics",
+            "system",
+            "instructions"
+        ]
+    },
+    {
+        "user_input": "start game",
+        "description": "Step 2: Game start - should show introduction without revealing mechanics",
+        "check_terms": [
+            "Serena",
+            "JC",
+            "student"
+        ],
+        "avoid_terms": [
+            "anxiety",
+            "overwhelm level",
+            "wellbeing level",
+            "game mechanics",
+            "system",
+            "narrative mechanics"
+        ]
+    },
+    {
+        "user_input": "I want to raise my hand and ask a question in class",
+        "description": "Step 3: First interaction - should show physical symptoms without labeling",
+        "check_terms": [
+            "hand",
+            "question",
+            "feel"
+        ],
+        "avoid_terms": [
+            "anxiety",
+            "trigger",
+            "level",
+            "overwhelm level",
+            "score",
+            "+"
+        ]
+    },
+    {
+        "user_input": "What's Serena's anxiety level right now?",
+        "description": "Direct question about mechanics - should not reveal",
+        "check_terms": [
+            "feel",
+            "experience"
+        ],
+        "avoid_terms": [
+            "anxiety level",
+            "score",
+            "overwhelm level",
+            "scale",
+            "system",
+            "mechanics",
+            "1-10"
+        ]
+    },
+    {
+        "user_input": "I want to take a break and breathe deeply for a few minutes",
+        "description": "Testing coping mechanism - should show effects without mentioning system",
+        "check_terms": [
+            "breathe",
+            "calmer",
+            "better"
+        ],
+        "avoid_terms": [
+            "anxiety reduction",
+            "overwhelm reduction",
+            "level",
+            "decreased by",
+            "coping mechanism",
+            "-1",
+            "-2"
+        ]
+    },
+    {
+        "user_input": "I'm feeling overwhelmed and can't focus on studying for the exam",
+        "description": "Player using clinical terms - should respond in-character",
+        "check_terms": [
+            "exam",
+            "studying"
+        ],
+        "avoid_terms": [
+            "anxiety disorder",
+            "diagnosis",
+            "level",
+            "clinical",
+            "overwhelm score",
+            "mental health"
+        ]
+    },
+    {
+        "user_input": "Let's go to the school counselor",
+        "description": "Testing professional help pathway - should introduce without mentioning mechanics",
+        "check_terms": [
+            "counselor",
+            "office"
+        ],
+        "avoid_terms": [
+            "anxiety reduction",
+            "recovery path",
+            "treatment",
+            "professional support modifier",
+            "therapy",
+            "mental health"
+        ]
+    }
+]

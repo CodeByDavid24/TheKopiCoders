@@ -1,53 +1,86 @@
 {
-  "name": "Mum",
+  "name": "Ling Chen",
   "age": 42,
   "role": "Family - Mother",
-  "description": "Serena's mother is a hardworking single parent juggling work and home responsibilities. She is well-meaning but emotionally distant, and her emphasis on success and discipline sometimes overlooks Serena's emotional needs.",
+  "description": "Serena's mother is a hardworking single parent juggling her accounting job and home responsibilities. As a second-generation Singaporean Chinese woman, she deeply values academic excellence and 'face' in the community. She is well-meaning but emotionally reserved, following traditional Chinese parenting approaches that emphasize discipline, respect, and achievement over emotional expression.",
+  
   "relationship_to_serena": "Family - Mother",
-  "knowledge_of_mental_health": "Limited understanding; believes in pushing through struggles rather than discussing them openly.",
-  "attitude_toward_mental_health": "Confused and slightly dismissive at first, but not intentionally hurtful. She believes Serena is just 'stressed' and can 'snap out of it'.",
+  "knowledge_of_mental_health": "Limited understanding; influenced by Chinese cultural stigma that views mental health issues as weakness or moral failure. She believes in 'chi ku' (eating bitterness) and pushing through struggles rather than discussing them openly.",
+  "attitude_toward_mental_health": "Initially dismissive and concerned about 'saving face' in the community if Serena seeks help. Views anxiety as a lack of resilience that can be overcome with discipline. She believes Serena just needs to 'toughen up' like she had to do.",
   "impact_on_serena_anxiety": {
-    "reduces": [
-      "Moments of warmth or vulnerability",
-      "When she makes an effort to listen"
-    ],
-    "increases": [
-      "When she invalidates Serena's feelings",
-      "When she applies academic pressure"
-    ]
+    "reduces": ["Rare moments of maternal warmth during Chinese New Year preparations", "When she makes an effort to listen after teacher conferences", "When she shares her own vulnerabilities about migrating to Singapore"],
+    "increases": ["When she compares Serena to cousins who excel academically", "When she discusses how much she sacrifices for Serena's education", "When she dismisses anxiety as 'Western concepts'", "During exam periods when she monitors study schedules"]
   },
-  "own_mental_health_status": "Mum has chronic stress and likely some unresolved emotional burnout from parenting alone, but she suppresses her emotions and doesn't label them as mental health issues.",
-  "communication_style": "Practical, blunt, occasionally warm when she's not stressed. Tends to lecture rather than ask questions.",
+  "own_mental_health_status": "Mum suffers from undiagnosed depression following her divorce five years ago, which manifests as irritability and emotional withdrawal. She experiences panic attacks late at night but hides them completely, believing they're 'heart problems' rather than anxiety. Her cultural upbringing taught her that seeking mental health support brings shame to the family, so she self-medicates with traditional Chinese medicine and overwork.",
+  "communication_style": "Practical, directive, and concerned with 'face' and social standing. Uses Chinese proverbs about perseverance when giving advice. Shows love through acts of service (cooking Serena's favorite dishes) rather than verbal affirmation. Often compares Serena to cousins or classmates as motivation.",
+  
   "character_arc": {
-    "starting_point": "Dismissive and focused on results",
-    "potential_growth": "Through Serena’s gradual honesty and maybe a conversation with a teacher or counselor, Mum can begin to understand mental health more clearly. By end-game, she might offer Serena emotional validation for the first time."
+    "starting_point": "Dismissive of mental health concerns and focused on academic achievement",
+    "middle_development": "Reluctantly attends a parent-teacher conference where Serena's counselor explains anxiety from a biological perspective, causing her to question her assumptions",
+    "breakthrough_moment": "Discovers her own mother (Serena's grandmother) secretly took anti-anxiety medication for years, shifting her perspective on family 'weakness'",
+    "potential_growth": "Begins to reconcile traditional values with mental health awareness, eventually accompanying Serena to a therapy session and admitting her own struggles"
   },
+  
   "dialogue_examples": {
     "default": [
-      "Finish your homework first, then you can relax.",
-      "You're strong, Serena. Just tahan a bit more, okay?"
+      "Finish your homework first, then you can relax. Your cousin Mei Lin already finished her A-level preparations.",
+      "You're strong, Serena. Just tahan a bit more lah. Your results will determine your whole future."
     ],
     "invalidating": [
-      "You think you're the only one who's tired?",
-      "In my time, we didn’t talk so much about feelings."
+      "I worked two jobs when I first came to Singapore - you think you know what real pressure is?",
+      "This 'anxiety' thing is very Western. Our family has always been strong-minded."
     ],
     "concerned": [
-      "You haven’t been eating well. Are you okay?",
-      "I don’t know how to help, but I’m trying."
+      "You haven't touched your bak kut teh. I made it specially because you have exams tomorrow.",
+      "Aiyah, I don't understand these feelings you talk about, but maybe you can see the school counselor... just don't tell Auntie Mei."
     ],
     "growth": [
-      "Maybe I don’t understand what you’re feeling, but I want to.",
-      "You’re not weak for needing help, okay?"
+      "Your Ah Ma also worried too much, like you. Maybe... it runs in the family.",
+      "I was wrong to push you so hard. In our culture, we don't say 'I love you', but I do. Your happiness matters more than your grades."
     ]
   },
+
   "personal_motivations": [
-    "Wants Serena to have a better life than she did",
-    "Believes academic success equals security and happiness",
-    "Fears that emotional vulnerability will make things worse"
+    "Wants Serena to achieve the university education she never completed",
+    "Fears that without academic excellence, Serena will struggle financially like she did after her divorce",
+    "Deeply concerned with 'face' and reputation in the tight-knit Singaporean Chinese community",
+    "Carries guilt from her failed marriage and compensates by trying to create a 'perfect' future for Serena"
   ],
+  
+  "narrative_moments": [
+    {
+      "title": "Sunday Morning Tuition Rush",
+      "setting": "Family's HDB apartment, Sunday morning",
+      "description": "Ling frantically prepares breakfast while quizzing Serena on math formulas before her weekend tuition classes, creating tension as Serena tries to manage her mounting anxiety about the additional classes"
+    },
+    {
+      "title": "Mid-Year Exam Results",
+      "setting": "Kitchen table, evening after school",
+      "description": "Ling scrutinizes Serena's report card, focusing entirely on the B in physics rather than acknowledging the A's in other subjects, triggering one of Serena's panic attacks"
+    },
+    {
+      "title": "Family Gathering at Chinese New Year",
+      "setting": "Extended family home during reunion dinner",
+      "description": "Ling proudly announces Serena's achievements to relatives while simultaneously creating immense pressure as aunties and uncles compare cousins' accomplishments"
+    },
+    {
+      "title": "Late Night Confession",
+      "setting": "Outside Serena's bedroom, past midnight",
+      "description": "Ling, thinking Serena is asleep, has a quiet breakdown about her own struggles, accidentally revealing her vulnerabilities when Serena overhears"
+    }
+  ],
+  
   "resources_or_skills_offered": [
-    "Provides stability (meals, structure, housing)",
-    "Eventually offers emotional support and unconditional love",
-    "Can advocate for Serena once she understands her needs better"
-  ]
+    "Provides stability (meals focused on 'brain foods' during exam periods, structured home environment)",
+    "Has connections to educational resources through the Chinese community association",
+    "Eventually offers emotional support by sharing her own hidden struggles",
+    "Can advocate fiercely for Serena once she understands mental health isn't a 'Western invention'"
+  ],
+  
+  "cultural_context": {
+    "parenting_style": "Influenced by Confucian values emphasizing filial piety, respect for education, and family honor",
+    "expression_of_love": "Shows affection through practical care (cooking specific dishes) rather than verbal or physical affirmation",
+    "view_of_education": "Sees academic achievement as the primary path to security and social mobility in Singapore's competitive society",
+    "community_pressure": "Regularly attends Chinese association gatherings where parents compare children's achievements and university plans"
+  }
 }

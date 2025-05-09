@@ -1,6 +1,9 @@
 anthropic==0.19.1  # Latest version compatible with Claude-3
-gradio==4.44.1
-numpy==1.26.1
+elevenlabs==0.2.26  # Text-to-speech API client
+gradio==4.44.1  # Interactive interface framework for the chatbot UI
+numpy==1.26.1  # Used for random number generation and data operations
 python-dotenv==1.0.0  # For loading environment variables from .env file
-streamlit>=1.22.0  # Main UI framework used in the application
+streamlit>=1.22.0  # Main UI framework used in the alternative interface
 httpx>=0.24.0  # HTTP client used as fallback in the code
+pytest==7.4.3  # Testing framework for unit tests
+pytest-mock==3.12.0  # Mock library for testing
