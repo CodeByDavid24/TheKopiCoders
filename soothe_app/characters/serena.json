@@ -22,9 +22,9 @@
             "maturity": "Young adult transitioning from adolescence, facing important life decisions."
         },
         "measurements": {
-            "height": 160,
-            "weight": 50,
-            "bmi": 19.5
+            "height": 164,
+            "weight": 46,
+            "bmi": 17.1
         },
         "appearance": "Slim and soft-featured, with long black hair often tied in a neat ponytail, warm brown eyes, and a gentle presence that reflects her quiet nature."
     },
@@ -37,8 +37,8 @@
             "H2 Mathematics",
             "H1 General Paper"
         ],
-        "cca": "Environmental Club (Secretary)",
-        "academic_standing": "Consistently in the top quartile of her cohort, but constantly feels she needs to do better"
+        "cca": "Student Council (Vice President)",
+        "academic_standing": "Consistently in the top quartile of her cohort, but constantly feels she has to do better"
     },
     "location": {
         "country": "Singapore",
@@ -61,7 +61,7 @@
         "description": "Serena is a dedicated JC student who earned her place at a prestigious junior college through hard work and determination. Despite her academic capabilities, she constantly battles with feeling inadequate compared to her seemingly effortless peers. She balances her parents' high expectations with her own desire for self-improvement, all while navigating the intense JC curriculum.",
         "goals": [
             "Score straight As for A-levels and secure a place in NUS Medicine",
-            "Overcome her hesitation to contribute during class discussions and presentations",
+            "Overcome her fears in order to contribute during class discussions and presentations",
             "Balance academic excellence with personal wellbeing",
             "Build meaningful friendships despite her reserved nature"
         ],
@@ -70,7 +70,7 @@
             "Has always been academically strong but socially reserved",
             "Selected for leadership positions due to her reliability, but often feels overwhelmed by the visibility",
             "Experienced a panic attack before a major presentation in secondary school but never acknowledged it as such",
-            "Has a supportive but achievement-oriented family who don't fully understand her internal struggles"
+            "Has a supportive but achievement-oriented family who does not fully understand her internal struggles"
         ]
     },
     "behaviour": [
@@ -78,7 +78,7 @@
         "Takes meticulous notes but rarely asks questions despite not fully understanding concepts",
         "Spends lunch breaks studying alone instead of socializing with classmates",
         "Obsessively checks and rechecks assignments before submission",
-        "Rehearses what to say before speaking up in tutorial discussions",
+        "Rehearses what to say in her head before speaking up in tutorial discussions",
         "Frequently declines social invitations to focus on studying or recover from social fatigue",
         "Experiences physical symptoms like headaches and stomach aches before tests or presentations",
         "Compares herself unfavorably to peers who seem to grasp concepts more quickly",
@@ -106,7 +106,7 @@
         "school_hours": "Attends lectures and tutorials, often feeling overwhelmed by the pace and volume",
         "after_school": "Stays in the library until it closes, afraid of falling behind",
         "evening": "Studies at home until late, often sacrificing sleep for revision",
-        "weekend": "Dedicates most hours to studying, with brief breaks for family meals"
+        "weekend": "Dedicating most hours to studying, with brief breaks for family meals"
     },
     "relationships": {
         "parents": "Supportive but have high expectations; father is a businessman, mother is a teacher",
