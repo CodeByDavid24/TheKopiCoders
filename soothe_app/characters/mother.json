@@ -21,6 +21,21 @@
     "potential_growth": "Begins to reconcile traditional values with mental health awareness, eventually accompanying Serena to a therapy session and admitting her own struggles"
   },
   
+  "background": {
+    "childhood": "Grew up in a traditional household where her father was the stern disciplinarian and her mother quietly supported his decisions. Academic achievement was the only measure of worth that received praise.",
+    "education": "Graduated from a polytechnic with a diploma in accounting, though she harbored dreams of becoming an architect that were discouraged as impractical.",
+    "marriage": "Married at 24 to a successful businessman who became increasingly distant as his career advanced, leading to their divorce when Serena was 12.",
+    "career": "Works as a senior accountant at a mid-sized Singaporean firm. Respected for her precision and diligence, but has declined promotions that would require more travel or evening hours to be present for Serena.",
+    "support_system": "Limited to a few close friends from her church and her elderly mother who occasionally helps with household duties. Her ex-husband provides financial support but minimal emotional presence in Serena's life."
+  },
+  
+  "physical_space": {
+    "home": "A meticulously maintained 4-room HDB flat in Tampines with traditional Chinese elements mixed with modern furnishings. Family photos are displayed prominently, but only those showing achievements.",
+    "serena_study_setup": "Has converted the dining area into an optimized study space for Serena with good lighting, organized shelves, and minimal distractions. Frequently brings tea and brain-healthy snacks without interrupting.",
+    "personal_retreat": "Keeps a small altar with family ancestral tablets in her bedroom where she sometimes sits alone late at night, the only space where she allows herself to show emotion.",
+    "kitchen": "The heart of the home, always stocked with traditional herbs and ingredients. Cooking is her primary language of love and concern, preparing specific dishes believed to enhance brain function before exams."
+  },
+  
   "dialogue_examples": {
     "default": [
       "Finish your homework first, then you can relax. Your cousin Mei Lin already finished her A-level preparations.",
@@ -37,6 +52,18 @@
     "growth": [
       "Your Ah Ma also worried too much, like you. Maybe... it runs in the family.",
       "I was wrong to push you so hard. In our culture, we don't say 'I love you', but I do. Your happiness matters more than your grades."
+    ],
+    "defensive": [
+      "I'm not pushing you too hard, I'm preparing you for the real world. You'll thank me later.",
+      "This is how my parents raised me, and I turned out fine. Why are young people so sensitive now?"
+    ],
+    "vulnerable": [
+      "Sometimes I worry I'm not doing enough for you without your father here.",
+      "I don't know how to help when you feel this way. Nobody taught me these things."
+    ],
+    "breakthrough": [
+      "I found some old pills in your grandmother's things. She never told anyone she was struggling too.",
+      "Maybe there's more than one kind of strength. Fighting alone isn't the only way."
     ]
   },
 
@@ -46,6 +73,21 @@
     "Deeply concerned with 'face' and reputation in the tight-knit Singaporean Chinese community",
     "Carries guilt from her failed marriage and compensates by trying to create a 'perfect' future for Serena"
   ],
+  
+  "parenting_philosophy": {
+    "core_beliefs": {
+      "sacrifice": "Believes good parenting means sacrificing personal desires for children's success",
+      "preparation": "Views her strict approach as necessary preparation for Singapore's competitive society",
+      "legacy": "Sees Serena's achievements as validating her own worth as a parent, especially as a single mother",
+      "protection": "Believes showing 'tough love' will protect Serena from real-world disappointments"
+    },
+    "blind_spots": {
+      "emotional_neglect": "Doesn't recognize that emotional support is as important as practical support",
+      "projection": "Projects her own unfulfilled ambitions onto Serena without considering Serena's unique needs",
+      "communication_gap": "Assumes Serena understands her love without verbal expression",
+      "stress_transfer": "Unintentionally transfers her own anxiety about security to Serena through constant pressure"
+    }
+  },
   
   "narrative_moments": [
     {
@@ -67,6 +109,26 @@
       "title": "Late Night Confession",
       "setting": "Outside Serena's bedroom, past midnight",
       "description": "Ling, thinking Serena is asleep, has a quiet breakdown about her own struggles, accidentally revealing her vulnerabilities when Serena overhears"
+    },
+    {
+      "title": "Medicine Cabinet Discovery",
+      "setting": "Grandmother's apartment during cleaning day",
+      "description": "Ling finds prescription medication for anxiety hidden in her mother's belongings, confronting her own family history and misconceptions"
+    },
+    {
+      "title": "School Counselor Meeting",
+      "setting": "Dr. Rahman's office after a teacher referral",
+      "description": "Reluctantly attending a meeting with the school counselor, Ling's defensive posture gradually softens as Dr. Rahman explains anxiety in terms of biological processes rather than personal weakness"
+    },
+    {
+      "title": "Midnight Tea Ritual",
+      "setting": "Kitchen table at 1 AM",
+      "description": "After finding Serena awake and studying despite exhaustion, Ling silently prepares her special chrysanthemum tea and sits with her daughter in rare comfortable silence, a small step toward connection"
+    },
+    {
+      "title": "Hospital Waiting Room",
+      "setting": "Emergency room after Serena experiences a severe panic attack",
+      "description": "As they wait for test results, Ling experiences her own symptoms of anxiety, creating a moment of recognition that changes her perception of Serena's struggles"
     }
   ],
   
@@ -77,10 +139,96 @@
     "Can advocate fiercely for Serena once she understands mental health isn't a 'Western invention'"
   ],
   
+  "interaction_states": {
+    "dismissive": {
+      "trigger": "When Serena mentions feeling overwhelmed or uncertain about her capabilities",
+      "response": "Minimizes Serena's feelings and redirects to practical solutions or comparisons to others",
+      "impact": "Increases Serena's need to hide symptoms and reinforces perfectionism"
+    },
+    "practical": {
+      "trigger": "When Serena faces concrete academic challenges",
+      "response": "Offers tangible assistance through additional tuition, study materials, or schedule optimization",
+      "impact": "Helps with immediate issues but may intensify underlying pressure"
+    },
+    "protective": {
+      "trigger": "When outside influences threaten Serena's academic focus",
+      "response": "Creates barriers between Serena and perceived distractions, including social activities",
+      "impact": "Reduces immediate stressors but increases isolation and dependency"
+    },
+    "transitional": {
+      "trigger": "After key events that challenge her preconceptions about mental health",
+      "response": "Shows uncertainty and mixed messages as she processes new information",
+      "impact": "Creates openings for change but may confuse Serena with inconsistency"
+    },
+    "supportive": {
+      "trigger": "Following breakthrough moments in her own understanding",
+      "response": "Attempts to show support in culturally appropriate ways, often through actions rather than words",
+      "impact": "Begins healing relationship and provides validation Serena deeply needs"
+    }
+  },
+  
+  "critical_choice_points": {
+    "counselor_meeting": {
+      "context": "School requests parental meeting about Serena's anxiety symptoms",
+      "choices": [
+        {"option": "Reluctantly attend", "narrative_branch": "First step toward awareness", "outcome": "Opens door to gradual change"},
+        {"option": "Refuse and remove Serena from counseling", "narrative_branch": "Reinforced barriers", "outcome": "Intensifies Serena's isolation and symptoms"}
+      ]
+    },
+    "panic_attack_response": {
+      "context": "Witnessing Serena having a severe panic attack before an exam",
+      "choices": [
+        {"option": "Take her to hospital", "narrative_branch": "Medical revelation", "outcome": "Doctor provides education about anxiety as physiological"},
+        {"option": "Push her to continue with exam", "narrative_branch": "Breaking point", "outcome": "Creates crisis that forces later intervention"}
+      ]
+    },
+    "family_history_revelation": {
+      "context": "Discovery of grandmother's anxiety medication",
+      "choices": [
+        {"option": "Share this history with Serena", "narrative_branch": "Generational healing", "outcome": "Creates sense of shared experience and normalization"},
+        {"option": "Hide the discovery", "narrative_branch": "Perpetuated silence", "outcome": "Maintains barrier between generations but creates internal conflict"}
+      ]
+    },
+    "personal_acknowledgment": {
+      "context": "Her own symptoms becoming unmanageable",
+      "choices": [
+        {"option": "Seek help alongside Serena", "narrative_branch": "Parallel journeys", "outcome": "Powerful modeling of vulnerability and growth"},
+        {"option": "Continue hiding her struggles", "narrative_branch": "Maintained facade", "outcome": "Limits connection but maintains cultural conformity"}
+      ]
+    }
+  },
+  
   "cultural_context": {
     "parenting_style": "Influenced by Confucian values emphasizing filial piety, respect for education, and family honor",
     "expression_of_love": "Shows affection through practical care (cooking specific dishes) rather than verbal or physical affirmation",
     "view_of_education": "Sees academic achievement as the primary path to security and social mobility in Singapore's competitive society",
-    "community_pressure": "Regularly attends Chinese association gatherings where parents compare children's achievements and university plans"
+    "community_pressure": "Regularly attends Chinese association gatherings where parents compare children's achievements and university plans",
+    "generational_trauma": "Carries forward patterns from her own upbringing while believing she is being more supportive than her parents were",
+    "face_concept": "Deeply concerned with maintaining family reputation, particularly as a single mother whose parenting might be more scrutinized",
+    "gender_expectations": "Has internalized expectations that mothers should sacrifice everything for their children's success",
+    "immigrant_mindset": "Though second-generation, retains the survival-focused mentality inherited from her parents' migration story"
+  },
+  
+  "symbolic_objects": {
+    "mother's_jade_pendant": {
+      "description": "A small jade pendant Ling always wears, given by her own mother",
+      "meaning": "Represents the matrilineal transmission of strength and endurance",
+      "narrative_use": "Often touches it when stressed, revealing her own anxiety coping mechanisms"
+    },
+    "family_recipe_book": {
+      "description": "Hand-written collection of family recipes passed down generations",
+      "meaning": "Connection to heritage and non-verbal expressions of care",
+      "narrative_use": "Pages with nervous system-calming soups are well-worn, suggesting generations of anxiety management"
+    },
+    "university_savings_passbook": {
+      "description": "Meticulously maintained record of savings for Serena's education",
+      "meaning": "Concrete manifestation of her sacrifice and hope for Serena",
+      "narrative_use": "Source of both pride and pressure in their relationship"
+    },
+    "hidden_family_photos": {
+      "description": "Albums stored in a bottom drawer showing happier family times",
+      "meaning": "The emotional past she has buried to focus on survival",
+      "narrative_use": "Discovery can trigger important conversations about emotional history"
+    }
   }
 }
