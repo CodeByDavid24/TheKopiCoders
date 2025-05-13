@@ -1,9 +1,38 @@
-anthropic==0.19.1  # Latest version compatible with Claude-3
-elevenlabs==0.2.26  # Text-to-speech API client
-gradio==4.44.1  # Interactive interface framework for the chatbot UI
-numpy==1.26.1  # Used for random number generation and data operations
-python-dotenv==1.0.0  # For loading environment variables from .env file
-streamlit>=1.22.0  # Main UI framework used in the alternative interface
-httpx>=0.24.0  # HTTP client used as fallback in the code
-pytest==7.4.3  # Testing framework for unit tests
-pytest-mock==3.12.0  # Mock library for testing
+# Core AI and API packages
+anthropic==0.19.1           # Latest version compatible with Claude-3
+elevenlabs==0.2.26          # Text-to-speech API client
+
+# User Interface frameworks
+gradio==4.44.1              # Interactive interface framework for the chatbot UI
+streamlit>=1.22.0           # Alternative UI framework used in Streamlit interface
+
+# Core Python packages
+numpy==1.26.1               # Used for random number generation and data operations
+python-dotenv==1.0.0        # For loading environment variables from .env file
+
+# HTTP client and fallback
+httpx>=0.24.0               # HTTP client used as fallback in the code
+
+# Testing packages
+pytest==7.4.3              # Testing framework for unit tests
+pytest-mock==3.12.0        # Mock library for testing
+
+# Additional dependencies for enhanced features
+# (Required for the enhanced content filtering system in main_v1.py)
+dataclasses>=0.6            # For ContentMatch and related data classes (Python 3.7+)
+enum34>=1.1.10              # For SeverityLevel enum (Python < 3.4, auto-installed in modern Python)
+
+# For threading and async operations (built-in modules)
+# threading - built-in module for TTS threading
+# subprocess - built-in module for ffmpeg TTS playback
+# time - built-in module for timing operations
+# pathlib - built-in module for file path handling
+
+# Note: Some imports like dataclasses and enum are built-in for Python 3.7+
+# The following are built-in modules that don't need installation:
+# - json: For JSON file handling
+# - re: For regex pattern matching in enhanced filtering
+# - logging: For application monitoring and debugging
+# - sys: For system-specific parameters
+# - os: For environment variables and file operations
+# - typing: For type hints (Python 3.5+)
