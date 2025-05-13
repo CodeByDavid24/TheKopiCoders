@@ -1,6 +1,6 @@
-import streamlit as st  # Import Streamlit for creating web interfaces
-import anthropic  # Import Anthropic for Claude API interactions
-import json  # Import JSON for handling configuration files
+import streamlit as st
+import anthropic
+import json
 import numpy as np
 import os
 from typing import List, Tuple
@@ -27,81 +27,26 @@ character = load_json('characters/serena')
 # Define the system prompt that sets up the initial game state and rules
 system_prompt = f"""
 You are an AI gamemaster. Your job is to create an immersive adventure for the user playing as Serena, a 17-year-old Chinese Singaporean JC1 student working toward her goal of securing a place in NUS Medicine.
-
-Serena's character profile:
-- Name: {character.get('name', 'Serena')}  # Use get() with default value for safety
-- Race: {character.get('physical', {}).get('race', {}).get('name', 'Chinese')}
-- Class: {character.get('class', {}).get('name', 'JC1')}
-- Location: {character.get('location', {}).get('school', 'Unknown')} in Singapore
-
-Instructions:
-- Begin with a brief introduction about Serena's life as a dedicated JC1 student taking {character.get('class', {}).get('subjects', ['Unknown'])[0]}, {character.get('class', {}).get('subjects', ['Unknown'])[1]}, {character.get('class', {}).get('subjects', ['Unknown'])[2]}, and {character.get('class', {}).get('subjects', ['Unknown'])[3]}, while serving as {character.get('class', {}).get('cca', 'Unknown')}. Mention her academic standing and ambitions without revealing her internal struggles.
-- Limit the introduction to one paragraph focusing on her academic environment, outward achievements, and goals.
-- DO NOT explicitly mention anxiety, mental health issues, or her coping mechanisms - these should be subtly woven into the narrative for the player to discover.
-- Create scenarios that naturally incorporate her behaviors (arriving early to sit at the back, taking meticulous notes but rarely asking questions, studying alone during breaks) without labeling them as anxiety-related.
-- Occasionally introduce situations involving her triggers (being called on unexpectedly, group projects, receiving grades lower than expected, tight deadlines, social gatherings, comparisons with classmates) and observe how the player responds.
-- Incorporate elements from her daily routine ({character.get('daily_routine', {}).get('morning', 'Unknown')}, {character.get('daily_routine', {}).get('school_hours', 'Unknown')}, {character.get('daily_routine', {}).get('after_school', 'Unknown')}) to create realistic scenarios.
-- Include interactions with her parents who are {character.get('relationships', {}).get('parents', 'Unknown')}, her small circle of {character.get('relationships', {}).get('friends', 'Unknown')}, and her teachers who {character.get('relationships', {}).get('teachers', 'Unknown')}.
-- Allow the user to respond freely to your scenarios and ask questions about Serena's life, background, and environment.
-- After each significant interaction, present 4 clear options for what the player can do next that reflect realistic choices Serena might consider. Examples:
-  1. Stay in the library until closing time to perfect your chemistry assignment
-  2. Join your classmates who invited you for dinner, even though it means less study time
-  3. Call it a day and go home to rest, knowing you have an early start tomorrow
-  4. Find a quiet spot in the school garden to clear your mind before deciding
-
-Remember: Serena doesn't view herself as having anxiety - she believes her reactions and feelings are normal parts of being a JC student in Singapore's competitive academic environment. She attributes her physical symptoms (headaches, stomach aches) to academic pressure rather than anxiety. The story should allow the player to gradually recognize these patterns through gameplay while making choices that either reinforce or help address her unacknowledged anxiety.
 """
 
 # Define the consent message
 consent_message = """
-**Start Game - Important Information**
+This is a fictional story designed to help you understand anxiety. Please be aware that some content may depict distressing situations. Do not replicate or engage in any harmful actions shown in the game. If you're feeling distressed, we encourage you to seek professional help.
 
-**Warning & Consent:**
-This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
-
-Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience. By starting the game, you agree to these terms.
-
-Type 'I agree' then 'Start game' to continue.
+Your choices will directly shape the story. By starting the game, you agree to these terms.
 """
 
-# Add this at the top of your file, after the imports
+# Initialize Claude API client
 try:
     print(f"Anthropic SDK version: {anthropic.__version__}")
 except AttributeError:
     print("Could not determine Anthropic SDK version")
 
-# Get API key from environment variable or use a placeholder that won't trigger detection
-# To use this in production, set the CLAUDE_API_KEY environment variable:
-# export CLAUDE_API_KEY=your_actual_key_here  (for Linux/Mac)
-# set CLAUDE_API_KEY=your_actual_key_here     (for Windows)
-CLAUDE_API_KEY = os.environ.get(
-    "CLAUDE_API_KEY", "REPLACE_WITH_YOUR_API_KEY_BEFORE_RUNNING")
+CLAUDE_API_KEY = os.environ.get("CLAUDE_API_KEY", "REPLACE_WITH_YOUR_API_KEY_BEFORE_RUNNING")
 
-# Initialize Claude client - handling proxy settings error
+# Initialize Claude client
 try:
-    # First attempt with standard initialization
     claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
-except TypeError as e:
-    if "unexpected keyword argument 'proxies'" in str(e):
-        # Try importing and using httpx directly to avoid the proxies issue
-        import httpx
-        http_client = httpx.Client()
-        try:
-            # Try with custom http client
-            claude_client = anthropic.Anthropic(
-                api_key=CLAUDE_API_KEY, http_client=http_client)
-        except Exception:
-            # Last resort - try older client style
-            try:
-                claude_client = anthropic.Client(api_key=CLAUDE_API_KEY)
-            except Exception:
-                print(
-                    "Failed to initialize Claude client. Please check your Anthropic SDK version.")
-                claude_client = None
-    else:
-        # Different type error
-        print(f"Error initializing Claude client: {e}")
-        claude_client = None
 except Exception as e:
     print(f"Error initializing Claude client: {e}")
     claude_client = None
@@ -115,49 +60,24 @@ def get_initial_response():
         return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
 
     try:
-        # Create the initial message for Claude
-        # Check which version of the SDK we're using based on the client type
-        if isinstance(claude_client, anthropic.Anthropic):
-            # New SDK version
-            response = claude_client.messages.create(
-                model="claude-3-5-sonnet-20240620",  # Use an appropriate Claude model
-                system=system_prompt,
-                messages=[
-                    {"role": "user", "content": "Start the game with a brief introduction to Serena."}
-                ],
-                temperature=0,
-                max_tokens=1000
-            )
-            # Store the starting narrative
-            return response.content[0].text
-        else:
-            # Older SDK version
-            response = claude_client.completion(
-                prompt=f"\n\nHuman: Start the game with a brief introduction to Serena.\n\nAssistant:",
-                model="claude-3-5-sonnet-20240620",
-                temperature=0,
-                max_tokens_to_sample=1000,
-                stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
-            )
-            # Store the starting narrative
-            return response.completion
-
+        response = claude_client.messages.create(
+            model="claude-3-5-sonnet-20240620",
+            system=system_prompt,
+            messages=[
+                {"role": "user", "content": "Start the game with a brief introduction to Serena and her current situation. Please format your response to naturally fit in a visual storytelling interface."}
+            ],
+            temperature=0,
+            max_tokens=1000
+        )
+        return response.content[0].text
     except Exception as e:
         return f"Error communicating with Claude API: {str(e)}"
 
 
 def run_action(message: str, conversation_history: List[Tuple[str, str]]) -> str:
-    """
-    Process player actions and generate appropriate responses
-    Args:
-        message: Player's input message
-        conversation_history: Conversation history as a list of (user_msg, assistant_msg) tuples
-    Returns:
-        String containing AI's response to player action
-    """
+    """Process player actions and generate appropriate responses"""
     global claude_client
 
-    # Check if Claude client is configured
     if not claude_client:
         return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
 
@@ -165,223 +85,536 @@ def run_action(message: str, conversation_history: List[Tuple[str, str]]) -> str
     if not st.session_state.consent_given:
         if message.lower() == 'i agree':
             st.session_state.consent_given = True
-            return "Thank you for agreeing to the terms. Type 'start game' to begin."
+            return "Welcome to Serena's story. Let's begin..."
         else:
             return consent_message
 
     # Check if this is the start of the game
     if message.lower() == 'start game':
-        # If we haven't generated the start yet, do it now
         if not st.session_state.start:
             st.session_state.start = get_initial_response()
         return st.session_state.start
 
     try:
-        # Handle different SDK versions
-        if isinstance(claude_client, anthropic.Anthropic):
-            # New SDK version
-            # Prepare message history for Claude
-            claude_messages = []
+        # Prepare message history for Claude
+        claude_messages = []
 
-            # Add conversation history
-            for user_msg, assistant_msg in conversation_history:
-                claude_messages.append(
-                    {"role": "user", "content": user_msg})
-                claude_messages.append(
-                    {"role": "assistant", "content": assistant_msg})
+        # Add conversation history
+        for user_msg, assistant_msg in conversation_history:
+            claude_messages.append({"role": "user", "content": user_msg})
+            claude_messages.append({"role": "assistant", "content": assistant_msg})
 
-            # Add current message to conversation
-            claude_messages.append({"role": "user", "content": message})
+        # Add current message to conversation
+        claude_messages.append({"role": "user", "content": message})
 
-            # Get response from Claude API
-            response = claude_client.messages.create(
-                model="claude-3.5-sonnet-20240620",  # Use an appropriate Claude model
-                system=system_prompt,
-                messages=claude_messages,
-                temperature=0,
-                max_tokens=1000
-            )
+        # Get response from Claude API
+        response = claude_client.messages.create(
+            model="claude-3-5-sonnet-20240620",
+            system=system_prompt,
+            messages=claude_messages,
+            temperature=0,
+            max_tokens=1000
+        )
 
-            # Process result
-            result = response.content[0].text
-        else:
-            # Older SDK version
-            # Convert history to the older Claude format
-            prompt = "\n\nHuman: " + message + "\n\nAssistant:"
-
-            response = claude_client.completion(
-                prompt=prompt,
-                model="claude-3.5-sonnet-20240620",
-                temperature=0,
-                max_tokens_to_sample=1000,
-                stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
-            )
-
-            result = response.completion
-
+        result = response.content[0].text
+        
+        # Update game state
+        update_game_state(message, result)
+        
         return result
 
     except Exception as e:
         return f"Error communicating with Claude API: {str(e)}"
 
 
-def display_message(message, is_user=False):
-    """Display a message in the chat interface with improved visibility"""
-    if is_user:
-        message_container = st.chat_message("user", avatar="👤")
-        # Add a light background for user messages
-        with message_container:
-            st.markdown(f"""
-            <div style="background-color: #e6f7ff; padding: 10px; border-radius: 10px; color: #000000;">
-                {message}
-            </div>
-            """, unsafe_allow_html=True)
+def update_game_state(user_choice: str, story_response: str):
+    """Update the game state based on user choices and story progression"""
+    # Update progress
+    if 'progress' not in st.session_state:
+        st.session_state.progress = 0.1
     else:
-        message_container = st.chat_message("assistant", avatar="🤖")
-        # Add a light background for assistant messages
-        with message_container:
-            st.markdown(f"""
-            <div style="background-color: #f0f0f0; padding: 10px; border-radius: 10px; color: #000000;">
-                {message}
-            </div>
-            """, unsafe_allow_html=True)
+        st.session_state.progress = min(1.0, st.session_state.progress + 0.08)
+    
+    # Update stage based on progress
+    if st.session_state.progress < 0.33:
+        st.session_state.stage = "Introduction"
+    elif st.session_state.progress < 0.66:
+        st.session_state.stage = "Middle Game"
+    else:
+        st.session_state.stage = "Climax"
+    
+    # Track choices
+    if 'choices_made' not in st.session_state:
+        st.session_state.choices_made = []
+    
+    if len(st.session_state.choices_made) >= 5:
+        st.session_state.choices_made.pop(0)
+    
+    st.session_state.choices_made.append(user_choice)
+    
+    # Update Serena's emotional state (simple example)
+    if 'serena_mood' not in st.session_state:
+        st.session_state.serena_mood = 50  # 0-100 scale
+    
+    # Adjust mood based on choice type
+    positive_keywords = ['music', 'journal', 'talk', 'help', 'relax', 'breathe']
+    negative_keywords = ['ignore', 'stress', 'worry', 'panic', 'avoid']
+    
+    if any(keyword in user_choice.lower() for keyword in positive_keywords):
+        st.session_state.serena_mood = min(100, st.session_state.serena_mood + 5)
+    elif any(keyword in user_choice.lower() for keyword in negative_keywords):
+        st.session_state.serena_mood = max(0, st.session_state.serena_mood - 5)
 
 
-def main():
-    """Main Streamlit App"""
-    # Set page config at the very beginning
-    st.set_page_config(
-        page_title="SootheAI Game",
-        page_icon="🧠",
-        layout="centered",
-        initial_sidebar_state="collapsed"
-    )
-
-    # Custom CSS for a more appealing interface with better visibility
+def apply_css():
+    """Apply CSS styling with fixed syntax"""
     st.markdown("""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* Override Streamlit default styles */
+        .main .block-container {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            background-color: #f8f9fa;
+        }
+        
+        /* Hide Streamlit default menu items */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        
+        /* Custom theme */
         .stApp {
-            background-color: #ffffff;
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
         }
-        .stTextInput > div > div > input {
-            border-radius: 20px;
-            color: #000000;
+        
+        /* Main title */
+        .game-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
         }
-        .main-header {
-            font-family: 'Trebuchet MS', sans-serif;
-            color: #1e3a5f;
-            font-size: 2.2rem;
-            font-weight: bold;
+        
+        .game-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
         }
-        .message-container {
+        
+        /* Story panel */
+        .story-panel {
+            background: white;
             border-radius: 15px;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
         }
-        .stButton button {
-            border-radius: 20px;
-            background-color: #6c5ce7;
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        /* Character panel */
+        .character-panel {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 1.5rem;
             color: white;
-            font-weight: bold;
+            margin-bottom: 1rem;
         }
-        /* Improve text visibility throughout the app */
-        p, span, div {
-            color: #000000 !important;
+        
+        .character-avatar {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
         }
-        .stMarkdown a {
-            color: #1e88e5 !important;
+        
+        .character-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
         }
-        /* Make chat messages more visible */
-        .stChatMessage {
-            background-color: #f0f2f6;
+        
+        .character-description {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Status bars */
+        .status-bar {
+            margin: 1rem 0;
+        }
+        
+        .status-label {
+            font-size: 0.85rem;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .status-bar-bg {
+            background-color: rgba(255,255,255,0.2);
             border-radius: 10px;
-            padding: 5px;
-            margin-bottom: 10px;
+            height: 10px;
+            overflow: hidden;
         }
-        .stChatMessage [data-testid="stChatMessageContent"] {
-            color: #000000 !important;
+        
+        .status-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #28a745, #34ce57);
+        }
+        
+        .mood-fill {
+            background: linear-gradient(90deg, #ffc107, #ffed4e);
+        }
+        
+        /* Action buttons */
+        .action-button {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 0.5rem;
+            color: #667eea;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Stats container */
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .stat-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            color: #333;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Choice history */
+        .choice-history {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .choice-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            margin: 0.25rem 0;
+            font-size: 0.85rem;
+            color: #333;
+            border-left: 3px solid #667eea;
+        }
+        
+        /* Button styling */
+        .stButton > button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stButton > button:hover {
+            background-color: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Input styling */
+        .stTextInput > div > div > input {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .stTextInput > div > div > input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     """, unsafe_allow_html=True)
 
-    # App title and description with improved visibility
-    st.markdown("<h1 class='main-header'>SootheAI Game</h1>",
-                unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 1.2rem; color: #000000; margin-bottom: 20px;'>An interactive story experience about anxiety awareness.</p>", unsafe_allow_html=True)
 
-    # Initialize session state variables
+def create_character_panel():
+    """Create the character status panel"""
+    with st.sidebar:
+        st.markdown("""
+        <div class="character-panel">
+            <div class="character-avatar">👩‍🎓</div>
+            <div class="character-name">Serena</div>
+            <div class="character-description">
+                17-year-old JC1 Student<br>
+                Aspiring to study Medicine at NUS
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Progress bar
+        progress = st.session_state.get('progress', 0)
+        stage = st.session_state.get('stage', 'Not Started')
+        
+        st.markdown(f"""
+        <div class="character-panel">
+            <div class="status-bar">
+                <div class="status-label">Story Progress - {stage}</div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill progress-fill" style="width: {progress * 100}%"></div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Mood indicator
+        mood = st.session_state.get('serena_mood', 50)
+        mood_text = "Anxious" if mood < 30 else "Okay" if mood < 70 else "Good"
+        
+        st.markdown(f"""
+        <div class="character-panel">
+            <div class="status-bar">
+                <div class="status-label">Emotional State - {mood_text}</div>
+                <div class="status-bar-bg">
+                    <div class="status-bar-fill mood-fill" style="width: {mood}%"></div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Stats
+        choices_count = len(st.session_state.get('choices_made', []))
+        messages_count = len(st.session_state.get('messages', []))
+        
+        st.markdown(f"""
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-value">{choices_count}</span>
+                <span class="stat-label">Choices Made</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">{messages_count}</span>
+                <span class="stat-label">Interactions</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Recent choices
+        if st.session_state.get('choices_made'):
+            st.markdown("""
+            <div class="choice-history">
+                <h4 style="color: #333; margin-bottom: 0.5rem;">Recent Choices</h4>
+            """, unsafe_allow_html=True)
+            
+            for choice in st.session_state.choices_made[-3:]:
+                st.markdown(f'<div class="choice-item">{choice}</div>', unsafe_allow_html=True)
+            
+            st.markdown("</div>", unsafe_allow_html=True)
+
+
+def create_action_buttons():
+    """Create interactive action buttons"""
+    st.markdown("### Choose your action:")
+    
+    if not st.session_state.consent_given:
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("I Agree to the Terms", key="agree_btn", use_container_width=True):
+                user_input = "I agree"
+                process_action(user_input)
+    elif not st.session_state.get('start'):
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("Start Game", key="start_btn", use_container_width=True):
+                user_input = "Start game"
+                process_action(user_input)
+    else:
+        actions = [
+            ("🎵 Listen to Music", "Listen to music"),
+            ("📓 Write in Journal", "Journal"),
+            ("👥 Talk to Someone", "Talk to a friend"),
+            ("🧘 Take Deep Breaths", "Take deep breaths"),
+            ("📚 Continue Studying", "Continue studying"),
+            ("🚶 Take a Walk", "Take a walk")
+        ]
+        
+        cols = st.columns(2)
+        for i, (label, action) in enumerate(actions):
+            col = cols[i % 2]
+            with col:
+                if st.button(label, key=f"action_{i}", use_container_width=True):
+                    process_action(action)
+
+
+def process_action(action: str):
+    """Process user action and update the game state"""
+    # Add to conversation history
+    conversation_history = st.session_state.get('messages', [])
+    
+    with st.spinner("Processing..."):
+        ai_response = run_action(action, conversation_history)
+    
+    # Update messages
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+    
+    st.session_state.messages.append((action, ai_response))
+    
+    # Store current story text for display
+    st.session_state.current_story = ai_response
+    
+    # Rerun to update UI
+    st.rerun()
+
+
+def display_story():
+    """Display the current story text in a game-like format"""
+    if not st.session_state.consent_given:
+        st.markdown(f"""
+        <div class="story-panel">
+            <div class="story-text">
+                <h3 style="color: #333; margin-bottom: 1rem;">⚠️ Important Information</h3>
+                {consent_message}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    elif st.session_state.get('current_story'):
+        st.markdown(f"""
+        <div class="story-panel">
+            <div class="story-text">
+                {st.session_state.current_story}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    elif st.session_state.consent_given and not st.session_state.get('start'):
+        st.markdown("""
+        <div class="story-panel">
+            <div class="story-text">
+                <h3 style="color: #333; margin-bottom: 1rem;">Welcome to SootheAI</h3>
+                <p>You're about to experience Serena's journey - a story about anxiety, choices, and growth.</p>
+                <p>Click "Start Game" when you're ready to begin...</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+def main():
+    """Main game interface"""
+    # Set page config
+    st.set_page_config(
+        page_title="SootheAI Experience",
+        page_icon="🎮",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+    
+    # Apply CSS
+    apply_css()
+    
+    # Initialize session state
     if 'messages' not in st.session_state:
         st.session_state.messages = []
     if 'consent_given' not in st.session_state:
         st.session_state.consent_given = False
     if 'start' not in st.session_state:
         st.session_state.start = None
-    if 'seed' not in st.session_state:
-        st.session_state.seed = np.random.randint(0, 1000000)
-
-    # Display conversation history
-    for user_msg, ai_msg in st.session_state.messages:
-        display_message(user_msg, is_user=True)
-        display_message(ai_msg, is_user=False)
-
-    # Show initial consent message if no messages yet
-    if not st.session_state.messages:
-        display_message(consent_message, is_user=False)
-
-    # Create a sidebar with example actions - improved styling
-    st.sidebar.markdown(
-        "<h2 style='color: #000000; font-weight: bold; margin-bottom: 15px;'>Suggested Actions</h2>", unsafe_allow_html=True)
-
-    # Add a description
-    st.sidebar.markdown(
-        "<p style='color: #000000; margin-bottom: 20px;'>Click any action below to quickly respond in the story:</p>", unsafe_allow_html=True)
-
-    # Create custom styled buttons
-    example_actions = ["Listen to music", "Journal", "Continue the story"]
-    for i, action in enumerate(example_actions):
-        button_key = f"action_button_{i}"
-        if st.sidebar.button(action, key=button_key, use_container_width=True):
-            # Use the action as user input
-            user_input = action
-            display_message(user_input, is_user=True)
-
-            # Get AI response
-            conversation_history = st.session_state.messages.copy()
-            ai_response = run_action(user_input, conversation_history)
-
-            # Display AI response
-            display_message(ai_response, is_user=False)
-
-            # Save to conversation history
-            st.session_state.messages.append((user_input, ai_response))
-
-            # Force a rerun to update the UI
-            st.experimental_rerun()
-
-    # Add separator and instructions
-    st.sidebar.markdown("<hr style='margin: 20px 0;'>", unsafe_allow_html=True)
-    st.sidebar.markdown(
-        "<p style='color: #000000;'>You can also type your own responses in the chat box below.</p>", unsafe_allow_html=True)
-
-    # Input field for user messages
-    placeholder_text = "Type 'I agree' to continue..." if not st.session_state.consent_given else "Type your message..."
-    user_input = st.chat_input(placeholder_text)
-
-    # Process user input when submitted
-    if user_input:
-        display_message(user_input, is_user=True)
-
-        # Get AI response
-        conversation_history = st.session_state.messages.copy()
-        ai_response = run_action(user_input, conversation_history)
-
-        # Display AI response
-        display_message(ai_response, is_user=False)
-
-        # Save to conversation history
-        st.session_state.messages.append((user_input, ai_response))
+    if 'current_story' not in st.session_state:
+        st.session_state.current_story = None
+    
+    # Main title
+    st.markdown("""
+    <div class="game-title">SootheAI</div>
+    <div class="game-subtitle">Navigate Anxiety Through Interactive Storytelling</div>
+    """, unsafe_allow_html=True)
+    
+    # Create two-column layout
+    left_col, right_col = st.columns([3, 1])
+    
+    with left_col:
+        # Display current story
+        display_story()
+        
+        # Action buttons
+        create_action_buttons()
+        
+        # Custom text input for free-form responses
+        if st.session_state.consent_given and st.session_state.get('start'):
+            st.markdown("---")
+            st.markdown("### 💬 Or type your own response:")
+            user_input = st.text_input("", placeholder="Type your response here...", key="custom_input")
+            
+            if user_input and st.button("Submit", key="submit_custom"):
+                process_action(user_input)
+    
+    with right_col:
+        # This column will be empty since sidebar is used for character panel
+        pass
+    
+    # Character panel (in sidebar)
+    create_character_panel()
 
 
-# Start the application when script is run
 if __name__ == "__main__":
     main()
