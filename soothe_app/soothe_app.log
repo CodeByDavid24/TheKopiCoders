@@ -295,3 +295,31 @@
 2025-05-09 09:19:38,333 - __main__ - INFO - Sending message to Claude API: 4...
 2025-05-09 09:19:55,359 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-05-09 09:19:55,360 - __main__ - INFO - Received and filtered response from Claude API: You decide to break from your usual routine and al...
+2025-05-09 12:50:23,179 - blacklist - INFO - Loaded 16 additional blacklisted phrases from blacklist.txt
+2025-05-09 12:50:23,180 - __main__ - INFO - Loaded 47 blacklisted phrases
+2025-05-09 12:50:23,181 - __main__ - INFO - Loading character data from JSON file
+2025-05-09 12:50:23,208 - __main__ - INFO - Loading JSON file: characters/serena.json
+2025-05-09 12:50:23,210 - __main__ - INFO - Checking Anthropic SDK version
+2025-05-09 12:50:23,212 - __main__ - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-09 12:50:23,212 - __main__ - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-09 12:50:23,445 - __main__ - INFO - Starting SootheAI application
+2025-05-09 12:50:23,447 - __main__ - INFO - Initializing game interface
+2025-05-09 12:50:23,517 - __main__ - INFO - Launching game interface
+2025-05-09 12:50:23,839 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-09 12:50:24,901 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-09 12:50:25,974 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-09 12:50:28,278 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-09 12:50:29,614 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-09 12:51:06,129 - __main__ - INFO - Processing message in main loop: i agree...
+2025-05-09 12:51:06,130 - __main__ - INFO - User consent received
+2025-05-09 12:51:11,159 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-09 12:51:11,160 - __main__ - INFO - Starting new game
+2025-05-09 12:51:11,161 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-09 12:51:17,247 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-09 12:51:17,256 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
+2025-05-09 12:51:17,258 - __main__ - INFO - Streaming TTS for initial narrative
+2025-05-09 12:51:41,584 - __main__ - INFO - Processing message in main loop: 1...
+2025-05-09 12:51:41,585 - __main__ - INFO - Sending message to Claude API: 1...
+2025-05-09 12:51:48,050 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-09 12:51:48,052 - __main__ - INFO - Received and filtered response from Claude API: The early morning light filters through your bedro...
+2025-05-09 12:51:48,055 - __main__ - INFO - Streaming TTS for response: The early morning light filters through your bedro...
