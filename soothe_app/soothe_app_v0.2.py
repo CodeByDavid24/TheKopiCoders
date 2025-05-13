@@ -14,13 +14,11 @@ import subprocess
 from elevenlabs import ElevenLabs
 from typing import Optional
 
-# Import the blacklist module for content filtering
 from blacklist import (
-    load_blacklist_from_file,
-    contains_blacklisted_content,
-    filter_content,
-    get_safety_disclaimer,
-    get_safe_response_alternative
+    EnhancedContentFilter,
+    ContentFilterResult,
+    ContentMatch,
+    SeverityLevel
 )
 
 # Load environment variables from .env file
@@ -44,7 +42,8 @@ if elevenlabs_api_key:
         elevenlabs_client = None
 else:
     # Log missing ElevenLabs API key
-    logger.warning("ELEVENLABS_API_KEY environment variable not set, TTS will be disabled")
+    logger.warning(
+        "ELEVENLABS_API_KEY environment variable not set, TTS will be disabled")
 
 # Configure logging with rotating file handler
 logging.basicConfig(
@@ -64,13 +63,13 @@ logging.basicConfig(
 # Create logger instance for this module
 logger = logging.getLogger(__name__)
 
-# Load blacklist from file at startup
+# Initialize enhanced content filter
 try:
-    blacklisted_phrases = load_blacklist_from_file()
-    logger.info(f"Loaded {len(blacklisted_phrases)} blacklisted phrases")
+    content_filter = EnhancedContentFilter()
+    logger.info("Enhanced content filter initialized successfully")
 except Exception as e:
-    logger.error(f"Error loading blacklist: {str(e)}")
-    blacklisted_phrases = []
+    logger.error(f"Error initializing enhanced content filter: {str(e)}")
+    content_filter = None
 
 
 def load_json(filename: str) -> dict:
@@ -338,22 +337,25 @@ def initialize_claude_client() -> tuple[anthropic.Anthropic | None, str]:
 
     try:
         # Log initialization attempt
-        logger.info("Attempting to initialize Claude client with standard configuration")
-        
+        logger.info(
+            "Attempting to initialize Claude client with standard configuration")
+
         # For Anthropic SDK versions < 0.51.0, use this initialization
         try:
             return anthropic.Anthropic(api_key=api_key), ""
         except TypeError as e:
             if "unexpected keyword argument 'proxies'" in str(e):
                 # Log proxy error
-                logger.warning("Proxy configuration error, attempting alternative initialization")
+                logger.warning(
+                    "Proxy configuration error, attempting alternative initialization")
                 http_client = httpx.Client()
                 return anthropic.Anthropic(api_key=api_key, http_client=http_client), ""
             else:
                 raise e
     except Exception as e:
         # Log unexpected error
-        logger.error(f"Unexpected error during Claude client initialization: {str(e)}")
+        logger.error(
+            f"Unexpected error during Claude client initialization: {str(e)}")
         return None, f"Unexpected error: {str(e)}"
 
 
@@ -382,7 +384,7 @@ demo: gr.Blocks | None = None
 
 def check_input_safety(message: str) -> tuple[bool, str]:
     """
-    Check user input for potentially harmful content.
+    Check user input for potentially harmful content using enhanced filter.
 
     Args:
         message (str): User's input message
@@ -391,26 +393,41 @@ def check_input_safety(message: str) -> tuple[bool, str]:
         tuple: (is_safe, safe_message)
             - is_safe: Boolean indicating if message is safe
             - safe_message: Original message or safety warning
-
-    Example:
-        >>> is_safe, message = check_input_safety("How can I help Serena cope with stress?")
-        >>> print(is_safe, message)
-        True "How can I help Serena cope with stress?"
     """
-    # Check for blacklisted content
-    has_blacklisted, matched_phrases = contains_blacklisted_content(
-        message, blacklisted_phrases)
+    global content_filter
 
-    if has_blacklisted:
+    if not content_filter:
+        # Fallback to simple check if filter not available
+        return True, message
+
+    # Use enhanced filter to analyze content
+    result = content_filter.analyze_content(message)
+
+    if result.has_violations:
+        # Log detected violations
         logger.warning(
-            f"Detected harmful content in user input: {matched_phrases}")
+            f"Detected harmful content in user input. Severity: {result.severity_score}")
+        logger.warning(f"Categories violated: {result.categories_violated}")
 
-        # Return a safety message
-        safety_message = (
-            "I notice your message contains content that might be sensitive or potentially harmful. "
-            "In this experience, we focus on exploring healthy coping strategies and understanding anxiety. "
-            "Please try rephrasing your message or exploring a different aspect of Serena's story."
-        ) + get_safety_disclaimer()
+        # Determine response based on severity
+        max_severity = max(
+            (match.severity for match in result.matches), default=SeverityLevel.LOW)
+
+        if max_severity == SeverityLevel.CRITICAL:
+            # For critical content, provide strong safety message
+            safety_message = (
+                "I notice your message contains content about serious safety concerns. "
+                "Please know that support is available and you don't have to face these feelings alone. "
+                "\n\n**Immediate Support:**\n"
+                "- National Care Hotline (Singapore): 1800-202-6868 (24 hours)\n"
+                "- Samaritans of Singapore (SOS): 1-767 (24 hours)\n"
+                "- Emergency: 999\n\n"
+                "In SootheAI, let's explore healthier ways Serena might cope with difficult feelings."
+            )
+        else:
+            # For other violations, use contextual response
+            safety_message = content_filter.get_safe_response_alternative(
+                context=message)
 
         return False, safety_message
 
@@ -419,43 +436,72 @@ def check_input_safety(message: str) -> tuple[bool, str]:
 
 def filter_response_safety(response: str) -> str:
     """
-    Filter LLM response for safety, replacing any harmful content.
+    Filter LLM response for safety using enhanced filter.
 
     Args:
         response (str): LLM response to filter
 
     Returns:
         str: Filtered safe response
-
-    Example:
-        >>> safe_response = filter_response_safety("Serena considers studying all night.")
-        >>> print(safe_response)
-        "Serena considers studying all night."
     """
-    # Check if response contains any blacklisted content
-    has_blacklisted, matched_phrases = contains_blacklisted_content(
-        response, blacklisted_phrases)
+    global content_filter
 
-    if has_blacklisted:
+    if not content_filter:
+        # Fallback to original response if filter not available
+        return response
+
+    # Analyze the response for harmful content
+    result = content_filter.analyze_content(response)
+
+    if result.has_violations:
+        # Log the violation details
         logger.warning(
-            f"Detected harmful content in LLM response: {matched_phrases}")
+            f"Detected harmful content in LLM response. Severity: {result.severity_score}")
+        logger.warning(f"Categories violated: {result.categories_violated}")
 
-        # For severe cases, replace the entire response
-        if any(phrase in ["commit suicide", "kill myself", "end my life"] for phrase in matched_phrases):
+        # Check if any violations are critical
+        critical_violations = [
+            match for match in result.matches if match.severity == SeverityLevel.CRITICAL]
+
+        if critical_violations:
+            # For critical content, replace entirely with safe alternative
             logger.error(
-                f"Detected extremely harmful content in LLM response, replacing entirely")
-            return get_safe_response_alternative()
+                "Critical content detected in LLM response, replacing entirely")
+            return content_filter.get_safe_response_alternative(context="LLM response contained critical content")
+        else:
+            # For non-critical violations, use the filtered text
+            # The enhanced filter automatically replaces harmful content
+            filtered_response = result.filtered_text
 
-        # For less severe cases, filter out the specific phrases
-        filtered_response = filter_content(
-            response, blacklist=blacklisted_phrases)
+            # Add safety notice for high severity content
+            high_severity = any(match.severity in [SeverityLevel.HIGH, SeverityLevel.CRITICAL]
+                                for match in result.matches)
+            if high_severity:
+                filtered_response += "\n\n" + content_filter._get_safety_disclaimer()
 
-        # Add safety disclaimer
-        filtered_response += get_safety_disclaimer()
-
-        return filtered_response
+            return filtered_response
 
     return response
+
+
+def log_content_analysis_metrics(result: ContentFilterResult, text_type: str):
+    """
+    Log detailed metrics about content analysis for monitoring.
+
+    Args:
+        result: ContentFilterResult from enhanced filter
+        text_type: Type of text analyzed ('user_input' or 'llm_response')
+    """
+    logger.info(f"Content analysis [{text_type}]:")
+    logger.info(f"  - Has violations: {result.has_violations}")
+    logger.info(f"  - Severity score: {result.severity_score}")
+    logger.info(f"  - Processing time: {result.processing_time*1000:.2f}ms")
+    logger.info(f"  - Categories violated: {result.categories_violated}")
+
+    if result.has_violations:
+        for match in result.matches:
+            logger.debug(
+                f"  - Match: {match.phrase} (Severity: {match.severity.name}, Category: {match.category})")
 
 
 def get_initial_response() -> str:
@@ -578,26 +624,26 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
     if not is_safe_input:
         logger.warning("Blocked unsafe user input")
         return safe_message
-    
+
     if game_state['consent_given'] and message.lower() != 'start game' and message.lower() != 'i agree':
         game_state.setdefault('interaction_count', 0)
         game_state['interaction_count'] += 1
-        
+
         # Debug logging
         logger.info(f"Interaction count: {game_state['interaction_count']}")
-        
+
         # Check if we should trigger an ending (after 12 interactions)
         if game_state['interaction_count'] >= 12:
             logger.info("Ending triggered after 12 interactions")
             ending_response = generate_simple_ending(game_state)
-            
+
             # Add a flag to indicate the story has ended
             game_state['story_ended'] = True
-            
+
             # Stream TTS for ending if available
             if 'run_tts_in_thread' in globals():
                 run_tts_in_thread(ending_response)
-                
+
             return ending_response
 
     try:
@@ -665,7 +711,6 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         safe_result = filter_response_safety(result)
         # Stream TTS for Claude's response
         run_tts_in_thread(safe_result)
-    
 
         # Log successful response and update game state
         # Log response received
@@ -680,7 +725,8 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         error_msg = f"Error communicating with Claude API: {str(e)}"
         logger.error(error_msg)  # Log API communication error
         return error_msg
-    
+
+
 def generate_simple_ending(game_state: GameState) -> str:
     """
     Generate a simple ending based on minimal state tracking.
@@ -688,50 +734,52 @@ def generate_simple_ending(game_state: GameState) -> str:
     # Track key phrases in user history
     user_messages = [msg.lower() for msg, _ in game_state.get('history', [])]
     has_mentioned_feelings = any('feel' in msg for msg in user_messages)
-    has_studied_late = any(('study' in msg and ('night' in msg or 'late' in msg)) for msg in user_messages)
-    has_talked_to_friend = any(('friend' in msg or 'talk' in msg) for msg in user_messages)
-    
+    has_studied_late = any(('study' in msg and (
+        'night' in msg or 'late' in msg)) for msg in user_messages)
+    has_talked_to_friend = any(('friend' in msg or 'talk' in msg)
+                               for msg in user_messages)
+
     # Build ending narrative without using triple quotes
     ending_narrative = "The end-of-term bell rings across Raffles Junior College. As you pack your notes and textbooks, you let out a long breath. This term has been a journey of discoveries - not just about H2 Biology or Chemistry formulas, but about yourself."
-    
+
     ending_narrative += "\n\nAs you step out of the classroom, you take a moment to appreciate how different things feel compared to the beginning of the term. The pressure of academics hasn't disappeared, but something has shifted in how you carry it."
-    
+
     # Add variations with consistent formatting
     if has_mentioned_feelings:
         ending_narrative += "\n\nYou've started paying attention to your body's signals - the racing heart before presentations, the tightness in your chest during tests. Simply recognizing these feelings has been its own kind of progress."
-    
+
     if has_studied_late:
         ending_narrative += "\n\nWhile you've still had late study nights, you've become more mindful about balancing your academic drive with your wellbeing. Small changes, but meaningful ones."
-    
+
     if has_talked_to_friend:
         ending_narrative += "\n\nOpening up to others, even just a little, has made a difference. The weight feels lighter when shared."
-    
+
     # Add closing paragraphs
     ending_narrative += "\n\nAs you walk through the school gates, you realize this is just one chapter in your story. The journey toward NUS Medicine continues, but you're approaching it with new awareness and tools."
-    
+
     ending_narrative += "\n\nWhatever comes next, you'll face it one breath at a time."
-    
+
     ending_narrative += "\n\n--- End of Serena's Story ---"
-    
+
     # Educational summary with consistent formatting
     educational_summary = "\n\n**Understanding Anxiety: Key Insights**"
-    
+
     educational_summary += "\n\nThrough Serena's story, we've explored how academic pressure can affect mental wellbeing. Some important takeaways:"
-    
+
     educational_summary += "\n\n1. Physical symptoms (racing heart, tight chest) are common manifestations of anxiety"
     educational_summary += "\n2. Small coping strategies can make a significant difference in managing daily stress"
     educational_summary += "\n3. Balance between achievement and wellbeing is an ongoing practice"
     educational_summary += "\n4. Recognition is the first step toward management"
-    
+
     educational_summary += "\n\nIf you or someone you know is experiencing persistent anxiety, remember that professional support is available."
-    
+
     educational_summary += "\n\nSingapore Helplines:"
     educational_summary += "\n- National Care Hotline: 1800-202-6868"
     educational_summary += "\n- Samaritans of Singapore (SOS): 1-767"
     educational_summary += "\n- IMH Mental Health Helpline: 6389-2222"
-    
+
     educational_summary += "\n\nThank you for experiencing Serena's story."
-    
+
     # Combine narrative and educational content
     return ending_narrative + educational_summary
 
@@ -766,19 +814,20 @@ def main_loop(message: str | None, history: list[tuple[str, str]]) -> str:
     # Process the action using the game state
     return run_action(message, history, game_state)
 
+
 def speak_text(text: str) -> None:
     """
     Stream text to speech using ElevenLabs API and play with ffmpeg.
-    
+
     Args:
         text (str): Text to convert to speech
     """
     global elevenlabs_client
-    
+
     if not elevenlabs_client:
         logger.warning("TTS disabled: ElevenLabs client not initialized")
         return
-        
+
     try:
         logger.info("[DEBUG] Starting TTS stream with ffmpeg pipe...")
         stream_start = time.time()
@@ -801,32 +850,35 @@ def speak_text(text: str) -> None:
 
         process.wait()
         stream_elapsed = time.time() - stream_start
-        logger.info(f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
+        logger.info(
+            f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
 
     except Exception as tts_error:
         logger.error(f"TTS Error: {tts_error}")
 
+
 def delayed_tts(text: str) -> None:
     """
     Delay TTS by a short time to allow UI to update first.
-    
+
     Args:
         text (str): Text to speak
     """
     time.sleep(0.1)
     speak_text(text)
 
+
 def run_tts_in_thread(text: str) -> None:
     """
     Run TTS in a separate thread to avoid blocking the main thread.
-    
+
     Args:
         text (str): Text to convert to speech
     """
     if not elevenlabs_client:
         logger.debug("TTS is disabled: ElevenLabs client not initialized")
         return
-    
+
     threading.Thread(target=delayed_tts, args=(text,), daemon=True).start()
     logger.info(f"Started TTS thread for text: {text[:50]}...")
 

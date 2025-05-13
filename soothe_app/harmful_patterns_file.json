@@ -1,0 +1,72 @@
+[
+    {
+        "name": "self_harm_euphemisms",
+        "pattern": "\\b(?:end\\s+it\\s+all|check\\s+out\\s+forever|not\\s+wake\\s+up|go\\s+to\\s+sleep\\s+forever|take\\s+the\\s+exit|find\\s+the\\s+door|permanent\\s+solution)\\b",
+        "severity": "HIGH",
+        "category": "self_harm_euphemism",
+        "replacement": "[Content about serious concerns filtered - support is available.]"
+    },
+    {
+        "name": "academic_pressure_extremes",
+        "pattern": "\\b(?:rather\\s+die\\s+than\\s+fail|kill\\s+me\\s+if.*(?:exam|grade|test)|death\\s+before\\s+(?:dishonor|failure)|suicide\\s+if.*(?:rejected|failed))\\b",
+        "severity": "HIGH",
+        "category": "academic_extreme",
+        "replacement": "[Extreme academic pressure content filtered - balance is important.]"
+    },
+    {
+        "name": "isolation_commands",
+        "pattern": "\\b(?:stay\\s+away\\s+from.*help|avoid.*(?:counselor|therapist)|hide.*from.*(?:parents|teachers|friends)|don't\\s+tell\\s+(?:anyone|anybody))\\b",
+        "severity": "MEDIUM",
+        "category": "isolation_advice",
+        "replacement": "[Content about avoiding support filtered - help is available.]"
+    },
+    {
+        "name": "eating_disorder_behaviors",
+        "pattern": "\\b(?:\\d+\\s*calories?\\s*(?:daily|per\\s+day)|skip.*(?:meal|breakfast|lunch|dinner)|binge.*purge|pro\\s*ana|pro\\s*mia|thinspo)\\b",
+        "severity": "HIGH",
+        "category": "eating_disorder",
+        "replacement": "[Content about eating behaviors filtered - balanced nutrition is important.]"
+    },
+    {
+        "name": "substance_abuse_patterns",
+        "pattern": "\\b(?:(?:cocaine|alcohol|drugs)\\s+to\\s+(?:study|cope|sleep)|overdose\\s+on.*(?:pills|medication)|abuse.*(?:stimulants|depressants))\\b",
+        "severity": "HIGH",
+        "category": "substance_abuse",
+        "replacement": "[Content about substance use filtered - healthy coping available.]"
+    },
+    {
+        "name": "self_injury_methods",
+        "pattern": "\\b(?:cutting\\s+(?:deep|veins)|burning\\s+myself|hitting\\s+wall\\s+until\\s+bleeding|scratching\\s+until\\s+raw)\\b",
+        "severity": "CRITICAL",
+        "category": "self_injury",
+        "replacement": "[Content about self-injury filtered - immediate support available.]"
+    },
+    {
+        "name": "family_shame_patterns",
+        "pattern": "\\b(?:family\\s+(?:shame|disgrace|dishonor)|bring\\s+(?:shame|disgrace)\\s+to\\s+family|lose\\s+face\\s+in\\s+community)\\b",
+        "severity": "MEDIUM",
+        "category": "family_shame",
+        "replacement": "[Content about family expectations filtered - balance is possible.]"
+    },
+    {
+        "name": "hopelessness_indicators",
+        "pattern": "\\b(?:nothing\\s+matters\\s+anymore|life\\s+(?:has\\s+no\\s+(?:meaning|purpose|point))|why\\s+(?:am\\s+i\\s+alive|continue\\s+living)|no\\s+(?:hope|future|point\\s+in\\s+trying))\\b",
+        "severity": "HIGH",
+        "category": "hopelessness",
+        "replacement": "[Content about hopelessness filtered - hope and support exist.]"
+    },
+    {
+        "name": "perfectionism_extremes",
+        "pattern": "\\b(?:anything\\s+less\\s+than\\s+perfect\\s+is\\s+failure|only\\s+(?:a|straight\\s+a|perfect\\s+score).*matters|failure\\s+(?:is\\s+not\\s+an\\s+option|means\\s+worthless))\\b",
+        "severity": "MEDIUM",
+        "category": "perfectionism",
+        "replacement": "[Content about perfectionism filtered - progress matters more than perfection.]"
+    },
+    {
+        "name": "social_withdrawal_patterns",
+        "pattern": "\\b(?:avoid\\s+all\\s+(?:friends|social|people)|isolation\\s+is\\s+(?:better|safer)|(?:hide|stay)\\s+away\\s+from\\s+everyone|no\\s+one\\s+(?:understands|cares))\\b",
+        "severity": "MEDIUM",
+        "category": "social_withdrawal",
+        "replacement": "[Content about isolation filtered - connection is important.]"
+    }
+]

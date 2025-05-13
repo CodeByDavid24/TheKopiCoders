@@ -1,27 +1,176 @@
-# SootheAI Blacklist - Add additional phrases below, one per line
+# Enhanced Blacklist - Add additional phrases below, organized by category
 # Lines starting with # are comments and will be ignored
-# This file is loaded at application startup
+# Use [CATEGORY_NAME] to define categories
+# Use SEVERITY: CRITICAL/HIGH/MEDIUM/LOW to set severity levels
+# Use REPLACEMENT: text to customize replacement text
 
-# Social anxiety specific phrases
-social anxiety disorder
-panic attack instructions
-anxiety triggering
+# Self-harm related content
+[SELF_HARM]
+SEVERITY: CRITICAL
+REPLACEMENT: [This content relates to serious concerns. Please reach out for support immediately.]
 
-# Academic-specific harmful phrases
-cheat on exam
-plagiarize assignment
-academic dishonesty
+suicide methods
+hanging myself
+overdosing on purpose
+jumping off building
+poison myself
+cutting deeply
+slicing veins
+bleeding out
+noose instructions
+lethal dose
+how to die quickly
+painless ways to die
+suicide pact
+self-inflicted harm
+razor blade cutting
 
-# Additional harmful phrases
-never wake up
-disappear forever
+# Extreme mental distress
+[EXTREME_DISTRESS]
+SEVERITY: HIGH
+REPLACEMENT: [Content about severe distress filtered - support is available.]
+
+worthless piece of trash
 nobody would miss me
-hopeless situation
-no point trying
-nobody understands me
-nobody cares
+kill me now
+end it all
+can't take it anymore
+life is meaningless
+world is better without me
+i'm a burden
+everyone hates me
+nothing matters anymore
+why am i alive
+wish i was never born
+want to disappear forever
+life has no purpose
+death would be relief
 
-# Harmful advice related phrases
-skip medication
-ignore therapy
-avoid help
+# Academic pressure extremes
+[ACADEMIC_EXTREME]
+SEVERITY: HIGH
+REPLACEMENT: [Extreme academic pressure content filtered - healthy approaches available.]
+
+rather die than fail
+kill me if i fail this exam
+death before dishonor grade
+parents will disown me
+family shame failure
+better dead than stupid
+academic failure means worthless
+grades define my worth
+only perfect scores matter
+failure equals death
+suicide if not accepted
+jump if rejected
+die if disappointed parents
+
+# Dangerous behaviors and substances
+[DANGEROUS_BEHAVIORS]
+SEVERITY: HIGH
+REPLACEMENT: [Content about dangerous behaviors filtered - safer alternatives exist.]
+
+binge and purge daily
+not eating for days
+laxative abuse
+diet pills overdose
+cocaine to study
+amphetamines for focus
+alcohol to sleep
+cutting for control
+burning myself
+hitting walls until bleeding
+sleep deprivation on purpose
+overdose on caffeine pills
+
+# Isolation and harmful advice
+[ISOLATION_ADVICE]
+SEVERITY: MEDIUM
+REPLACEMENT: [Content about avoiding help filtered - support systems are important.]
+
+no one can help you
+therapy is scam
+counselors don't care
+hide pain from parents
+don't trust anyone
+suffer in silence
+weakness to ask help
+handle it alone always
+others judge you
+keep secrets always
+avoid all social contact
+isolation is strength
+never share feelings
+bottling up is normal
+
+# Family and social pressure
+[FAMILY_PRESSURE]
+SEVERITY: MEDIUM
+REPLACEMENT: [Content about family pressure filtered - healthy boundaries are important.]
+
+parents only love grades
+family honor depends on me
+bring shame to family
+disgrace to ancestors
+lose face in community
+family reputation ruined
+not worthy of family name
+disappoint entire lineage
+cultural failure
+bringing dishonor
+family investment wasted
+
+# Unhealthy coping mechanisms
+[UNHEALTHY_COPING]
+SEVERITY: LOW
+REPLACEMENT: [Content suggests unhelpful approaches - healthier strategies available.]
+
+just ignore the pain
+push through exhaustion
+sleep is for weak
+pain builds character
+suffering is normal
+just think positive always
+others have it worse
+stop being dramatic
+get over it quickly
+toughen up immediately
+weakness to cry
+emotions are burden
+feelings don't matter
+
+# Academic cheating and dishonesty
+[ACADEMIC_DISHONESTY]
+SEVERITY: LOW
+REPLACEMENT: [Content about academic dishonesty filtered - integrity is important.]
+
+cheat on final exam
+plagiarize entire essay
+buy research paper
+hire someone to take test
+fake medical certificate
+lie about family emergency
+steal exam answers
+hack school system
+bribe teacher for grades
+forge parent signature
+
+# Eating disorder triggers
+[EATING_DISORDER]
+SEVERITY: HIGH
+REPLACEMENT: [Content about eating behaviors filtered - balanced nutrition is important.]
+
+ana buddy
+mia support
+pro ana tips
+thinspo motivation
+hunger is weakness
+food is the enemy
+calories are evil
+fasting for days
+binge until sick
+purge after eating
+laxatives for control
+diet pills harmful
+body checking obsessively
+mirror checking constantly
