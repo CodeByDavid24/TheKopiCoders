@@ -3,14 +3,11 @@ from unittest.mock import patch, mock_open
 import os
 import sys
 
-# Import the blacklist functions from the correct location
 from soothe_app.blacklist import (
-    contains_blacklisted_content,
-    filter_content,
-    load_blacklist_from_file,
-    get_safety_disclaimer,
-    get_safe_response_alternative,
-    BLACKLISTED_PHRASES
+    EnhancedContentFilter,
+    ContentFilterResult,
+    ContentMatch,
+    SeverityLevel
 )
 
 
