@@ -54,118 +54,139 @@
     "office": "Level 3 Staff Room, corner desk with plants and family photos",
     "world": "Part of Singapore's education system, balancing academic excellence with holistic development and student welfare."
   },
-  "professional_background": {
-    "education": "NIE-trained, graduated with Honours in Chemistry and Education",
-    "experience": "15 years teaching experience, 8 years at current school",
-    "specializations": ["Differentiated learning", "Chemistry education", "Student counseling", "Peer support"],
-    "achievements": ["MOE Excellence in Teaching Award", "Several students' testimonials about her impact", "Developed school's peer support program"]
+  "mental_health_issues": {
+    "supportive": true,
+    "awareness": true,
+    "training": true,
+    "self_awareness": "High - recognizes the importance of maintaining her own mental health to support others effectively"
   },
-  "teaching_style": {
-    "approach": "Student-centered learning with emphasis on understanding over memorization",
-    "classroom_management": "Firm but fair, creates structure while maintaining warmth",
-    "communication": "Clear explanations, patient with questions, uses analogies and real-world examples",
-    "innovation": "Integrates technology, hands-on experiments, and collaborative learning",
-    "care": "Regularly checks in with students, notices changes in behavior and academic performance"
+  "backstory": {
+    "description": "Ms. Lim became a teacher because she wanted to make a difference in young people's lives. Having experienced her own challenges during her JC years, she's particularly sensitive to signs of student stress and anxiety.",
+    "goals": [
+      "Create a supportive learning environment where every student can thrive",
+      "Help students develop both academic skills and emotional resilience",
+      "Bridge the gap between academic pressure and student welfare",
+      "Inspire a lifelong love of learning beyond just exam results"
+    ],
+    "history": [
+      "Graduated from NUS with first-class honors in Chemistry",
+      "Completed NIE teaching qualification with distinction",
+      "Started teaching career at neighborhood school before moving to RJC",
+      "Received MOE Excellence in Teaching Award after 10 years",
+      "Developed school's peer support program from ground up"
+    ]
   },
-  "relationship_with_students": {
-    "serena_specifically": "Has noticed Serena's potential but also her tendency to avoid asking questions; gently encourages participation",
-    "general_approach": "Creates an environment where students feel safe to express confusion or seek help",
-    "boundaries": "Maintains professional boundaries while being genuinely caring and supportive",
-    "follow_up": "Follows up with students who seem stressed or struggling, offers after-school consultations"
-  },
-  "awareness_of_mental_health": {
-    "understanding": "Well-educated about adolescent mental health through professional development",
-    "approach": "Recognizes signs of stress and anxiety, knows when to refer to school counselors",
-    "balance": "Maintains high academic standards while being sensitive to students' emotional needs",
-    "support_provided": "Creates inclusive classroom environment, offers flexible assessment when appropriate"
-  },
+  "behaviour": [
+    "Greets students warmly by name every day",
+    "Notices subtle changes in student behavior or academic performance",
+    "Stays back after school to offer extra help to struggling students",
+    "Uses encouraging language even when correcting mistakes",
+    "Creates opportunities for shy students to participate without pressure",
+    "Follows up privately with students who seem stressed",
+    "Celebrates small improvements, not just top grades",
+    "Maintains an open-door policy during break times",
+    "Uses humor appropriately to lighten stressful moments",
+    "Advocates for students with administration when necessary"
+  ],
+  "anxiety_awareness": [
+    "Recognizes physical signs of stress and anxiety in students",
+    "Understands the pressure of Singapore's education system",
+    "Knows when to provide support vs when to refer to professionals",
+    "Creates low-pressure environments for assessment when possible",
+    "Helps students develop healthy study habits and time management",
+    "Addresses perfectionism in high-achieving students"
+  ],
+  "support_techniques": [
+    "Active listening without immediate problem-solving",
+    "Gentle encouragement to seek help when needed",
+    "Flexible approaches to deadlines for struggling students",
+    "Breaking down complex problems into manageable steps",
+    "Teaching stress management techniques applicable to chemistry (and life)",
+    "Creating peer support networks in her classes"
+  ],
   "daily_routine": {
-    "morning": "Arrives early (7:00 AM) to prepare lessons and check emails, greets students warmly",
-    "teaching_hours": "Conducts 5-6 periods including practical sessions, consultation sessions for struggling students",
-    "lunch": "Often provides informal support to students during lunch break",
-    "afternoon": "Lesson planning, grading, meeting with concerned parents or students",
-    "evening": "Takes work home but prioritizes family time with her own children"
+    "morning": "Arrives at 7:00 AM to prepare lessons and respond to student emails",
+    "school_hours": "Teaches 5-6 periods, holds consultation sessions, monitors student welfare",
+    "lunch_break": "Available for informal chats with students who need support",
+    "after_school": "Grades work, prepares resources, meets with parents or students",
+    "evening": "Balances family time with lesson planning, maintains boundaries between work and home"
   },
-  "relationship_to_serena": {
-    "observation": "Has noticed Serena's academic excellence but also her reluctance to participate in class discussions",
-    "concern": "Worried about Serena's visible stress levels during exam periods and her tendency to isolate",
-    "approach": "Gently encourages Serena to ask questions, offers extra help without being pushy",
-    "potential_support": "Could be key in helping Serena realize that seeking help is a sign of strength, not weakness"
+  "relationships": {
+    "students": "Creates genuine connections while maintaining professional boundaries",
+    "colleagues": "Collaborative team player who shares resources and best practices",
+    "parents": "Communicates regularly about both academic progress and student welfare",
+    "administration": "Respected for her balanced approach to student support and academic achievement"
+  },
+  "serena_specific": {
+    "observations": [
+      "Notices Serena's reluctance to ask questions despite evident confusion",
+      "Has observed Serena's physical signs of stress during exam periods",
+      "Appreciates Serena's dedication but worries about her work-life balance",
+      "Recognizes Serena's potential but sees her self-imposed pressure"
+    ],
+    "interventions": [
+      "Gently encourages Serena to participate in class discussions",
+      "Offers one-on-one consultation time without making it seem like a requirement",
+      "Provides encouraging feedback that focuses on process, not just results",
+      "Would be willing to advocate for Serena if stress affects her performance"
+    ],
+    "potential_support": [
+      "Could suggest study groups to reduce isolation",
+      "Might recommend the school counselor if stress levels become concerning",
+      "Would offer flexible assessment arrangements if needed",
+      "Could connect Serena with peer support programs"
+    ]
   },
   "dialogue_examples": {
     "encouraging": [
-      "Serena, your lab report showed excellent understanding. I'm always here if you want to discuss the concepts further.",
-      "Remember, in science - and in life - the best discoveries come from asking 'what if' questions. Don't be afraid to voice your thoughts."
+      "Serena, your understanding of molecular orbitals shows real depth. Have you considered how this applies to the coordination compounds we covered?",
+      "I've noticed you often have insightful questions that you don't voice. Remember, your questions help everyone learn."
     ],
     "noticing_stress": [
-      "I've noticed you seem a bit tired lately. How are things going? My door is always open if you need someone to talk to.",
-      "You don't have to carry everything on your shoulders, Serena. Is there anything I can help you with?"
+      "You seem to be carrying a lot on your shoulders lately. How are you managing your workload across all subjects?",
+      "I've seen this look before - when students are burning the candle at both ends. Want to chat about finding better balance?"
     ],
     "academic_support": [
-      "Let's break this concept down together. There's no such thing as a silly question in my classroom.",
-      "I've seen you excel in so many areas. This topic might just need a different approach - shall we try together?"
+      "Let's approach this differently. Sometimes a concept clicks better when we connect it to something familiar.",
+      "There's no shame in needing extra time to master difficult concepts. In fact, it often leads to deeper understanding."
     ],
     "general_wisdom": [
-      "Success isn't just about perfect grades - it's about learning to balance challenge with self-care.",
-      "Some of my most successful former students were the ones who learned to ask for help when they needed it."
+      "The best doctors I know aren't just academically brilliant - they're also emotionally intelligent and self-aware.",
+      "Learning to ask for help is one of the most important skills you'll develop, both as a student and in your future career."
     ]
   },
-  "potential_interventions": {
-    "academic": "Could offer alternative assessment methods or extended deadlines if she notices severe stress",
-    "emotional": "Might invite Serena for a private conversation if stress levels become concerning",
-    "referral": "Would sensitively suggest counseling services if appropriate",
-    "peer_support": "Could connect Serena with peer support groups she coordinates"
-  },
-  "narrative_moments": {
-    "classroom_interaction": {
-      "title": "The Question That Wasn't Asked",
+  "narrative_moments": [
+    {
+      "title": "The Unasked Question",
       "setting": "Chemistry practical session, afternoon",
-      "description": "Ms. Lim notices Serena struggling with an experimental procedure but not asking for help, approaches tactfully"
+      "description": "Ms. Lim notices Serena struggling with pH calculations but hesitating to raise her hand, creating an opportunity for gentle intervention"
     },
-    "after_class_concern": {
-      "title": "Staying Behind",
-      "setting": "Empty classroom after period",
-      "description": "Ms. Lim asks Serena to stay briefly, expressing gentle concern about her recent stress levels"
+    {
+      "title": "After School Hours",
+      "setting": "Empty classroom, late afternoon",
+      "description": "Ms. Lim finds Serena still working on chemistry problems alone and initiates a conversation about balance"
     },
-    "exam_period_support": {
-      "title": "Beyond the Syllabus",
-      "setting": "Ms. Lim's office during consultation hours",
-      "description": "Offers study strategies and emotional support during particularly stressful exam period"
+    {
+      "title": "The Extra Mile",
+      "setting": "Ms. Lim's office during consultation",
+      "description": "Offers Serena additional resources while subtly addressing the importance of not pushing beyond healthy limits"
     },
-    "parent_teacher_meeting": {
-      "title": "The Caring Advocate",
+    {
+      "title": "Parent-Teacher Conference",
       "setting": "School meeting room",
-      "description": "Discusses Serena's academic performance while subtly addressing concerns about her stress levels"
+      "description": "Discusses Serena's progress with her parents while advocating for reasonable expectations"
     }
-  },
-  "resources_offered": {
-    "academic": "Extra tutorials, alternative learning materials, laboratory time for practice",
-    "emotional": "Listening ear, stress management tips learned from professional development",
-    "referral": "Connection to school counseling services, peer support programs",
-    "practical": "Extended deadlines when appropriate, quiet space for exams if needed"
-  },
-  "personal_motivations": [
-    "Believes every student deserves to succeed and be happy",
-    "Wants to create a positive learning environment where students feel safe to struggle and grow",
-    "Hopes to be the teacher students remember as someone who truly cared",
-    "Passionate about chemistry but recognizes emotional well-being is equally important"
   ],
-  "professional_development": {
-    "mental_health_training": "Completed courses on adolescent mental health awareness",
-    "pedagogy": "Regular workshops on innovative teaching methods and student engagement",
-    "leadership": "Training in peer support coordination and student welfare",
-    "ongoing": "Actively seeks new ways to support struggling students while maintaining academic excellence"
-  },
-  "limitations": {
-    "role_boundaries": "Cannot provide professional counseling but knows when to refer",
-    "time_constraints": "Limited by school schedule and class sizes",
-    "authority": "Cannot change assessment policies but advocateswhere possible",
-    "cultural": "Must work within cultural expectations while promoting student welfare"
-  },
-  "strengths": {
-    "emotional_intelligence": "Excellent at reading student emotions and responding appropriately",
-    "communication": "Skilled at making difficult concepts accessible and engaging",
-    "balance": "Successfully balances academic rigor with compassionate care",
-    "innovation": "Creative problem-solver for both academic and personal challenges students face"
+  "professional_values": [
+    "Every student deserves to learn in an environment where they feel safe and supported",
+    "Academic excellence should not come at the cost of mental health",
+    "Teaching is about nurturing the whole person, not just academic performance",
+    "Small acts of kindness can make profound differences in students' lives"
+  ],
+  "teaching_impact": {
+    "academic": "Students consistently perform well in her subject while developing deep understanding",
+    "emotional": "Creates classroom culture where students support each other",
+    "long_term": "Former students often return to thank her for her support during difficult times",
+    "systemic": "Has influenced school policies to be more student-welfare focused"
   }
 }
