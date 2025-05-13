@@ -727,63 +727,6 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         return error_msg
 
 
-def generate_simple_ending(game_state: GameState) -> str:
-    """
-    Generate a simple ending based on minimal state tracking.
-    """
-    # Track key phrases in user history
-    user_messages = [msg.lower() for msg, _ in game_state.get('history', [])]
-    has_mentioned_feelings = any('feel' in msg for msg in user_messages)
-    has_studied_late = any(('study' in msg and (
-        'night' in msg or 'late' in msg)) for msg in user_messages)
-    has_talked_to_friend = any(('friend' in msg or 'talk' in msg)
-                               for msg in user_messages)
-
-    # Build ending narrative without using triple quotes
-    ending_narrative = "The end-of-term bell rings across Raffles Junior College. As you pack your notes and textbooks, you let out a long breath. This term has been a journey of discoveries - not just about H2 Biology or Chemistry formulas, but about yourself."
-
-    ending_narrative += "\n\nAs you step out of the classroom, you take a moment to appreciate how different things feel compared to the beginning of the term. The pressure of academics hasn't disappeared, but something has shifted in how you carry it."
-
-    # Add variations with consistent formatting
-    if has_mentioned_feelings:
-        ending_narrative += "\n\nYou've started paying attention to your body's signals - the racing heart before presentations, the tightness in your chest during tests. Simply recognizing these feelings has been its own kind of progress."
-
-    if has_studied_late:
-        ending_narrative += "\n\nWhile you've still had late study nights, you've become more mindful about balancing your academic drive with your wellbeing. Small changes, but meaningful ones."
-
-    if has_talked_to_friend:
-        ending_narrative += "\n\nOpening up to others, even just a little, has made a difference. The weight feels lighter when shared."
-
-    # Add closing paragraphs
-    ending_narrative += "\n\nAs you walk through the school gates, you realize this is just one chapter in your story. The journey toward NUS Medicine continues, but you're approaching it with new awareness and tools."
-
-    ending_narrative += "\n\nWhatever comes next, you'll face it one breath at a time."
-
-    ending_narrative += "\n\n--- End of Serena's Story ---"
-
-    # Educational summary with consistent formatting
-    educational_summary = "\n\n**Understanding Anxiety: Key Insights**"
-
-    educational_summary += "\n\nThrough Serena's story, we've explored how academic pressure can affect mental wellbeing. Some important takeaways:"
-
-    educational_summary += "\n\n1. Physical symptoms (racing heart, tight chest) are common manifestations of anxiety"
-    educational_summary += "\n2. Small coping strategies can make a significant difference in managing daily stress"
-    educational_summary += "\n3. Balance between achievement and wellbeing is an ongoing practice"
-    educational_summary += "\n4. Recognition is the first step toward management"
-
-    educational_summary += "\n\nIf you or someone you know is experiencing persistent anxiety, remember that professional support is available."
-
-    educational_summary += "\n\nSingapore Helplines:"
-    educational_summary += "\n- National Care Hotline: 1800-202-6868"
-    educational_summary += "\n- Samaritans of Singapore (SOS): 1-767"
-    educational_summary += "\n- IMH Mental Health Helpline: 6389-2222"
-
-    educational_summary += "\n\nThank you for experiencing Serena's story."
-
-    # Combine narrative and educational content
-    return ending_narrative + educational_summary
-
-
 def main_loop(message: str | None, history: list[tuple[str, str]]) -> str:
     """
     Main game loop that processes player input and returns AI responses.
