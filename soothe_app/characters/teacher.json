@@ -1,0 +1,171 @@
+{
+  "name": "Ms. Sarah Lim",
+  "age": 38,
+  "gender": "Female",
+  "role": "School - Teacher (H2 Chemistry)",
+  "personality": {
+    "mbti": "ENFJ",
+    "mbti_description": "Caring, passionate about education, intuitive about students' needs, believes in every student's potential",
+    "traits": {
+      "attitudes": "Optimistic yet realistic; creates a safe space where students feel heard and valued",
+      "perception": "Highly attuned to students' emotional states and learning needs; notices patterns and changes in behavior",
+      "judgement": "Balances academic rigor with emotional support; makes decisions based on both educational outcomes and student welfare",
+      "orientation": "Seeks to inspire lifelong learning and personal growth beyond just academic achievement"
+    }
+  },
+  "physical": {
+    "race": {
+      "name": "Chinese Singaporean",
+      "description": "A second-generation Singaporean with strong ties to both Eastern values and Western pedagogical approaches."
+    },
+    "age": {
+      "years": 38,
+      "lifespan": "Typically lives up to around 85–100 years with modern healthcare.",
+      "maturity": "Experienced educator with strong emotional intelligence and classroom management skills."
+    },
+    "measurements": {
+      "height": 165,
+      "weight": 58,
+      "bmi": 21.3
+    },
+    "appearance": "Professional yet approachable, often wearing comfortable blazers over colorful blouses, hair usually in a neat bob, warm smile that reaches her eyes, and expressive hand gestures when explaining concepts."
+  },
+  "class": {
+    "name": "Senior Teacher",
+    "description": "Lead Chemistry teacher at Raffles Junior College with 15 years of teaching experience, known for her innovative teaching methods and strong rapport with students.",
+    "subjects": [
+      "H2 Chemistry",
+      "H1 General Paper (Relief teaching)",
+      "Science Research Programme"
+    ],
+    "additional_roles": [
+      "Form Teacher for 2-4 class",
+      "Chemistry Department Coordinator",
+      "Student Welfare Committee Member",
+      "Peer Support Coordinator"
+    ],
+    "teaching_philosophy": "Every student has unique strengths and challenges. My role is to help them discover their potential while supporting them through difficulties."
+  },
+  "location": {
+    "country": "Singapore",
+    "school": "Raffles Junior College",
+    "home": "Condo in Bishan, lives with husband (fellow teacher) and two young children",
+    "classroom": "Chemistry Lab 3 - decorated with motivational posters and student success stories",
+    "office": "Level 3 Staff Room, corner desk with plants and family photos",
+    "world": "Part of Singapore's education system, balancing academic excellence with holistic development and student welfare."
+  },
+  "professional_background": {
+    "education": "NIE-trained, graduated with Honours in Chemistry and Education",
+    "experience": "15 years teaching experience, 8 years at current school",
+    "specializations": ["Differentiated learning", "Chemistry education", "Student counseling", "Peer support"],
+    "achievements": ["MOE Excellence in Teaching Award", "Several students' testimonials about her impact", "Developed school's peer support program"]
+  },
+  "teaching_style": {
+    "approach": "Student-centered learning with emphasis on understanding over memorization",
+    "classroom_management": "Firm but fair, creates structure while maintaining warmth",
+    "communication": "Clear explanations, patient with questions, uses analogies and real-world examples",
+    "innovation": "Integrates technology, hands-on experiments, and collaborative learning",
+    "care": "Regularly checks in with students, notices changes in behavior and academic performance"
+  },
+  "relationship_with_students": {
+    "serena_specifically": "Has noticed Serena's potential but also her tendency to avoid asking questions; gently encourages participation",
+    "general_approach": "Creates an environment where students feel safe to express confusion or seek help",
+    "boundaries": "Maintains professional boundaries while being genuinely caring and supportive",
+    "follow_up": "Follows up with students who seem stressed or struggling, offers after-school consultations"
+  },
+  "awareness_of_mental_health": {
+    "understanding": "Well-educated about adolescent mental health through professional development",
+    "approach": "Recognizes signs of stress and anxiety, knows when to refer to school counselors",
+    "balance": "Maintains high academic standards while being sensitive to students' emotional needs",
+    "support_provided": "Creates inclusive classroom environment, offers flexible assessment when appropriate"
+  },
+  "daily_routine": {
+    "morning": "Arrives early (7:00 AM) to prepare lessons and check emails, greets students warmly",
+    "teaching_hours": "Conducts 5-6 periods including practical sessions, consultation sessions for struggling students",
+    "lunch": "Often provides informal support to students during lunch break",
+    "afternoon": "Lesson planning, grading, meeting with concerned parents or students",
+    "evening": "Takes work home but prioritizes family time with her own children"
+  },
+  "relationship_to_serena": {
+    "observation": "Has noticed Serena's academic excellence but also her reluctance to participate in class discussions",
+    "concern": "Worried about Serena's visible stress levels during exam periods and her tendency to isolate",
+    "approach": "Gently encourages Serena to ask questions, offers extra help without being pushy",
+    "potential_support": "Could be key in helping Serena realize that seeking help is a sign of strength, not weakness"
+  },
+  "dialogue_examples": {
+    "encouraging": [
+      "Serena, your lab report showed excellent understanding. I'm always here if you want to discuss the concepts further.",
+      "Remember, in science - and in life - the best discoveries come from asking 'what if' questions. Don't be afraid to voice your thoughts."
+    ],
+    "noticing_stress": [
+      "I've noticed you seem a bit tired lately. How are things going? My door is always open if you need someone to talk to.",
+      "You don't have to carry everything on your shoulders, Serena. Is there anything I can help you with?"
+    ],
+    "academic_support": [
+      "Let's break this concept down together. There's no such thing as a silly question in my classroom.",
+      "I've seen you excel in so many areas. This topic might just need a different approach - shall we try together?"
+    ],
+    "general_wisdom": [
+      "Success isn't just about perfect grades - it's about learning to balance challenge with self-care.",
+      "Some of my most successful former students were the ones who learned to ask for help when they needed it."
+    ]
+  },
+  "potential_interventions": {
+    "academic": "Could offer alternative assessment methods or extended deadlines if she notices severe stress",
+    "emotional": "Might invite Serena for a private conversation if stress levels become concerning",
+    "referral": "Would sensitively suggest counseling services if appropriate",
+    "peer_support": "Could connect Serena with peer support groups she coordinates"
+  },
+  "narrative_moments": {
+    "classroom_interaction": {
+      "title": "The Question That Wasn't Asked",
+      "setting": "Chemistry practical session, afternoon",
+      "description": "Ms. Lim notices Serena struggling with an experimental procedure but not asking for help, approaches tactfully"
+    },
+    "after_class_concern": {
+      "title": "Staying Behind",
+      "setting": "Empty classroom after period",
+      "description": "Ms. Lim asks Serena to stay briefly, expressing gentle concern about her recent stress levels"
+    },
+    "exam_period_support": {
+      "title": "Beyond the Syllabus",
+      "setting": "Ms. Lim's office during consultation hours",
+      "description": "Offers study strategies and emotional support during particularly stressful exam period"
+    },
+    "parent_teacher_meeting": {
+      "title": "The Caring Advocate",
+      "setting": "School meeting room",
+      "description": "Discusses Serena's academic performance while subtly addressing concerns about her stress levels"
+    }
+  },
+  "resources_offered": {
+    "academic": "Extra tutorials, alternative learning materials, laboratory time for practice",
+    "emotional": "Listening ear, stress management tips learned from professional development",
+    "referral": "Connection to school counseling services, peer support programs",
+    "practical": "Extended deadlines when appropriate, quiet space for exams if needed"
+  },
+  "personal_motivations": [
+    "Believes every student deserves to succeed and be happy",
+    "Wants to create a positive learning environment where students feel safe to struggle and grow",
+    "Hopes to be the teacher students remember as someone who truly cared",
+    "Passionate about chemistry but recognizes emotional well-being is equally important"
+  ],
+  "professional_development": {
+    "mental_health_training": "Completed courses on adolescent mental health awareness",
+    "pedagogy": "Regular workshops on innovative teaching methods and student engagement",
+    "leadership": "Training in peer support coordination and student welfare",
+    "ongoing": "Actively seeks new ways to support struggling students while maintaining academic excellence"
+  },
+  "limitations": {
+    "role_boundaries": "Cannot provide professional counseling but knows when to refer",
+    "time_constraints": "Limited by school schedule and class sizes",
+    "authority": "Cannot change assessment policies but advocateswhere possible",
+    "cultural": "Must work within cultural expectations while promoting student welfare"
+  },
+  "strengths": {
+    "emotional_intelligence": "Excellent at reading student emotions and responding appropriately",
+    "communication": "Skilled at making difficult concepts accessible and engaging",
+    "balance": "Successfully balances academic rigor with compassionate care",
+    "innovation": "Creative problem-solver for both academic and personal challenges students face"
+  }
+}
