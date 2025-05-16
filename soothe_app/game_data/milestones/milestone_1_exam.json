@@ -1,0 +1,197 @@
+{
+    "milestone_type": "exams",
+    "title": "The Preliminary Examinations",
+    "description": "The crucial preliminary exams before A-levels - a major test of Serena's preparation and anxiety management skills",
+    "phase": "mid_story",
+    "importance": "High - Results will determine A-level subject combinations and self-confidence",
+    "scenario": {
+        "setting": "Raffles Institution examination hall, 8:00 AM on a Monday morning",
+        "context": "First day of preliminary examinations. Mathematics paper in 30 minutes.",
+        "serena_state": {
+            "physical_symptoms": [
+                "Sweaty palms despite air conditioning",
+                "Rapid heartbeat (noticeable to herself)",
+                "Slight nausea, barely ate breakfast",
+                "Tension headache building behind her eyes"
+            ],
+            "mental_state": [
+                "Racing thoughts about potential questions",
+                "Self-doubt about preparation despite months of studying",
+                "Catastrophic thinking about failure consequences",
+                "Reviewing mental notes obsessively"
+            ],
+            "recent_events": [
+                "Last night: Studied until 2 AM despite planning to sleep early",
+                "Morning: Checked notes three times during MRT journey",
+                "Arrived 45 minutes early, sat alone reviewing formulas"
+            ]
+        }
+    },
+    "decision_points": [
+        {
+            "id": "pre_exam_coping",
+            "situation": "30 minutes before the exam, anxiety symptoms are building",
+            "choices": [
+                {
+                    "id": "breathing_exercise",
+                    "text": "Practice the breathing exercises Dr. Lim taught you",
+                    "immediate_effect": "Anxiety decreases slightly, feels more centered",
+                    "long_term_impact": "Positive coping strategy reinforced"
+                },
+                {
+                    "id": "last_minute_cramming",
+                    "text": "Review notes one more time to feel prepared",
+                    "immediate_effect": "Temporary reassurance, but increased time pressure",
+                    "long_term_impact": "Reinforces unhelpful coping pattern"
+                },
+                {
+                    "id": "talk_to_friend",
+                    "text": "Text Wei Ming for encouragement",
+                    "immediate_effect": "Feels supported but distracted",
+                    "long_term_impact": "Strengthens support system usage"
+                },
+                {
+                    "id": "isolation_spiral",
+                    "text": "Sit alone and try to push through the anxiety",
+                    "immediate_effect": "Anxiety continues to build unchecked",
+                    "long_term_impact": "Isolation pattern reinforced"
+                }
+            ]
+        },
+        {
+            "id": "during_exam_crisis",
+            "situation": "Question 5 on the math paper - you've never seen this type of problem before",
+            "choices": [
+                {
+                    "id": "strategic_skip",
+                    "text": "Skip it for now and return later with fresh perspective",
+                    "immediate_effect": "Maintains exam momentum, reduces immediate panic",
+                    "long_term_impact": "Learns flexible problem-solving approach"
+                },
+                {
+                    "id": "panic_freeze",
+                    "text": "Stare at the problem, feeling increasingly panicked",
+                    "immediate_effect": "Time wasted, anxiety spiraling upward",
+                    "long_term_impact": "Reinforces freeze response to difficulty"
+                },
+                {
+                    "id": "attempt_anyway",
+                    "text": "Work through it methodically despite confusion",
+                    "immediate_effect": "Some progress made, slight confidence boost",
+                    "long_term_impact": "Builds resilience and persistence"
+                },
+                {
+                    "id": "give_up_completely",
+                    "text": "Leave it blank and feel defeated about the whole exam",
+                    "immediate_effect": "Immediate relief but growing dread",
+                    "long_term_impact": "Learned helplessness pattern strengthened"
+                }
+            ]
+        },
+        {
+            "id": "post_exam_reaction",
+            "situation": "Walking out of the exam hall, comparing answers with classmates",
+            "choices": [
+                {
+                    "id": "healthy_boundary",
+                    "text": "Politely avoid answer comparison and go decompress",
+                    "immediate_effect": "Protects mental state from rumination",
+                    "long_term_impact": "Healthy boundary-setting skill developed"
+                },
+                {
+                    "id": "answer_checking",
+                    "text": "Compare answers with Wei Ming and others",
+                    "immediate_effect": "Some reassurance but also new worries",
+                    "long_term_impact": "Perpetuates external validation seeking"
+                },
+                {
+                    "id": "self_reflection",
+                    "text": "Journal about the experience and what you learned",
+                    "immediate_effect": "Processes emotions constructively",
+                    "long_term_impact": "Builds self-awareness and emotional intelligence"
+                },
+                {
+                    "id": "catastrophic_rumination",
+                    "text": "Replay every moment, focusing on potential mistakes",
+                    "immediate_effect": "Increasing distress and self-criticism",
+                    "long_term_impact": "Rumination pattern deeply reinforced"
+                }
+            ]
+        }
+    ],
+    "pathway_influences": {
+        "successful_path": {
+            "required_choices": [
+                "breathing_exercise",
+                "strategic_skip",
+                "healthy_boundary"
+            ],
+            "alternative_combinations": [
+                [
+                    "talk_to_friend",
+                    "attempt_anyway",
+                    "self_reflection"
+                ]
+            ],
+            "anxiety_threshold": "Below 15 total anxiety points",
+            "confidence_threshold": "Above 5 total confidence points"
+        },
+        "depression_spiral": {
+            "triggered_by": [
+                "isolation_spiral",
+                "panic_freeze",
+                "catastrophic_rumination"
+            ],
+            "anxiety_threshold": "Above 25 total anxiety points",
+            "confidence_threshold": "Below -3 total confidence points",
+            "pattern": "Consistent choice of avoidance and self-criticism"
+        },
+        "resilient_recovery": {
+            "critical_choice": "Must have at least one severe stumble but then choose growth",
+            "example_path": [
+                "last_minute_cramming",
+                "panic_freeze",
+                "self_reflection"
+            ],
+            "recovery_indicator": "Choosing growth option after experiencing failure"
+        }
+    },
+    "outcomes": {
+        "exam_performance": {
+            "high": "87-95% across papers",
+            "moderate": "75-86% across papers",
+            "low": "60-74% across papers",
+            "failing": "Below 60% on multiple papers"
+        },
+        "psychological_impact": {
+            "positive": "Increased confidence in coping abilities",
+            "neutral": "Maintained status quo, some lessons learned",
+            "negative": "Reinforced negative patterns, decreased self-efficacy",
+            "crisis": "Severe anxiety symptoms requiring intervention"
+        }
+    },
+    "coaching_opportunities": {
+        "pre_milestone": [
+            "Practice exam strategies in low-stakes environment",
+            "Develop specific anxiety management plan for exam day",
+            "Identity and challenge catastrophic thinking patterns"
+        ],
+        "during_milestone": [
+            "Use grounding techniques during difficult moments",
+            "Apply flexible problem-solving strategies",
+            "Practice self-compassion when struggling"
+        ],
+        "post_milestone": [
+            "Process the experience without harsh self-judgment",
+            "Extract learning points for future improvement",
+            "Celebrate efforts and growth, not just outcomes"
+        ]
+    },
+    "narrative_threads": [
+        "Relationship with parents' expectations",
+        "Friendship dynamics during stress",
+        "Teacher support and awareness",
+        "Personal growth in anxiety management",
+        "Academic identity vs self-worth"
+    ]
+}

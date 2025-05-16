@@ -1,0 +1,70 @@
+{
+    "ending_type": "depression_spiral",
+    "title": "When the Weight Becomes Too Much",
+    "description": "Serena's anxiety escalates into depression as she struggles without proper support and continues using harmful coping mechanisms.",
+    "narrative": {
+        "opening": "Serena stares at the rejection email from NUS Medicine. The words blur together as familiar numbness settles in. She hasn't slept properly in weeks, and the constant worry has evolved into something deeper, emptier.",
+        "development": [
+            "What started as exam anxiety has grown into something that colors every aspect of her life. Serena finds herself questioning not just her abilities, but her worth as a person.",
+            "She's been skipping meals, telling herself she doesn't deserve food if she can't even handle her studies. The isolation she once chose now feels inescapable.",
+            "Friends have stopped inviting her out after months of declined invitations. Even Wei Ming's concerned texts go unanswered."
+        ],
+        "climax": "During a particularly difficult night, Serena realizes she can't remember the last time she felt genuinely happy. The anxiety has transformed into a persistent gray fog that makes everything feel meaningless.",
+        "resolution": [
+            "Serena misses several important exams, unable to get out of bed some mornings.",
+            "Her parents, initially frustrated, finally realize this isn't just about 'being lazy' when they find her crying uncontrollably one evening.",
+            "The story ends with Serena finally accepting that she needs help, but the path to recovery feels overwhelming and uncertain."
+        ]
+    },
+    "character_decline": {
+        "anxiety_progression": "Anxiety evolved into persistent depressive episodes",
+        "self_isolation": "Complete withdrawal from friends and social activities",
+        "harmful_patterns": [
+            "Severe sleep disruption (insomnia and oversleeping)",
+            "Irregular eating patterns and poor nutrition",
+            "Academic procrastination leading to panic-cram cycles",
+            "Negative self-talk becoming internalized beliefs",
+            "Avoidance of all potentially stressful situations"
+        ],
+        "lost_support": [
+            "Friends stopped reaching out after repeated rejections",
+            "No professional help sought despite warning signs",
+            "Parents misunderstood symptoms as behavioral problems",
+            "Teachers saw declining performance but didn't intervene"
+        ],
+        "academic_outcome": "Failing grades, missed deadlines, academic probation",
+        "relationships": "Severe strain on all relationships, increased family conflict"
+    },
+    "warning_signs": [
+        {
+            "situation": "First major exam failure",
+            "response": "Isolated further, stopped attending study groups",
+            "outcome": "Pattern of avoidance reinforced"
+        },
+        {
+            "situation": "Parents express disappointment",
+            "response": "Internalized criticism, increased self-blame",
+            "outcome": "Self-worth tied entirely to performance"
+        },
+        {
+            "situation": "Friends express concern",
+            "response": "Pushed them away to avoid being a burden",
+            "outcome": "Lost crucial support system"
+        }
+    ],
+    "final_state": {
+        "emotional_wellbeing": "Severe depression with suicidal ideation",
+        "academic_performance": "Academic failure, suspension likely",
+        "social_connections": "Almost complete isolation",
+        "future_outlook": "Feels hopeless and trapped",
+        "anxiety_level": "Chronic, accompanied by depressive symptoms"
+    },
+    "crisis_point": "The story ends at a critical juncture where immediate intervention is necessary. While dark, this ending serves as a stark reminder of what can happen when mental health issues go untreated.",
+    "hope_note": "Even in this ending, there's an implicit message that it's never too late to seek help. Recovery is still possible with proper support and treatment.",
+    "resources": [
+        "National Care Hotline: 1800-202-6868",
+        "Samaritans of Singapore: 1-767",
+        "IMH Mental Health Helpline: 6389-2222"
+    ],
+    "message": "This ending illustrates the serious consequences of untreated anxiety and depression. It emphasizes the importance of seeking help early and the danger of isolation. Recovery is possible, but professional intervention becomes crucial at this stage."
+}

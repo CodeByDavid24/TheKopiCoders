@@ -1,0 +1,63 @@
+{
+    "ending_type": "successful",
+    "title": "A New Path Forward",
+    "description": "Serena has successfully managed her anxiety and achieved her goals through healthy coping strategies and support systems.",
+    "narrative": {
+        "opening": "The notification chimes on Serena's phone - NUS Medicine interview invitation. Her heart skips, but instead of the familiar tightness in her chest, she feels a gentle flutter of excitement. She takes a deep breath, just like Dr. Lim taught her.",
+        "development": [
+            "Over the past months, Serena has developed a toolkit of coping strategies. Her CBT sessions with Dr. Lim helped her recognize that perfectionism was feeding her anxiety, not protecting her from failure.",
+            "She started scheduling 'worry time' - 15 minutes each day to acknowledge anxious thoughts, then consciously redirect her energy toward actionable steps.",
+            "The study group with Wei Ming and Sarah became more than academic support - they created a safe space to share struggles without judgment."
+        ],
+        "climax": "During her mock interview at school, Serena notices her old patterns emerging - rapid heartbeat, sweaty palms. But this time, she doesn't fight the sensations. 'My body is preparing me to perform,' she reminds herself, using the reframing technique Dr. Lim taught her.",
+        "resolution": [
+            "Serena's interview goes well - not because she felt zero anxiety, but because she worked with her nervousness rather than against it.",
+            "She realizes that some anxiety will always be part of her - and that's okay. What matters is how she responds to it.",
+            "Whether she gets into Medicine or not, Serena knows she has the tools to handle whatever comes next."
+        ]
+    },
+    "character_growth": {
+        "anxiety_management": "Learned to work with anxiety rather than eliminate it completely",
+        "self_awareness": "Developed ability to recognize triggers and early warning signs",
+        "coping_strategies": [
+            "Mindfulness meditation",
+            "Cognitive behavioral therapy techniques",
+            "Regular exercise and sleep hygiene",
+            "Scheduled worry time",
+            "Reframing negative thoughts"
+        ],
+        "support_system": [
+            "Regular therapy sessions with Dr. Lim",
+            "Study group with friends",
+            "Improved communication with parents",
+            "School counselor check-ins"
+        ],
+        "academic_outcome": "Maintains good grades while prioritizing mental health",
+        "relationships": "Deeper, more authentic friendships based on mutual support"
+    },
+    "key_moments": [
+        {
+            "situation": "Receiving NUS interview invitation",
+            "response": "Practices breathing technique, shares excitement with friends",
+            "outcome": "Feels prepared and supported"
+        },
+        {
+            "situation": "Mock interview anxiety",
+            "response": "Uses reframing technique, accepts physical symptoms",
+            "outcome": "Performs well despite initial nervousness"
+        },
+        {
+            "situation": "Parent pressure about results",
+            "response": "Communicates boundaries and need for support",
+            "outcome": "Parents become more understanding allies"
+        }
+    ],
+    "final_state": {
+        "emotional_wellbeing": "Stable with healthy anxiety management",
+        "academic_performance": "Strong but balanced approach to studies",
+        "social_connections": "Meaningful friendships and improved family relations",
+        "future_outlook": "Optimistic and realistic about challenges ahead",
+        "anxiety_level": "Present but manageable, no longer limiting"
+    },
+    "message": "Recovery isn't about eliminating anxiety completely - it's about learning to live fully alongside it. Serena's journey shows that with the right tools, support, and mindset, anxiety can coexist with success and happiness."
+}

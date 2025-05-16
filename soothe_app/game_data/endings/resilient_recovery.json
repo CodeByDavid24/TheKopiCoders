@@ -1,0 +1,84 @@
+{
+    "ending_type": "resilient_recovery",
+    "title": "Rising from the Depths",
+    "description": "After experiencing a significant mental health crisis, Serena makes a remarkable recovery through professional help, community support, and discovering inner strength she didn't know she had.",
+    "narrative": {
+        "opening": "Six months ago, Serena was hospitalized after a severe panic attack during her A-levels. Today, she sits in the same exam hall, but everything is different. The butterflies in her stomach feel manageable, almost familiar friends.",
+        "development": [
+            "The rock bottom moment came when Serena collapsed during a math paper, hyperventilating so severely that an ambulance was called. In the hospital, she finally admitted to her parents: 'I can't handle this anymore.'",
+            "Recovery wasn't linear. There were days when getting out of bed felt like climbing Mount Everest. But slowly, with Dr. Chen's guidance and medication to stabilize her mood, Serena began to rebuild herself from the ground up.",
+            "She discovered that vulnerability isn't weakness - sharing her story with other students created connections deeper than any she'd known. Her mental health advocate role at JC became a source of purpose."
+        ],
+        "climax": "When university application results come in, Serena doesn't get into Medicine. For a moment, the old panic threatens to return. But then she realizes - this isn't the end of her story, it's a new chapter.",
+        "resolution": [
+            "Serena accepts a place in Psychology at NTU, recognizing her lived experience could help others facing similar struggles.",
+            "She maintains her recovery through ongoing therapy, peer support groups, and advocacy work.",
+            "Her relationship with her parents has fundamentally changed - they've learned to see mental health as seriously as physical health."
+        ]
+    },
+    "recovery_journey": {
+        "crisis_recognition": "Acknowledged the severity of her condition and accepted help",
+        "professional_intervention": "Hospitalization, medication, regular therapy sessions",
+        "healing_strategies": [
+            "Dialectical Behavior Therapy (DBT) skills",
+            "Mindfulness meditation and body awareness",
+            "Peer support group participation",
+            "Gradual exposure therapy for academic anxiety",
+            "Creative expression through art therapy",
+            "Physical activity as mood regulation"
+        ],
+        "rebuilt_support": [
+            "Weekly therapy with Dr. Chen",
+            "Mental health peer support group",
+            "Reconstructed friendships based on honesty",
+            "Family therapy sessions improving home dynamics",
+            "Mentorship from recovered students"
+        ],
+        "academic_adaptation": "Maintained studies with accommodations and realistic expectations",
+        "relationships": "Deeper, more authentic connections based on mutual support and honesty"
+    },
+    "turning_points": [
+        {
+            "situation": "Hospital admission after panic attack",
+            "response": "Finally accepted need for professional help",
+            "outcome": "Beginning of formal treatment and recovery"
+        },
+        {
+            "situation": "First peer support group meeting",
+            "response": "Shared story openly for first time",
+            "outcome": "Realized isolation was perpetuating problems"
+        },
+        {
+            "situation": "Medicine rejection letter",
+            "response": "Grief, then reframing as redirection not rejection",
+            "outcome": "Discovered new passion in mental health advocacy"
+        },
+        {
+            "situation": "Speaking at school mental health assembly",
+            "response": "Used personal experience to help others",
+            "outcome": "Found purpose in advocacy and peer support"
+        }
+    ],
+    "growth_areas": {
+        "emotional_regulation": "Developed healthy ways to process and express emotions",
+        "cognitive_flexibility": "Learned to challenge and reframe negative thought patterns",
+        "stress_tolerance": "Built capacity to handle difficulties without being overwhelmed",
+        "relationship_skills": "Improved communication and boundary-setting abilities",
+        "self_advocacy": "Learned to ask for help and accommodations when needed",
+        "meaning_making": "Found purpose in personal struggles through helping others"
+    },
+    "final_state": {
+        "emotional_wellbeing": "Stable with ongoing management, experiencing full range of emotions healthily",
+        "academic_performance": "Good performance with realistic expectations and self-care balance",
+        "social_connections": "Meaningful relationships built on authenticity and mutual support",
+        "future_outlook": "Optimistic and purposeful, views challenges as growth opportunities",
+        "anxiety_level": "Present but manageable, no longer defining her identity"
+    },
+    "advocacy_work": {
+        "school_activities": "Mental health ambassador, peer counselor training",
+        "community_involvement": "Youth mental health awareness campaigns",
+        "future_plans": "Aspires to become clinical psychologist specializing in youth anxiety"
+    },
+    "message": "Recovery from mental health crisis is possible. It requires professional help, community support, and inner resilience. Serena's journey shows that our greatest struggles can become our greatest strengths when channeled toward helping others. The path isn't easy, but it leads to a fuller, more meaningful life.",
+    "inspiration": "Sometimes we have to be broken before we can become whole. Serena's story reminds us that crisis can be a catalyst for profound positive change and that seeking help is a sign of strength, not weakness."
+}

@@ -1,0 +1,253 @@
+{
+    "milestone_type": "results",
+    "title": "The Results Day",
+    "description": "Preliminary exam results are released - a moment that will significantly impact Serena's self-perception and future choices",
+    "phase": "late_story",
+    "importance": "Critical - Results determine A-level confidence, university prospects, and family dynamics",
+    "scenario": {
+        "setting": "Serena's bedroom, 6:00 AM on results release day",
+        "context": "Results accessible online. Parents are already awake, making breakfast downstairs with unusual tension in the air.",
+        "serena_state": {
+            "physical_symptoms": [
+                "Woke up an hour before alarm, heart pounding",
+                "Hands shaking while reaching for phone",
+                "Stomach churning, can't imagine eating",
+                "Hypervigilant to every sound from downstairs"
+            ],
+            "mental_state": [
+                "Catastrophic scenarios playing on repeat",
+                "Bargaining thoughts: 'If results are good, I'll...'",
+                "Intrusive images of parents' disappointed faces",
+                "Oscillating between hope and dread"
+            ],
+            "recent_context": [
+                "Last week: Increased irritability, snapping at friends",
+                "Yesterday: Couldn't concentrate on anything, kept checking portal",
+                "This morning: Parents trying to act normal but obviously nervous"
+            ]
+        }
+    },
+    "result_scenarios": [
+        {
+            "id": "excellent_results",
+            "description": "90%+ average, top 5 in cohort",
+            "immediate_reactions": [
+                "Initial disbelief, checking multiple times",
+                "Euphoric relief flooding through body",
+                "Tears of joy and exhaustion",
+                "Immediate urge to share with everyone"
+            ],
+            "decision_points": [
+                {
+                    "situation": "How to process this success",
+                    "choices": [
+                        {
+                            "id": "balanced_celebration",
+                            "text": "Celebrate but acknowledge the hard work and support received",
+                            "path_influence": "successful"
+                        },
+                        {
+                            "id": "pressure_amplification",
+                            "text": "Feel relief but immediately worry about maintaining this standard",
+                            "path_influence": "depression_risk"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "good_results",
+            "description": "75-85% average, solid performance",
+            "immediate_reactions": [
+                "Mixed feelings - relief but also disappointment",
+                "Comparing to own expectations vs others' results",
+                "Uncertainty about university prospects",
+                "Parents' measured response creating more anxiety"
+            ],
+            "decision_points": [
+                {
+                    "situation": "Parents' response is lukewarm congratulations",
+                    "choices": [
+                        {
+                            "id": "realistic_perspective",
+                            "text": "Recognize these are good results that open many doors",
+                            "path_influence": "successful"
+                        },
+                        {
+                            "id": "internalize_disappointment",
+                            "text": "Focus on where you fell short, feel like you've let everyone down",
+                            "path_influence": "depression_risk",
+                            "confidence_modifier": -3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "disappointing_results",
+            "description": "60-70% average, below expectations",
+            "immediate_reactions": [
+                "Shock and disbelief, must be a mistake",
+                "Shame burning in chest and face",
+                "Immediate thoughts of being a failure",
+                "Dreading facing parents and friends"
+            ],
+            "decision_points": [
+                {
+                    "situation": "Processing the disappointment",
+                    "choices": [
+                        {
+                            "id": "growth_mindset",
+                            "text": "Accept results, focus on learning and improvement for A-levels",
+                            "path_influence": "resilient_recovery"
+                        },
+                        {
+                            "id": "shame_spiral",
+                            "text": "See this as confirmation of inadequacy, withdraw from others",
+                            "path_influence": "depression_spiral"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "very_poor_results",
+            "description": "Below 60% average, multiple subject failures",
+            "immediate_reactions": [
+                "Complete shock, checking portal multiple times",
+                "Numbness followed by overwhelming despair",
+                "Physical nausea and dizziness",
+                "Inability to process or accept the reality"
+            ],
+            "decision_points": [
+                {
+                    "situation": "Facing the crisis",
+                    "choices": [
+                        {
+                            "id": "seek_help_immediately",
+                            "text": "Tell parents immediately, ask for help and support",
+                            "path_influence": "resilient_recovery"
+                        },
+                        {
+                            "id": "hide_and_spiral",
+                            "text": "Hide the results, pretend everything is normal",
+                            "path_influence": "depression_spiral"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "family_dynamics": [
+        {
+            "scenario": "Parents discover results",
+            "father_reaction": {
+                "disappointed": "Silent treatment, comparing to cousins' achievements",
+                "supportive": "Asks how he can help, focuses on next steps",
+                "angry": "Accusations about wasted time and money"
+            },
+            "mother_reaction": {
+                "worried": "Excessive fussing, suggesting tutors and retakes",
+                "understanding": "Emotional support, validates effort over outcome",
+                "critical": "Lectures about not trying hard enough"
+            },
+            "choice_impact": "Family reaction significantly influences Serena's path forward"
+        }
+    ],
+    "peer_interactions": [
+        {
+            "id": "wei_ming_comparison",
+            "situation": "Wei Ming got better results",
+            "choices": [
+                {
+                    "id": "genuine_congratulation",
+                    "text": "Genuinely congratulate him and maintain friendship",
+                    "relationship_impact": "positive",
+                    "path_influence": "successful"
+                },
+                {
+                    "id": "jealous_withdrawal",
+                    "text": "Feel jealous and start avoiding him",
+                    "relationship_impact": "negative",
+                    "path_influence": "depression_risk"
+                }
+            ]
+        },
+        {
+            "id": "social_media_comparison",
+            "situation": "Social media filled with celebration posts",
+            "choices": [
+                {
+                    "id": "limit_exposure",
+                    "text": "Take a social media break to protect mental health",
+                    "wellbeing_impact": "positive",
+                    "path_influence": "successful"
+                },
+                {
+                    "id": "compare_obsessively",
+                    "text": "Scroll through everyone's results, comparing constantly",
+                    "wellbeing_impact": "negative",
+                    "path_influence": "depression_risk"
+                }
+            ]
+        }
+    ],
+    "coping_mechanisms": [
+        {
+            "healthy": [
+                "Call school counselor for perspective",
+                "Journal about feelings and next steps",
+                "Exercise to manage stress hormones",
+                "Talk to trusted friend or family member",
+                "Create action plan for A-level preparation"
+            ],
+            "unhealthy": [
+                "Isolate completely from friends and family",
+                "Binge-watch shows to avoid thinking",
+                "Skip meals due to stomach upset",
+                "Stay up all night ruminating",
+                "Make drastic decisions about future"
+            ]
+        }
+    ],
+    "pathway_determination": {
+        "successful_path": {
+            "key_factors": [
+                "Balanced perspective on results regardless of grade",
+                "Maintains relationships despite disappointment",
+                "Uses results as learning opportunity",
+                "Receives adequate family support"
+            ],
+            "result_threshold": "Not grade-dependent - attitude and response matter most"
+        },
+        "depression_spiral": {
+            "risk_factors": [
+                "Catastrophic interpretation of results",
+                "Social comparison and isolation",
+                "Lack of family understanding/support",
+                "Identity completely tied to academic performance"
+            ],
+            "critical_choice": "How Serena defines herself after results"
+        },
+        "resilient_recovery": {
+            "catalyst": "Poor results become wake-up call for change",
+            "key_turning_point": "Asking for help despite shame",
+            "growth_opportunity": "Learning that worth isn't defined by grades"
+        }
+    },
+    "future_implications": [
+        "A-level subject selection confidence",
+        "University application strategy",
+        "Relationship with parents going forward",
+        "Self-concept and academic identity",
+        "Motivation and study strategies for A-levels"
+    ],
+    "therapeutic_opportunities": [
+        "Reframing perfectionism and self-worth",
+        "Developing resilience in face of setbacks",
+        "Understanding difference between healthy and unhealthy coping",
+        "Building communication skills with family",
+        "Creating realistic expectations for future"
+    ],
+    "narrative_significance": "Results day represents the culmination of Serena's anxiety around academic performance, while simultaneously being a launching point for either recovery or further struggle. The milestone tests whether lessons learned about anxiety management hold up under extreme stress."
+}
