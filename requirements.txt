@@ -1,6 +1,6 @@
 # Core AI and API packages
 anthropic==0.19.1           # Latest version compatible with Claude-3
-elevenlabs==0.2.26          # Text-to-speech API client
+elevenlabs==1.58.1          # Text-to-speech API client
 
 # User Interface frameworks
 gradio==4.44.1              # Interactive interface framework for the chatbot UI
