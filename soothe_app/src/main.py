@@ -13,6 +13,8 @@ import time
 import subprocess
 from elevenlabs import ElevenLabs
 from typing import Optional
+import re
+from collections import deque
 
 from blacklist import (
     EnhancedContentFilter,
@@ -365,9 +367,125 @@ if client_error:
     # Log initialization failure
     logger.error(f"Failed to initialize Claude client: {client_error}")
 
+
+class TTSRateLimiter:
+
+    def __init__(self, max_requests_per_minute=10, max_chars_per_request=1000):
+        self.max_requests = max_requests_per_minute
+        self.max_chars = max_chars_per_request
+        self.requests = deque()
+        self.total_chars_today = 0
+        self.daily_char_limit = 50000  # ElevenLabs free tier limit
+        self.last_reset = time.time()
+
+    def _reset_daily_counter_if_needed(self):
+        """Reset daily counter if it's a new day."""
+        current_time = time.time()
+        if current_time - self.last_reset > 24 * 60 * 60:  # 24 hours
+            self.total_chars_today = 0
+            self.last_reset = current_time
+            logger.info("Daily TTS character count reset")
+
+    def can_process_tts(self, text: str) -> tuple[bool, str]:
+        """Check if TTS request should be processed."""
+        self._reset_daily_counter_if_needed()
+        now = time.time()
+
+        # Remove old requests (older than 1 minute)
+        while self.requests and now - self.requests[0] > 60:
+            self.requests.popleft()
+
+        # Check rate limits
+        if len(self.requests) >= self.max_requests:
+            return False, "Audio rate limit exceeded. Please wait before requesting more audio."
+
+        if len(text) > self.max_chars:
+            return False, f"Text too long for audio ({len(text)} chars). Maximum {self.max_chars} characters."
+
+        if self.total_chars_today + len(text) > self.daily_char_limit:
+            return False, "Daily audio limit reached. Audio will resume tomorrow."
+
+        # Record this request
+        self.requests.append(now)
+        self.total_chars_today += len(text)
+        logger.info(
+            f"TTS rate limiter: {len(self.requests)}/{self.max_requests} requests, {self.total_chars_today}/{self.daily_char_limit} daily chars")
+        return True, ""
+
+
+class VoiceConsentManager:
+    def __init__(self):
+        self.voice_consent_given = False
+        self.voice_consent_message = """
+        **Audio Feature Consent Required**
+        
+        SootheAI can narrate the story using AI-generated speech. Please note:
+        - This uses synthetic voice generation, not a real person
+        - Audio is processed in real-time and not stored
+        - You can disable audio at any time by typing 'disable audio'
+        
+        Would you like to enable audio narration?
+        - Type 'enable audio' to activate voice narration
+        - Type 'disable audio' to continue with text only
+        """
+
+    def check_voice_consent(self, message: str) -> tuple[bool, str | None]:
+        """
+        Check if user has given or is giving voice consent.
+
+        Returns:
+            tuple: (consent_status_changed, response_message)
+        """
+        message_lower = message.lower().strip()
+
+        # Check for consent commands
+        if message_lower == 'enable audio':
+            if not self.voice_consent_given:
+                self.voice_consent_given = True
+                logger.info("User enabled audio narration")
+                return True, "✅ Audio narration enabled! The story will now be read aloud."
+            else:
+                return False, "Audio narration is already enabled."
+
+        elif message_lower == 'disable audio':
+            if self.voice_consent_given:
+                self.voice_consent_given = False
+                logger.info("User disabled audio narration")
+                return True, "🔇 Audio narration disabled. You'll continue with text only."
+            else:
+                return False, "Audio narration is already disabled."
+
+        # Check if this is the first time and user hasn't given consent
+        elif not self.voice_consent_given and message_lower not in ['i agree', 'start game']:
+            return True, self.voice_consent_message
+
+        return False, None
+
+
+# Add speaker identification function
+def add_voice_disclaimer(text: str) -> str:
+    """
+    Add AI voice disclaimer to the beginning of narration.
+    Only add it at the start of new conversations/sessions.
+    """
+    # Check if this is the beginning of a new narration session
+    # (when the text starts with narrative content, not dialogue)
+    if game_state.get('tts_session_started', False):
+        return text
+    else:
+        # Mark that TTS session has started
+        game_state['tts_session_started'] = True
+        disclaimer = "This story is narrated by an AI-generated voice. "
+        return disclaimer + text
+
+
 # Initialize game state with type hints and documentation
 GameState = dict[str, int | dict | list |
                  bool | None]  # Type alias for game state
+
+# Initialize TTS rate limiter and voice consent manager
+tts_rate_limiter = TTSRateLimiter()
+voice_consent_manager = VoiceConsentManager()
 
 game_state: GameState = {
     'seed': np.random.randint(0, 1000000),  # Initial seed for reproducibility
@@ -377,6 +495,10 @@ game_state: GameState = {
     'start': None,  # Will store the starting narrative
     'interaction_count': 0
 }
+
+# Update the game_state to include audio settings
+game_state['audio_enabled'] = False
+game_state['tts_session_started'] = False
 
 # Global variable to store Gradio interface instance for restart capability
 demo: gr.Blocks | None = None
@@ -507,114 +629,92 @@ def log_content_analysis_metrics(result: ContentFilterResult, text_type: str):
 def get_initial_response() -> str:
     """
     Get the initial game narrative from Claude.
-
-    Returns:
-        str: Initial narrative text or error message if request fails
-
-    Example:
-        >>> narrative = get_initial_response()
-        >>> print(narrative)
-        'Welcome to Serena's story...'
     """
     global game_state, claude_client
 
     if not claude_client:
-        # Log missing client error
         logger.error("Claude client not initialized")
         return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
 
     try:
-        # Create the initial message for Claude
-        # Log API request attempt
         logger.info("Requesting initial narrative from Claude API")
 
-        # Check which version of the SDK we're using based on available methods
+        # Check which version of the SDK we're using
         if hasattr(claude_client, 'messages'):
-            # New SDK version (>=0.18.1)
             response = claude_client.messages.create(
-                model="claude-3-5-sonnet-20240620",  # Use latest stable model
-                max_tokens=1000,  # Limit response length
-                temperature=0,  # Use deterministic output
+                model="claude-3-5-sonnet-20240620",
+                max_tokens=1000,
+                temperature=0,
                 messages=[{
                     "role": "user",
                     "content": "Start the game with a brief introduction to Serena."
                 }],
-                system=system_prompt  # Use predefined system prompt
+                system=system_prompt
             )
-            # Store the starting narrative
             initial_narrative = response.content[0].text
         else:
-            # Older SDK version
-            # Log SDK version warning
             logger.warning(
                 "Using older Anthropic SDK version with completion API")
             response = claude_client.completion(
                 prompt=f"\n\nHuman: Start the game with a brief introduction to Serena.\n\nAssistant:",
-                model="claude-2.1",  # Use older model for compatibility
+                model="claude-2.1",
                 temperature=0,
                 max_tokens_to_sample=1000,
                 stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
             )
-            # Store the starting narrative
             initial_narrative = response.completion
 
         # Filter the initial narrative for safety
         safe_narrative = filter_response_safety(initial_narrative)
         game_state['start'] = safe_narrative
 
-        # Log successful response
         logger.info(
             "Successfully received and filtered initial narrative from Claude API")
-        # Stream TTS for initial narrative
-        run_tts_in_thread(safe_narrative)
+
+        # Use updated TTS function with consent and rate limiting
+        run_tts_with_consent_and_limiting(safe_narrative)
         logger.info("Streaming TTS for initial narrative")
+
         return safe_narrative
     except Exception as e:
         error_msg = f"Error communicating with Claude API: {str(e)}"
-        logger.error(error_msg)  # Log API communication error
+        logger.error(error_msg)
         return error_msg
 
 
 def run_action(message: str, history: list[tuple[str, str]], game_state: GameState) -> str:
     """
     Process player actions and generate appropriate responses.
-
-    Args:
-        message (str): Player's input message
-        history (list[tuple[str, str]]): Conversation history from Gradio
-        game_state (GameState): Current state of the game
-
-    Returns:
-        str: AI's response to player action or error message
-
-    Example:
-        >>> response = run_action("I want to study in the library", [], game_state)
-        >>> print(response)
-        'Serena heads to the library...'
+    Now includes voice consent handling.
     """
-    global claude_client
+    global claude_client, voice_consent_manager
 
     # Check if Claude client is configured
     if not claude_client:
-        # Log missing client error
         logger.error("Claude client not initialized")
         return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
 
-    # Check if consent has been given
+    # Handle voice consent first (before game consent)
+    consent_changed, consent_response = voice_consent_manager.check_voice_consent(
+        message)
+    if consent_changed and consent_response:
+        # Update game state audio setting
+        game_state['audio_enabled'] = voice_consent_manager.voice_consent_given
+        return consent_response
+
+    # Check if main game consent has been given
     if not game_state['consent_given']:
         if message.lower() == 'i agree':
-            logger.info("User consent received")  # Log consent given
+            logger.info("User consent received")
             game_state['consent_given'] = True
             return "Thank you for agreeing to the terms. Type 'start game' to begin."
         else:
-            # Log consent message display
             logger.info("Showing consent message to user")
             return consent_message
 
     # Check if this is the start of the game
     if message.lower() == 'start game':
-        logger.info("Starting new game")  # Log game start
-        # If we haven't generated the start yet, do it now
+        logger.info("Starting new game")
         if game_state['start'] is None:
             game_state['start'] = get_initial_response()
         return game_state['start']
@@ -625,105 +725,84 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         logger.warning("Blocked unsafe user input")
         return safe_message
 
-    if game_state['consent_given'] and message.lower() != 'start game' and message.lower() != 'i agree':
+    # Continue with existing game logic...
+    if game_state['consent_given'] and message.lower() not in ['start game', 'i agree', 'enable audio', 'disable audio']:
         game_state.setdefault('interaction_count', 0)
         game_state['interaction_count'] += 1
 
-        # Debug logging
         logger.info(f"Interaction count: {game_state['interaction_count']}")
 
         # Check if we should trigger an ending (after 12 interactions)
         if game_state['interaction_count'] >= 12:
             logger.info("Ending triggered after 12 interactions")
             ending_response = generate_simple_ending(game_state)
-
-            # Add a flag to indicate the story has ended
             game_state['story_ended'] = True
 
-            # Stream TTS for ending if available
-            if 'run_tts_in_thread' in globals():
-                run_tts_in_thread(ending_response)
-
+            # Use updated TTS function
+            run_tts_with_consent_and_limiting(ending_response)
             return ending_response
 
     try:
-        # Handle different SDK versions
+        # Handle different SDK versions (existing code)
         if hasattr(claude_client, 'messages'):
-            # New SDK version
             # Prepare message history for Claude
             claude_messages = []
 
             # Add conversation history from game_state
             if len(game_state['history']) > 0 or len(history) > 0:
                 for user_msg, assistant_msg in game_state['history']:
-                    claude_messages.append({
-                        "role": "user",
-                        "content": user_msg
-                    })
-                    claude_messages.append({
-                        "role": "assistant",
-                        "content": assistant_msg
-                    })
+                    claude_messages.append(
+                        {"role": "user", "content": user_msg})
+                    claude_messages.append(
+                        {"role": "assistant", "content": assistant_msg})
 
             # Add current message to conversation
-            claude_messages.append({
-                "role": "user",
-                "content": message
-            })
+            claude_messages.append({"role": "user", "content": message})
 
-            # Log message being sent
             logger.info(f"Sending message to Claude API: {message[:50]}...")
 
             # Get response from Claude API
             response = claude_client.messages.create(
-                model="claude-3-5-sonnet-20240620",  # Use latest stable model
-                max_tokens=1000,  # Limit response length
-                temperature=0,  # Use deterministic output
+                model="claude-3-5-sonnet-20240620",
+                max_tokens=1000,
+                temperature=0,
                 messages=claude_messages,
-                system=system_prompt  # Use predefined system prompt
+                system=system_prompt
             )
 
-            # Process and store result
             result = response.content[0].text
         else:
-            # Older SDK version
-            # Log SDK version warning
+            # Older SDK version handling (existing code)
             logger.warning(
                 "Using older Anthropic SDK version with completion API")
-            # Convert history to the older Claude format
             prompt = "\n\nHuman: " + message + "\n\nAssistant:"
-
-            # Log message being sent
             logger.info(
                 f"Sending message to Claude API (old SDK): {message[:50]}...")
 
             response = claude_client.completion(
                 prompt=prompt,
-                model="claude-2.1",  # Use older model for compatibility
+                model="claude-2.1",
                 temperature=0,
                 max_tokens_to_sample=1000,
                 stop_sequences=["\n\nHuman:", "\n\nAssistant:"]
             )
-
             result = response.completion
 
         # Filter the response for safety
         safe_result = filter_response_safety(result)
-        # Stream TTS for Claude's response
-        run_tts_in_thread(safe_result)
+
+        # Use updated TTS function with consent and rate limiting
+        run_tts_with_consent_and_limiting(safe_result)
 
         # Log successful response and update game state
-        # Log response received
         logger.info(
             f"Received and filtered response from Claude API: {safe_result[:50]}...")
-        logger.info(
-            f"Streaming TTS for response: {safe_result[:50]}...")
         game_state['history'].append((message, safe_result))
         return safe_result
 
     except Exception as e:
         error_msg = f"Error communicating with Claude API: {str(e)}"
-        logger.error(error_msg)  # Log API communication error
+        logger.error(error_msg)
         return error_msg
 
 
@@ -811,19 +890,51 @@ def delayed_tts(text: str) -> None:
     speak_text(text)
 
 
-def run_tts_in_thread(text: str) -> None:
+def run_tts_with_consent_and_limiting(text: str) -> None:
     """
-    Run TTS in a separate thread to avoid blocking the main thread.
+    Run TTS with voice consent and rate limiting checks.
 
     Args:
         text (str): Text to convert to speech
     """
+    global voice_consent_manager, tts_rate_limiter
+
+    # Check if TTS is disabled at the client level
     if not elevenlabs_client:
         logger.debug("TTS is disabled: ElevenLabs client not initialized")
         return
 
-    threading.Thread(target=delayed_tts, args=(text,), daemon=True).start()
+    # Check voice consent
+    if not voice_consent_manager.voice_consent_given:
+        logger.debug("TTS skipped: Voice consent not given")
+        return
+
+    # Check rate limiting
+    can_process, limit_message = tts_rate_limiter.can_process_tts(text)
+    if not can_process:
+        logger.warning(f"TTS rate limited: {limit_message}")
+        # Optionally, you could add the limit message to the UI somehow
+        return
+
+    # Add voice disclaimer if needed
+    text_with_disclaimer = add_voice_disclaimer(text)
+
+    # Run TTS in thread as before
+    threading.Thread(target=delayed_tts, args=(
+        text_with_disclaimer,), daemon=True).start()
     logger.info(f"Started TTS thread for text: {text[:50]}...")
+
+
+def get_tts_status() -> str:
+    """Get current status of TTS features for debugging."""
+    status = []
+    status.append(
+        f"Voice consent: {'✅' if voice_consent_manager.voice_consent_given else '❌'}")
+    status.append(
+        f"Daily chars used: {tts_rate_limiter.total_chars_today}/{tts_rate_limiter.daily_char_limit}")
+    status.append(
+        f"Recent requests: {len(tts_rate_limiter.requests)}/{tts_rate_limiter.max_requests}")
+    return " | ".join(status)
 
 
 def start_game() -> None:

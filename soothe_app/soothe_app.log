@@ -439,3 +439,89 @@
 2025-05-13 14:24:39,371 - __main__ - INFO - Requesting initial narrative from Claude API
 2025-05-13 14:24:45,830 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-05-13 14:24:45,835 - __main__ - ERROR - Error communicating with Claude API: name 'contains_blacklisted_content' is not defined
+2025-05-16 12:27:45,583 - __main__ - ERROR - Error loading blacklist: name 'load_blacklist_from_file' is not defined
+2025-05-16 12:27:45,584 - __main__ - INFO - Loading character data from JSON file
+2025-05-16 12:27:45,585 - __main__ - WARNING - JSON file not found: characters/serena.json
+2025-05-16 12:27:45,585 - __main__ - INFO - Checking Anthropic SDK version
+2025-05-16 12:27:45,586 - __main__ - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-16 12:27:45,586 - __main__ - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-16 12:27:45,823 - __main__ - INFO - Starting SootheAI application
+2025-05-16 12:27:45,826 - __main__ - INFO - Initializing game interface
+2025-05-16 12:27:45,902 - __main__ - INFO - Launching game interface
+2025-05-16 12:27:46,183 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-16 12:27:47,305 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-16 12:27:48,359 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-16 12:27:50,667 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-16 12:27:52,009 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-16 12:28:13,883 - __main__ - INFO - Processing message in main loop: i  agree...
+2025-05-16 12:28:13,885 - __main__ - INFO - Showing consent message to user
+2025-05-16 12:28:38,604 - __main__ - INFO - Processing message in main loop: i agree...
+2025-05-16 12:28:38,606 - __main__ - INFO - User consent received
+2025-05-16 12:28:40,882 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-16 12:28:40,885 - __main__ - INFO - Starting new game
+2025-05-16 12:28:40,888 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-16 12:28:47,468 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-16 12:28:47,481 - __main__ - ERROR - Error communicating with Claude API: name 'contains_blacklisted_content' is not defined
+2025-05-16 12:36:41,469 - __main__ - INFO - Enhanced content filter initialized successfully
+2025-05-16 12:36:41,470 - __main__ - INFO - Loading character data from JSON file
+2025-05-16 12:36:41,471 - __main__ - WARNING - JSON file not found: characters/serena.json
+2025-05-16 12:36:41,472 - __main__ - INFO - Checking Anthropic SDK version
+2025-05-16 12:36:41,473 - __main__ - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-16 12:36:41,474 - __main__ - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-16 12:36:41,701 - __main__ - INFO - Starting SootheAI application
+2025-05-16 12:36:41,701 - __main__ - INFO - Initializing game interface
+2025-05-16 12:36:41,769 - __main__ - INFO - Launching game interface
+2025-05-16 12:36:42,091 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-16 12:36:42,871 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-16 12:36:44,189 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-16 12:36:46,292 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-16 12:36:47,327 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-16 12:37:57,644 - __main__ - INFO - Processing message in main loop: i agree...
+2025-05-16 12:37:57,649 - __main__ - INFO - User consent received
+2025-05-16 12:38:02,199 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-16 12:38:02,201 - __main__ - INFO - Starting new game
+2025-05-16 12:38:02,202 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-16 12:38:08,780 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-16 12:38:08,786 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
+2025-05-16 12:38:08,788 - __main__ - INFO - Streaming TTS for initial narrative
+2025-05-16 12:39:11,175 - __main__ - INFO - Processing message in main loop: Take a few minutes to do some light stretching to ...
+2025-05-16 12:39:29,473 - __main__ - INFO - Processing message in main loop: enable audio...
+2025-05-16 12:39:29,476 - __main__ - INFO - User enabled audio narration
+2025-05-16 12:39:40,891 - __main__ - INFO - Processing message in main loop: Continue the story...
+2025-05-16 12:39:40,894 - __main__ - INFO - Interaction count: 1
+2025-05-16 12:39:40,896 - __main__ - INFO - Sending message to Claude API: Continue the story...
+2025-05-16 12:39:48,500 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-16 12:39:48,504 - __main__ - WARNING - TTS rate limited: Text too long for audio (1506 chars). Maximum 1000 characters.
+2025-05-16 12:39:48,506 - __main__ - INFO - Received and filtered response from Claude API: The morning sun filters through the curtains of yo...
+2025-05-16 23:05:37,800 - __main__ - INFO - Loading environment variables from .env file
+2025-05-16 23:05:37,800 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-16 23:05:38,002 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-16 23:05:38,003 - __main__ - INFO - Loaded 165 blacklisted phrases
+2025-05-16 23:05:38,004 - blacklist_compatibility - INFO - Content filter test passed
+2025-05-16 23:05:38,005 - __main__ - INFO - Content filter test passed
+2025-05-16 23:05:38,006 - __main__ - INFO - Loading character data from JSON file
+2025-05-16 23:05:38,006 - __main__ - WARNING - JSON file not found in any location: characters/serena.json
+2025-05-16 23:05:38,006 - __main__ - WARNING - Using default character data as fallback
+2025-05-16 23:05:38,007 - __main__ - INFO - Checking Anthropic SDK version
+2025-05-16 23:05:38,008 - __main__ - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-16 23:05:38,008 - __main__ - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-16 23:05:38,211 - __main__ - INFO - Starting SootheAI application
+2025-05-16 23:05:38,211 - __main__ - INFO - Initializing game interface
+2025-05-16 23:05:38,271 - __main__ - INFO - Launching game interface
+2025-05-16 23:05:38,569 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-16 23:05:39,314 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-16 23:05:40,693 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-16 23:05:43,002 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-16 23:05:43,976 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-16 23:05:57,690 - __main__ - INFO - Processing message in main loop: i agree...
+2025-05-16 23:05:57,690 - __main__ - INFO - User consent received
+2025-05-16 23:06:03,740 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-16 23:06:03,740 - __main__ - INFO - Starting new game
+2025-05-16 23:06:03,741 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-16 23:06:10,406 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-16 23:06:10,408 - __main__ - INFO - Successfully received and filtered initial narrative from Claude API
+2025-05-16 23:06:10,409 - __main__ - INFO - Started TTS thread for text: The early morning sun filters through the curtains...
+2025-05-16 23:06:10,410 - __main__ - INFO - Streaming TTS for initial narrative
+2025-05-16 23:06:10,510 - __main__ - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-16 23:06:11,847 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+2025-05-16 23:07:28,208 - __main__ - INFO - [DEBUG] TTS streaming duration: 77.70 seconds

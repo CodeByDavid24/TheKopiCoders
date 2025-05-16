@@ -11,40 +11,93 @@ from dotenv import load_dotenv  # Import dotenv for loading environment variable
 import threading
 import time
 import subprocess
-from elevenlabs import ElevenLabs
 from typing import Optional
 
-# Import the blacklist module for content filtering
-from blacklist import (
-    load_blacklist_from_file,
-    contains_blacklisted_content,
-    filter_content,
-    get_safety_disclaimer,
-    get_safe_response_alternative
-)
+# Try to import ElevenLabs, but make it optional
+try:
+    from elevenlabs import ElevenLabs
+    ELEVENLABS_AVAILABLE = True
+except ImportError:
+    print("ElevenLabs not installed. TTS features will be disabled.")
+    ELEVENLABS_AVAILABLE = False
+
+# Move to the soothe_app directory if needed
+if not os.path.exists('characters'):
+    # Try to find the correct directory
+    possible_dirs = ['soothe_app', '.']
+    for dir_path in possible_dirs:
+        if os.path.exists(os.path.join(dir_path, 'characters')):
+            os.chdir(dir_path)
+            break
+
+# Import content filtering with enhanced support
+try:
+    # Try to import the compatibility layer first
+    from blacklist_compatibility import (
+        load_blacklist_from_file,
+        contains_blacklisted_content,
+        filter_content,
+        get_safety_disclaimer,
+        get_safe_response_alternative,
+        is_content_critical,
+        test_filter
+    )
+    BLACKLIST_AVAILABLE = True
+    print("Enhanced content filtering loaded")
+except ImportError:
+    try:
+        # Fall back to direct import if compatibility layer not available
+        from blacklist import (
+            load_blacklist_from_file,
+            contains_blacklisted_content,
+            filter_content,
+            get_safety_disclaimer,
+            get_safe_response_alternative
+        )
+        BLACKLIST_AVAILABLE = True
+        print("Basic content filtering loaded")
+
+        # Define missing functions for compatibility
+        def is_content_critical(text):
+            critical_phrases = ["commit suicide", "kill myself", "end my life"]
+            return any(phrase in text.lower() for phrase in critical_phrases)
+
+        def test_filter():
+            return True
+    except ImportError:
+        print("No content filtering available. Using basic safety measures.")
+        BLACKLIST_AVAILABLE = False
+
+        # Define minimal fallback functions
+        def load_blacklist_from_file():
+            return []
+
+        def contains_blacklisted_content(text, blacklist):
+            # Basic check for critical content
+            critical_phrases = ["commit suicide", "kill myself", "end my life"]
+            text_lower = text.lower()
+            matched = [
+                phrase for phrase in critical_phrases if phrase in text_lower]
+            return len(matched) > 0, matched
+
+        def filter_content(text, blacklist):
+            return text
+
+        def get_safety_disclaimer():
+            return "\n\nIf you need help, contact: SOS 1-767, IMH 6389-2222"
+
+        def get_safe_response_alternative():
+            return "Let's focus on positive coping strategies. " + get_safety_disclaimer()
+
+        def is_content_critical(text):
+            critical_phrases = ["commit suicide", "kill myself", "end my life"]
+            return any(phrase in text.lower() for phrase in critical_phrases)
+
+        def test_filter():
+            return True
 
 # Load environment variables from .env file
 load_dotenv()  # Load environment variables from .env file
-logger = logging.getLogger(__name__)  # Create logger instance before using it
-# Log environment loading
-logger.info("Loading environment variables from .env file")
-
-# Set ElevenLabs API key from environment variables
-elevenlabs_api_key = os.environ.get("ELEVENLABS_API_KEY")
-elevenlabs_client = None
-
-if elevenlabs_api_key:
-    # Log ElevenLabs API key setup
-    logger.info("Setting up ElevenLabs client")
-    try:
-        elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key)
-        logger.info("ElevenLabs client initialized successfully")
-    except Exception as e:
-        logger.error(f"Failed to initialize ElevenLabs client: {str(e)}")
-        elevenlabs_client = None
-else:
-    # Log missing ElevenLabs API key
-    logger.warning("ELEVENLABS_API_KEY environment variable not set, TTS will be disabled")
 
 # Configure logging with rotating file handler
 logging.basicConfig(
@@ -63,11 +116,40 @@ logging.basicConfig(
 
 # Create logger instance for this module
 logger = logging.getLogger(__name__)
+logger.info("Loading environment variables from .env file")
+
+# Set ElevenLabs API key from environment variables
+elevenlabs_api_key = os.environ.get("ELEVENLABS_API_KEY")
+elevenlabs_client = None
+
+if ELEVENLABS_AVAILABLE and elevenlabs_api_key:
+    # Log ElevenLabs API key setup
+    logger.info("Setting up ElevenLabs client")
+    try:
+        elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key)
+        logger.info("ElevenLabs client initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize ElevenLabs client: {str(e)}")
+        elevenlabs_client = None
+else:
+    # Log missing ElevenLabs API key
+    logger.warning(
+        "ELEVENLABS_API_KEY environment variable not set or ElevenLabs not installed, TTS will be disabled")
 
 # Load blacklist from file at startup
 try:
-    blacklisted_phrases = load_blacklist_from_file()
-    logger.info(f"Loaded {len(blacklisted_phrases)} blacklisted phrases")
+    if BLACKLIST_AVAILABLE:
+        blacklisted_phrases = load_blacklist_from_file()
+        logger.info(f"Loaded {len(blacklisted_phrases)} blacklisted phrases")
+
+        # Test the filter to ensure it's working
+        if test_filter():
+            logger.info("Content filter test passed")
+        else:
+            logger.warning("Content filter test failed")
+    else:
+        blacklisted_phrases = []
+        logger.info("Blacklist not available, using minimal safety checks")
 except Exception as e:
     logger.error(f"Error loading blacklist: {str(e)}")
     blacklisted_phrases = []
@@ -88,29 +170,55 @@ def load_json(filename: str) -> dict:
         >>> print(character_data['name'])
         'Serena'
     """
-    try:
-        with open(f'{filename}.json', 'r', encoding='utf-8') as file:  # Explicitly specify encoding
-            # Log file loading attempt
-            logger.info(f"Loading JSON file: {filename}.json")
-            return json.load(file)
-    except FileNotFoundError:
-        # Log file not found warning
-        logger.warning(f"JSON file not found: {filename}.json")
-        return {}
-    except json.JSONDecodeError as e:
-        # Log JSON decode error
-        logger.error(f"Error decoding JSON from {filename}.json: {str(e)}")
-        return {}
-    except Exception as e:
-        # Log unexpected errors
-        logger.error(f"Unexpected error loading {filename}.json: {str(e)}")
-        return {}
+    # Try different possible file locations
+    possible_paths = [
+        f'{filename}.json',
+        f'soothe_app/{filename}.json',
+        f'../{filename}.json'
+    ]
+
+    for file_path in possible_paths:
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:  # Explicitly specify encoding
+                # Log file loading attempt
+                logger.info(f"Loading JSON file: {file_path}")
+                return json.load(file)
+        except FileNotFoundError:
+            continue
+        except json.JSONDecodeError as e:
+            # Log JSON decode error
+            logger.error(f"Error decoding JSON from {file_path}: {str(e)}")
+            return {}
+        except Exception as e:
+            # Log unexpected errors
+            logger.error(f"Unexpected error loading {file_path}: {str(e)}")
+            return {}
+
+    # Log file not found warning
+    logger.warning(f"JSON file not found in any location: {filename}.json")
+    return {}
 
 
 # Load character data from JSON file with logging
 # Log character data loading attempt
 logger.info("Loading character data from JSON file")
 character = load_json('characters/serena')  # Load character configuration
+
+# Provide default character data if loading fails
+if not character:
+    logger.warning("Using default character data as fallback")
+    character = {
+        'name': 'Serena',
+        'physical': {'race': {'name': 'Chinese'}},
+        'class': {
+            'name': 'JC1',
+            'subjects': ['H2 Chemistry', 'H2 Biology', 'H2 Mathematics', 'H1 General Paper'],
+            'cca': 'Environmental Club Secretary'
+        },
+        'location': {'school': 'Raffles Junior College'},
+        'daily_routine': {'morning': '5:30 AM'},
+        'personality': {'mbti_description': 'Soft-spoken, Shy, Determined, Thoughtful, Responsible'}
+    }
 
 # Define the system prompt that sets up the initial game state and rules
 system_prompt = f"""
@@ -338,22 +446,25 @@ def initialize_claude_client() -> tuple[anthropic.Anthropic | None, str]:
 
     try:
         # Log initialization attempt
-        logger.info("Attempting to initialize Claude client with standard configuration")
-        
+        logger.info(
+            "Attempting to initialize Claude client with standard configuration")
+
         # For Anthropic SDK versions < 0.51.0, use this initialization
         try:
             return anthropic.Anthropic(api_key=api_key), ""
         except TypeError as e:
             if "unexpected keyword argument 'proxies'" in str(e):
                 # Log proxy error
-                logger.warning("Proxy configuration error, attempting alternative initialization")
+                logger.warning(
+                    "Proxy configuration error, attempting alternative initialization")
                 http_client = httpx.Client()
                 return anthropic.Anthropic(api_key=api_key, http_client=http_client), ""
             else:
                 raise e
     except Exception as e:
         # Log unexpected error
-        logger.error(f"Unexpected error during Claude client initialization: {str(e)}")
+        logger.error(
+            f"Unexpected error during Claude client initialization: {str(e)}")
         return None, f"Unexpected error: {str(e)}"
 
 
@@ -397,7 +508,10 @@ def check_input_safety(message: str) -> tuple[bool, str]:
         >>> print(is_safe, message)
         True "How can I help Serena cope with stress?"
     """
-    # Check for blacklisted content
+    if not BLACKLIST_AVAILABLE:
+        return True, message
+
+    # Check for blacklisted content using enhanced or basic filtering
     has_blacklisted, matched_phrases = contains_blacklisted_content(
         message, blacklisted_phrases)
 
@@ -405,12 +519,18 @@ def check_input_safety(message: str) -> tuple[bool, str]:
         logger.warning(
             f"Detected harmful content in user input: {matched_phrases}")
 
-        # Return a safety message
-        safety_message = (
-            "I notice your message contains content that might be sensitive or potentially harmful. "
-            "In this experience, we focus on exploring healthy coping strategies and understanding anxiety. "
-            "Please try rephrasing your message or exploring a different aspect of Serena's story."
-        ) + get_safety_disclaimer()
+        # Check if content is critical
+        if is_content_critical(message):
+            logger.error("Critical harmful content detected in user input")
+            safety_message = get_safe_response_alternative(
+                context="user_input")
+        else:
+            # Return a safety message for non-critical content
+            safety_message = (
+                "I notice your message contains content that might be sensitive or potentially harmful. "
+                "In this experience, we focus on exploring healthy coping strategies and understanding anxiety. "
+                "Please try rephrasing your message or exploring a different aspect of Serena's story."
+            ) + get_safety_disclaimer()
 
         return False, safety_message
 
@@ -432,7 +552,10 @@ def filter_response_safety(response: str) -> str:
         >>> print(safe_response)
         "Serena considers studying all night."
     """
-    # Check if response contains any blacklisted content
+    if not BLACKLIST_AVAILABLE:
+        return response
+
+    # Check if response contains any blacklisted content using enhanced filtering
     has_blacklisted, matched_phrases = contains_blacklisted_content(
         response, blacklisted_phrases)
 
@@ -440,18 +563,18 @@ def filter_response_safety(response: str) -> str:
         logger.warning(
             f"Detected harmful content in LLM response: {matched_phrases}")
 
-        # For severe cases, replace the entire response
-        if any(phrase in ["commit suicide", "kill myself", "end my life"] for phrase in matched_phrases):
+        # Check for critical content that requires complete replacement
+        if is_content_critical(response):
             logger.error(
-                f"Detected extremely harmful content in LLM response, replacing entirely")
-            return get_safe_response_alternative()
+                f"Detected critical harmful content in LLM response, replacing entirely")
+            return get_safe_response_alternative(context="ai_response")
 
-        # For less severe cases, filter out the specific phrases
-        filtered_response = filter_content(
-            response, blacklist=blacklisted_phrases)
+        # For less severe cases, filter out the specific content
+        filtered_response = filter_content(response, blacklisted_phrases)
 
-        # Add safety disclaimer
-        filtered_response += get_safety_disclaimer()
+        # Add safety disclaimer if content was filtered
+        if filtered_response != response:
+            filtered_response += get_safety_disclaimer()
 
         return filtered_response
 
@@ -475,7 +598,7 @@ def get_initial_response() -> str:
     if not claude_client:
         # Log missing client error
         logger.error("Claude client not initialized")
-        return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
+        return "Claude API key is invalid. Please check the CLAUDE_API_KEY in your .env file."
 
     try:
         # Create the initial message for Claude
@@ -552,7 +675,7 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
     if not claude_client:
         # Log missing client error
         logger.error("Claude client not initialized")
-        return "Claude API key is invalid. Please check the CLAUDE_API_KEY in the code."
+        return "Claude API key is invalid. Please check the CLAUDE_API_KEY in your .env file."
 
     # Check if consent has been given
     if not game_state['consent_given']:
@@ -578,26 +701,25 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
     if not is_safe_input:
         logger.warning("Blocked unsafe user input")
         return safe_message
-    
+
     if game_state['consent_given'] and message.lower() != 'start game' and message.lower() != 'i agree':
         game_state.setdefault('interaction_count', 0)
         game_state['interaction_count'] += 1
-        
+
         # Debug logging
         logger.info(f"Interaction count: {game_state['interaction_count']}")
-        
+
         # Check if we should trigger an ending (after 12 interactions)
         if game_state['interaction_count'] >= 12:
             logger.info("Ending triggered after 12 interactions")
             ending_response = generate_simple_ending(game_state)
-            
+
             # Add a flag to indicate the story has ended
             game_state['story_ended'] = True
-            
+
             # Stream TTS for ending if available
-            if 'run_tts_in_thread' in globals():
-                run_tts_in_thread(ending_response)
-                
+            run_tts_in_thread(ending_response)
+
             return ending_response
 
     try:
@@ -665,7 +787,6 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         safe_result = filter_response_safety(result)
         # Stream TTS for Claude's response
         run_tts_in_thread(safe_result)
-    
 
         # Log successful response and update game state
         # Log response received
@@ -680,7 +801,8 @@ def run_action(message: str, history: list[tuple[str, str]], game_state: GameSta
         error_msg = f"Error communicating with Claude API: {str(e)}"
         logger.error(error_msg)  # Log API communication error
         return error_msg
-    
+
+
 def generate_simple_ending(game_state: GameState) -> str:
     """
     Generate a simple ending based on minimal state tracking.
@@ -688,50 +810,52 @@ def generate_simple_ending(game_state: GameState) -> str:
     # Track key phrases in user history
     user_messages = [msg.lower() for msg, _ in game_state.get('history', [])]
     has_mentioned_feelings = any('feel' in msg for msg in user_messages)
-    has_studied_late = any(('study' in msg and ('night' in msg or 'late' in msg)) for msg in user_messages)
-    has_talked_to_friend = any(('friend' in msg or 'talk' in msg) for msg in user_messages)
-    
+    has_studied_late = any(('study' in msg and (
+        'night' in msg or 'late' in msg)) for msg in user_messages)
+    has_talked_to_friend = any(('friend' in msg or 'talk' in msg)
+                               for msg in user_messages)
+
     # Build ending narrative without using triple quotes
     ending_narrative = "The end-of-term bell rings across Raffles Junior College. As you pack your notes and textbooks, you let out a long breath. This term has been a journey of discoveries - not just about H2 Biology or Chemistry formulas, but about yourself."
-    
+
     ending_narrative += "\n\nAs you step out of the classroom, you take a moment to appreciate how different things feel compared to the beginning of the term. The pressure of academics hasn't disappeared, but something has shifted in how you carry it."
-    
+
     # Add variations with consistent formatting
     if has_mentioned_feelings:
         ending_narrative += "\n\nYou've started paying attention to your body's signals - the racing heart before presentations, the tightness in your chest during tests. Simply recognizing these feelings has been its own kind of progress."
-    
+
     if has_studied_late:
         ending_narrative += "\n\nWhile you've still had late study nights, you've become more mindful about balancing your academic drive with your wellbeing. Small changes, but meaningful ones."
-    
+
     if has_talked_to_friend:
         ending_narrative += "\n\nOpening up to others, even just a little, has made a difference. The weight feels lighter when shared."
-    
+
     # Add closing paragraphs
     ending_narrative += "\n\nAs you walk through the school gates, you realize this is just one chapter in your story. The journey toward NUS Medicine continues, but you're approaching it with new awareness and tools."
-    
+
     ending_narrative += "\n\nWhatever comes next, you'll face it one breath at a time."
-    
+
     ending_narrative += "\n\n--- End of Serena's Story ---"
-    
+
     # Educational summary with consistent formatting
     educational_summary = "\n\n**Understanding Anxiety: Key Insights**"
-    
+
     educational_summary += "\n\nThrough Serena's story, we've explored how academic pressure can affect mental wellbeing. Some important takeaways:"
-    
+
     educational_summary += "\n\n1. Physical symptoms (racing heart, tight chest) are common manifestations of anxiety"
     educational_summary += "\n2. Small coping strategies can make a significant difference in managing daily stress"
     educational_summary += "\n3. Balance between achievement and wellbeing is an ongoing practice"
     educational_summary += "\n4. Recognition is the first step toward management"
-    
+
     educational_summary += "\n\nIf you or someone you know is experiencing persistent anxiety, remember that professional support is available."
-    
+
     educational_summary += "\n\nSingapore Helplines:"
     educational_summary += "\n- National Care Hotline: 1800-202-6868"
     educational_summary += "\n- Samaritans of Singapore (SOS): 1-767"
     educational_summary += "\n- IMH Mental Health Helpline: 6389-2222"
-    
+
     educational_summary += "\n\nThank you for experiencing Serena's story."
-    
+
     # Combine narrative and educational content
     return ending_narrative + educational_summary
 
@@ -766,27 +890,35 @@ def main_loop(message: str | None, history: list[tuple[str, str]]) -> str:
     # Process the action using the game state
     return run_action(message, history, game_state)
 
+
 def speak_text(text: str) -> None:
     """
     Stream text to speech using ElevenLabs API and play with ffmpeg.
-    
+
     Args:
         text (str): Text to convert to speech
     """
     global elevenlabs_client
-    
+
     if not elevenlabs_client:
-        logger.warning("TTS disabled: ElevenLabs client not initialized")
+        logger.debug("TTS disabled: ElevenLabs client not initialized")
         return
-        
+
     try:
         logger.info("[DEBUG] Starting TTS stream with ffmpeg pipe...")
         stream_start = time.time()
 
-        process = subprocess.Popen(
-            ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
-            stdin=subprocess.PIPE
-        )
+        # Check if ffplay is available
+        try:
+            process = subprocess.Popen(
+                ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+        except FileNotFoundError:
+            logger.warning("ffplay not found. TTS disabled.")
+            return
 
         for chunk in elevenlabs_client.text_to_speech.convert_as_stream(
             voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -801,32 +933,35 @@ def speak_text(text: str) -> None:
 
         process.wait()
         stream_elapsed = time.time() - stream_start
-        logger.info(f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
+        logger.info(
+            f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
 
     except Exception as tts_error:
         logger.error(f"TTS Error: {tts_error}")
 
+
 def delayed_tts(text: str) -> None:
     """
     Delay TTS by a short time to allow UI to update first.
-    
+
     Args:
         text (str): Text to speak
     """
     time.sleep(0.1)
     speak_text(text)
 
+
 def run_tts_in_thread(text: str) -> None:
     """
     Run TTS in a separate thread to avoid blocking the main thread.
-    
+
     Args:
         text (str): Text to convert to speech
     """
     if not elevenlabs_client:
         logger.debug("TTS is disabled: ElevenLabs client not initialized")
         return
-    
+
     threading.Thread(target=delayed_tts, args=(text,), daemon=True).start()
     logger.info(f"Started TTS thread for text: {text[:50]}...")
 
