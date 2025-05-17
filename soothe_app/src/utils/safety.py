@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # Try to import enhanced content filter
 try:
-    from contnet_filter import (
+    from src.core.content_filter import (  # Fixed import path
         EnhancedContentFilter,
         ContentFilterResult,
         ContentMatch,
