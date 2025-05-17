@@ -8,7 +8,7 @@ import logging
 
 # Try to import the enhanced content filter, fall back to simple version if not available
 try:
-    from blacklist import EnhancedContentFilter, ContentFilterResult, SeverityLevel
+    from soothe_app.src.core.content_filter import EnhancedContentFilter, ContentFilterResult, SeverityLevel
     ENHANCED_FILTER_AVAILABLE = True
 except ImportError:
     ENHANCED_FILTER_AVAILABLE = False

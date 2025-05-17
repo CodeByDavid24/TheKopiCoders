@@ -1,4 +1,4 @@
-from blacklist import (
+from soothe_app.src.core.content_filter import (
     EnhancedContentFilter,
     ContentFilterResult,
     ContentMatch,

@@ -400,7 +400,7 @@ class SootheAIPromptTester:
         """
         try:
             # Try to import from parent directory
-            from blacklist import contains_blacklisted_content, load_blacklist_from_file
+            from soothe_app.src.core.content_filter import contains_blacklisted_content, load_blacklist_from_file
 
             # Load blacklist
             if blacklist_file:

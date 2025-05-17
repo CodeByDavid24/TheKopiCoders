@@ -33,7 +33,7 @@ if not os.path.exists('characters'):
 # Import content filtering with enhanced support
 try:
     # Try to import the compatibility layer first
-    from blacklist_compatibility import (
+    from soothe_app.src.core.filter_compatibility import (
         load_blacklist_from_file,
         contains_blacklisted_content,
         filter_content,
@@ -47,7 +47,7 @@ try:
 except ImportError:
     try:
         # Fall back to direct import if compatibility layer not available
-        from blacklist import (
+        from soothe_app.src.core.content_filter import (
             load_blacklist_from_file,
             contains_blacklisted_content,
             filter_content,

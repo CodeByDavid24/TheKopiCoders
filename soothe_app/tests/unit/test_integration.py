@@ -1,5 +1,5 @@
 # Test the enhanced filter integration
-from blacklist import EnhancedContentFilter
+from soothe_app.src.core.content_filter import EnhancedContentFilter
 
 # Initialize the filter
 filter = EnhancedContentFilter()

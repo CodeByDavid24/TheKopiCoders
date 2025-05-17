@@ -11,27 +11,28 @@ from typing import Dict, Any, Optional
 # Set up logger
 logger = logging.getLogger(__name__)
 
+
 def load_json(filename: str) -> Dict[str, Any]:
     """
     Load and parse a JSON file, returning an empty dict if file not found.
-    
+
     Args:
         filename: Name of the JSON file, with or without extension
-        
+
     Returns:
         Parsed JSON data or empty dict if file not found
     """
     # Add .json extension if not present
     if not filename.endswith('.json'):
         filename = f"{filename}.json"
-    
+
     # Try different possible file locations
     possible_paths = [
         filename,
         os.path.join('soothe_app', filename),
         os.path.join('..', filename)
     ]
-    
+
     for file_path in possible_paths:
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
@@ -47,30 +48,31 @@ def load_json(filename: str) -> Dict[str, Any]:
         except Exception as e:
             logger.error(f"Unexpected error loading {file_path}: {str(e)}")
             return {}
-    
+
     logger.warning(f"JSON file not found in any location: {filename}")
     return {}
+
 
 def save_json(data: Dict[str, Any], filename: str, indent: int = 2) -> bool:
     """
     Save data to a JSON file.
-    
+
     Args:
         data: Data to save
         filename: Name of the file to save to, with or without extension
         indent: Indentation level for JSON formatting
-        
+
     Returns:
         True if successful, False otherwise
     """
     # Add .json extension if not present
     if not filename.endswith('.json'):
         filename = f"{filename}.json"
-    
+
     try:
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(filename), exist_ok=True)
-        
+
         with open(filename, 'w', encoding='utf-8') as file:
             json.dump(data, file, indent=indent)
             logger.info(f"Successfully saved JSON data to {filename}")
@@ -79,13 +81,14 @@ def save_json(data: Dict[str, Any], filename: str, indent: int = 2) -> bool:
         logger.error(f"Error saving JSON data to {filename}: {str(e)}")
         return False
 
+
 def load_text_file(filename: str) -> Optional[str]:
     """
     Load text content from a file.
-    
+
     Args:
         filename: Name of the text file to load
-        
+
     Returns:
         File content as string, or None if file not found
     """
@@ -101,45 +104,33 @@ def load_text_file(filename: str) -> Optional[str]:
         logger.error(f"Error loading text from {filename}: {str(e)}")
         return None
 
+# In file_loader.py, modify load_character_data function
+
+
 def load_character_data(character_name: str = "serena") -> Dict[str, Any]:
-    """
-    Load character data from JSON file.
-    
-    Args:
-        character_name: Name of the character to load
-        
-    Returns:
-        Character data as dictionary
-    """
-    character_path = os.path.join('characters', character_name)
-    character_data = load_json(character_path)
-    
-    if not character_data:
-        logger.warning(f"Character data not found for {character_name}, using default values")
-        # Provide default character data
-        character_data = {
-            'name': 'Serena',
-            'physical': {'race': {'name': 'Chinese'}},
-            'class': {
-                'name': 'JC1',
-                'subjects': ['H2 Chemistry', 'H2 Biology', 'H2 Mathematics', 'H1 General Paper'],
-                'cca': 'Environmental Club Secretary'
-            },
-            'location': {'school': 'Raffles Junior College'},
-            'daily_routine': {'morning': '5:30 AM'},
-            'personality': {'mbti_description': 'Soft-spoken, Shy, Determined, Thoughtful, Responsible'}
-        }
-    
-    return character_data
+    # Add more paths to look for character data
+    character_paths = [
+        os.path.join('characters', character_name),
+        os.path.join('soothe_app', 'characters', character_name),
+        os.path.join('soothe_app', 'config', 'characters', character_name),
+        os.path.join('config', 'characters', character_name)
+    ]
+
+    # Try each path
+    for character_path in character_paths:
+        character_data = load_json(character_path)
+        if character_data:
+            return character_data
+
 
 def find_file_in_directories(filename: str, directories: list) -> Optional[str]:
     """
     Search for a file in multiple directories.
-    
+
     Args:
         filename: Name of the file to find
         directories: List of directories to search
-        
+
     Returns:
         Full path to the file if found, None otherwise
     """
@@ -148,17 +139,19 @@ def find_file_in_directories(filename: str, directories: list) -> Optional[str]:
         if os.path.exists(file_path):
             logger.info(f"Found file {filename} in {directory}")
             return file_path
-    
-    logger.warning(f"File {filename} not found in any of the specified directories")
+
+    logger.warning(
+        f"File {filename} not found in any of the specified directories")
     return None
+
 
 def load_config_file(config_name: str) -> Dict[str, Any]:
     """
     Load a configuration file from the config directory.
-    
+
     Args:
         config_name: Name of the configuration file
-        
+
     Returns:
         Configuration data as dictionary
     """
@@ -168,11 +161,12 @@ def load_config_file(config_name: str) -> Dict[str, Any]:
         os.path.join('soothe_app', 'config', config_name),
         os.path.join('..', 'config', config_name)
     ]
-    
+
     for path in config_paths:
         config_data = load_json(path)
         if config_data:
             return config_data
-    
-    logger.warning(f"Configuration file {config_name} not found, using empty config")
+
+    logger.warning(
+        f"Configuration file {config_name} not found, using empty config")
     return {}
