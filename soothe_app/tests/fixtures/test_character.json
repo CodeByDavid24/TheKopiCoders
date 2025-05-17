@@ -1,0 +1,107 @@
+{
+    "name": "Test Character",
+    "gender": "Female",
+    "personality": {
+        "mbti": "INFP",
+        "mbti_description": "Thoughtful, Introspective, Empathetic, Creative",
+        "traits": {
+            "attitudes": "Quietly reflective, approaches challenges with careful consideration",
+            "perception": "Notices emotional nuances and subtle details that others might miss",
+            "judgement": "Makes decisions based on personal values and principles",
+            "orientation": "Seeks meaning and authenticity in all experiences"
+        }
+    },
+    "physical": {
+        "race": {
+            "name": "Chinese Singaporean",
+            "description": "An ethnic group that forms the majority in Singapore."
+        },
+        "age": {
+            "years": 17,
+            "lifespan": "Typically lives up to around 85–100 years with modern healthcare.",
+            "maturity": "Young adult transitioning from adolescence, facing important life decisions."
+        },
+        "measurements": {
+            "height": 164,
+            "weight": 46,
+            "bmi": 17.1
+        },
+        "appearance": "Slim with straight black hair usually worn in a ponytail, expressive brown eyes, and a thoughtful demeanor."
+    },
+    "class": {
+        "name": "JC Student",
+        "description": "A JC1 student taking science stream subjects with aspirations for medicine.",
+        "subjects": [
+            "H2 Chemistry",
+            "H2 Biology",
+            "H2 Mathematics",
+            "H1 General Paper"
+        ],
+        "cca": "Environmental Club (Secretary)",
+        "academic_standing": "Top 15% of cohort, consistent performer"
+    },
+    "location": {
+        "country": "Singapore",
+        "school": "Test Junior College",
+        "home": "HDB flat in eastern Singapore",
+        "study_spots": [
+            "School library",
+            "Home desk",
+            "Neighborhood café"
+        ],
+        "world": "A modern high-pressure academic environment with strong emphasis on achievement."
+    },
+    "mental_health_issues": {
+        "anxiety": true,
+        "stress": true,
+        "self_esteem": true,
+        "self_awareness": "Growing - beginning to recognize patterns in thoughts and feelings"
+    },
+    "backstory": {
+        "description": "A diligent student who has always excelled academically but struggles with internal pressure and expectations. Balances family expectations with personal aspirations.",
+        "goals": [
+            "Gain admission to medical school",
+            "Develop more confidence in social situations",
+            "Find sustainable balance between academics and wellbeing"
+        ],
+        "history": [
+            "Graduated from secondary school with distinction",
+            "Has experienced occasional panic symptoms before major exams",
+            "Recently began journaling to process thoughts and feelings"
+        ]
+    },
+    "behaviour": [
+        "Prepares extensively for presentations and tests",
+        "Often takes notes with color-coded systems",
+        "Tends to overthink decisions and second-guess choices",
+        "Quiet in group settings but engaged and thoughtful",
+        "Sometimes experiences physical symptoms during stressful situations"
+    ],
+    "anxiety_triggers": [
+        "Public speaking situations",
+        "Unexpected changes to plans or schedules",
+        "Comparative assessments with peers",
+        "High-stakes examinations",
+        "Parental discussions about future plans"
+    ],
+    "coping_mechanism": [
+        "Deep breathing exercises",
+        "Journaling thoughts and feelings",
+        "Taking walks in nature",
+        "Listening to calming music",
+        "Talking with one close friend"
+    ],
+    "daily_routine": {
+        "morning": "Wakes up at 6:00 AM, reviews notes before school",
+        "school_hours": "Attends classes, takes detailed notes, eats lunch with small group of friends",
+        "after_school": "Participates in CCA activities or studies in library",
+        "evening": "Studies at home, prepares for next day",
+        "weekend": "Balances study time with limited recreation, family activities"
+    },
+    "relationships": {
+        "parents": "Supportive but with high expectations for academic achievement",
+        "friends": "Small circle of close friends, one confidant",
+        "teachers": "Respected by teachers for diligence and thoughtfulness",
+        "peers": "Generally well-liked but seen as somewhat reserved"
+    }
+}
