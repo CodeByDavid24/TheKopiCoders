@@ -40,3 +40,36 @@ The ala...
 2025-05-15 23:58:15,063 - __main__ - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
 2025-05-15 23:58:15,583 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
 2025-05-15 23:58:48,478 - __main__ - ERROR - TTS Error: [Errno 32] Broken pipe
+2025-05-17 13:21:01,374 - soothe_app.src.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-17 13:21:01,375 - __main__ - INFO - Starting SootheAI application
+2025-05-17 13:21:01,376 - soothe_app.src.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-17 13:21:01,376 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-17 13:21:01,575 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-17 13:21:01,575 - soothe_app.src.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-17 13:21:01,576 - soothe_app.src.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-17 13:21:01,777 - soothe_app.src.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-17 13:21:01,777 - soothe_app.src.utils.file_loader - WARNING - Character data not found for serena, using default values
+2025-05-17 13:21:01,778 - __main__ - INFO - Loaded character data for Serena
+2025-05-17 13:21:01,779 - __main__ - INFO - Creating Gradio interface
+2025-05-17 13:21:01,779 - soothe_app.src.models.game_state - INFO - Game state initialized at 2025-05-17 13:21:01
+2025-05-17 13:21:01,779 - soothe_app.src.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-17 13:21:01,780 - soothe_app.src.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-17 13:21:01,780 - soothe_app.src.ui.tts_handler - INFO - TTS handler initialized
+2025-05-17 13:21:01,780 - soothe_app.src.ui.gradio_interface - INFO - GradioInterface initialized
+2025-05-17 13:21:01,780 - soothe_app.src.ui.gradio_interface - INFO - Creating Gradio interface
+2025-05-17 13:21:01,854 - soothe_app.src.ui.gradio_interface - INFO - Launching Gradio interface
+2025-05-17 13:21:02,122 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-17 13:21:02,888 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-17 13:21:04,258 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-17 13:21:06,475 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-17 13:21:07,494 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-17 13:22:08,893 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: i agree...
+2025-05-17 13:22:08,895 - soothe_app.src.core.narrative_engine - INFO - User consent received
+2025-05-17 13:22:08,897 - soothe_app.src.models.game_state - INFO - User consent recorded
+2025-05-17 13:22:13,634 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: start game...
+2025-05-17 13:22:13,635 - soothe_app.src.core.narrative_engine - INFO - Starting new game
+2025-05-17 13:22:13,638 - soothe_app.src.core.narrative_engine - INFO - Requesting initial narrative from Claude API
+2025-05-17 13:22:13,641 - soothe_app.src.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-17 13:22:21,569 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-17 13:22:21,574 - soothe_app.src.models.game_state - INFO - Starting narrative set
+2025-05-17 13:22:21,577 - soothe_app.src.core.narrative_engine - INFO - Successfully initialized game with starting narrative
