@@ -1,236 +1,175 @@
 # SootheAI Code Overview
 
-This document provides a simplified overview of the SootheAI application architecture, focusing on core concepts for AI Application students.
+This document provides a high-level overview of the SootheAI application architecture, code structure, and key components.
 
-## Introduction
+## Project Structure
 
-SootheAI is an interactive application that uses AI to create personalized narratives about anxiety awareness. The experience follows a character named Serena, a JC student in Singapore, as she navigates academic pressure and undiagnosed anxiety.
-
-## Key Components
-
-### 1. Interface Options
-
-SootheAI offers two user interfaces:
-
-- **Gradio Interface** (`soothe_app/main.py`): A chatbot-style interface with conversation history and audio narration
-- **Streamlit Interface** (`soothe_interface_dev/stream.py`): A simple, user-friendly interface
-- **HTML/CSS Prototype** (`soothe_interface_dev/digital_prototype/`): A static demo version
-
-### 2. Character Data System
-
-Characters are defined using JSON files (`soothe_app/characters/`):
-
-```python
-# Example of loading character data
-def load_json(filename: str) -> dict:
-    """Load and parse a JSON file with error handling"""
-    try:
-        with open(f'{filename}.json', 'r', encoding='utf-8') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}
-
-# Load character data
-character = load_json('characters/serena')
+```
+soothe_app/
+├── config/                 # Configuration files
+│   ├── blacklist/          # Content safety blacklists
+│   ├── characters/         # Character definitions
+│   └── system_prompts/     # Claude system prompts
+├── docs/                   # Documentation
+├── game_data/              # Game narrative content
+│   ├── endings/            # Story ending definitions
+│   └── milestones/         # Narrative milestone events
+├── src/                    # Source code
+│   ├── core/               # Core functionality
+│   ├── models/             # Data models
+│   ├── ui/                 # User interface components
+│   └── utils/              # Utility functions
+└── tests/                  # Test suites
+    ├── fixtures/           # Test fixtures
+    ├── integration/        # Integration tests
+    ├── tools/              # Testing utilities
+    └── unit/               # Unit tests
 ```
 
-The character data includes:
+## Core Components
 
-- Personality traits and background
-- Academic environment
-- Behaviors related to anxiety
-- Relationships and coping mechanisms
+### Narrative Engine
 
-### 3. AI Integration
+The narrative engine (`src/core/narrative_engine.py`) is the heart of SootheAI. It manages:
 
-The application connects to Anthropic's Claude API to generate narrative responses:
-
-```python
-# Simplified Claude API integration
-def get_response(message: str, history: list) -> str:
-    """Get a response from Claude API"""
-    response = claude_client.messages.create(
-        model="claude-3-5-sonnet-20240620",
-        max_tokens=1000,
-        temperature=0,
-        messages=history + [{"role": "user", "content": message}],
-        system=system_prompt
-    )
-    return response.content[0].text
-```
-
-The AI is guided by a detailed system prompt that defines:
-
-- Character details and personality
-- Narrative structure and flow
-- Content safety guidelines
-- Rules for depicting anxiety without clinical labels
-
-### 4. Text-to-Speech Integration
-
-SootheAI now features audio narration using ElevenLabs:
+- Story generation through Claude API
+- Game state tracking and transitions
+- User input processing
+- Content safety filtering
+- Response formatting
 
 ```python
-def speak_text(text: str) -> None:
-    """Stream text to speech using ElevenLabs API and play with ffmpeg"""
-    # Create streaming audio from text
-    audio_stream = elevenlabs_client.text_to_speech.convert_as_stream(
-        voice_id="21m00Tcm4TlvDq8ikWAM",
-        output_format="mp3_44100_128",
-        text=text,
-        model_id="eleven_flash_v2_5"
-    )
+# Key classes
+class NarrativeEngine:
+    """Engine that drives the SootheAI narrative experience."""
     
-    # Play the audio using ffmpeg
-    process = subprocess.Popen(
-        ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
-        stdin=subprocess.PIPE
-    )
+    def process_message(self, message: str) -> Tuple[str, bool]:
+        """Process a player message and generate a response."""
+```
+
+### Game State
+
+The game state model (`src/models/game_state.py`) tracks:
+
+- Character wellbeing
+- Conversation history
+- Player consent status
+- Relationship scores
+- Interaction count
+
+```python
+class GameState:
+    """Class for managing the state of the SootheAI narrative experience."""
     
-    # Stream audio chunks to ffplay
-    for chunk in audio_stream:
-        process.stdin.write(chunk)
+    def update_wellbeing_level(self, change: int) -> int:
+        """Update the character's wellbeing level."""
 ```
 
-The TTS system:
+### API Client
 
-- Runs in a separate thread to avoid blocking the UI
-- Converts Claude's responses to natural speech
-- Creates a more immersive experience for users
+The API client (`src/core/api_client.py`) handles communication with the Claude API:
 
-### 5. Content Safety System
-
-The application includes a comprehensive safety system:
+- Manages authentication
+- Handles request/response formatting
+- Implements error handling
+- Provides a singleton instance for application-wide use
 
 ```python
-# Content filtering example
-def check_input_safety(message: str) -> tuple[bool, str]:
-    """Check if user input contains harmful content"""
-    has_blacklisted, matched_phrases = contains_blacklisted_content(
-        message, blacklisted_phrases)
+class ClaudeClient:
+    """Client for interacting with Claude API."""
     
-    if has_blacklisted:
-        return False, "This content may be sensitive. Let's focus on healthy coping strategies."
-    return True, message
+    def generate_response(self, messages: List[Dict[str, str]], 
+                          system_prompt: str) -> Tuple[Optional[str], Optional[str]]:
+        """Generate a response from Claude."""
 ```
 
-Key safety features:
+### Content Filter
 
-- Blacklist of harmful phrases (`blacklist.py`)
-- Input and output content filtering
-- Safety disclaimers and helpline information
-- Redirection for potentially harmful topics
+The content filter (`src/core/content_filter.py`) provides safety features:
 
-### 6. Consent Flow
-
-The application implements a mandatory consent process:
+- Detects harmful content in user input
+- Filters unsafe content from AI responses
+- Implements multi-level severity detection
+- Provides alternative safe responses
 
 ```python
-# Simplified consent flow
-if not game_state['consent_given']:
-    if message.lower() == 'i agree':
-        game_state['consent_given'] = True
-        return "Thank you for agreeing. Type 'start game' to begin."
-    else:
-        return consent_message
+class EnhancedContentFilter:
+    """Enhanced content filtering system with multiple detection methods"""
+    
+    def analyze_content(self, text: str) -> ContentFilterResult:
+        """Analyze content for harmful material with comprehensive filtering"""
 ```
 
-Users must explicitly agree to terms before starting the experience, acknowledging:
+### Gradio Interface
 
-- The fictional nature of the content
-- Potential for sensitive topics
-- Warning against harmful actions
-- Data handling practices
+The UI interface (`src/ui/gradio_interface.py`) creates the web experience:
 
-### 7. Game State Management
-
-The application tracks user progress and contextual information:
+- Implements chat interface
+- Manages consent flow
+- Integrates optional text-to-speech
+- Handles user interactions
 
 ```python
-# Game state initialization
-game_state = {
-    'seed': np.random.randint(0, 1000000),  # For reproducibility
-    'character': character,                  # Character data
-    'history': [],                           # Conversation history
-    'consent_given': False,                  # Consent tracking
-    'start': None                            # Initial narrative
-}
+class GradioInterface:
+    """Class for managing the Gradio interface for SootheAI."""
+    
+    def main_loop(self, message: Optional[str], history: List[Tuple[str, str]]) -> str:
+        """Main game loop that processes player input and returns AI responses."""
 ```
 
-This allows the application to:
+## Key Workflows
 
-- Remember previous interactions
-- Maintain narrative continuity
-- Track consent status
-- Store character data
+### Application Startup
 
-### 8. Error Handling and Logging
+1. Environment variables loaded
+2. Logging configured
+3. API clients initialized
+4. Character data loaded
+5. Content filter initialized
+6. Gradio interface created and launched
 
-The application includes comprehensive error handling:
+### Consent Flow
 
-```python
-# Logging configuration
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.handlers.RotatingFileHandler(
-            'soothe_app.log',
-            maxBytes=1024*1024,  # 1MB per file
-            backupCount=5        # Keep 5 backup files
-        ),
-        logging.StreamHandler(sys.stdout)  # Also log to console
-    ]
-)
-```
+1. User presented with consent message
+2. User must explicitly agree ("I agree")
+3. User starts game ("start game")
+4. Initial narrative displayed
 
-This enables:
+### Gameplay Loop
 
-- Tracking API interactions
-- Monitoring for errors
-- Debugging issues
-- Performance analysis
+1. User sends input message
+2. Input checked for safety
+3. Game state updated
+4. Claude API generates response
+5. Response filtered for safety
+6. Response displayed to user (with optional TTS)
+7. Conversation history updated
 
-## Data Flow
+## Development Guidelines
 
-Here's the typical flow of data through the application:
+### Testing
 
-1. User sends a message through the interface
-2. Message is checked against the blacklist for safety
-3. If safe, message is sent to Claude API with conversation history
-4. Claude generates a response based on the system prompt
-5. Response is filtered for safety
-6. Safe response is displayed to the user and converted to speech
-7. User interaction and AI response are added to conversation history
+- Unit tests in `tests/unit/`
+- Integration tests in `tests/integration/`
+- Run with `python test_runner.py`
 
-## Testing Framework
+### Safety Features
 
-The application includes several testing components:
+- Never bypass content filter checks
+- Always filter both input and output
+- Use appropriately sanitized prompts
+- Follow consent flow requirements
 
-- **Unit Tests** (`soothe_app/tests/test_blacklist.py`): Test content filtering
-- **System Prompt Tester** (`soothe_app/tests/system_prompt_tester.py`): Test AI prompts
-- **Consent Flow Tests** (`soothe_app/tests/consent_flow_tests.json`): Test user flow
+### Adding Features
 
-## Key Takeaways for AI Application Students
+1. Create unit tests first
+2. Implement changes
+3. Update documentation
+4. Create pull request
 
-1. **Prompt Engineering**: System prompts are crucial for guiding AI behavior.
-2. **Safety First**: Content moderation is essential for mental health applications.
-3. **Ethical Considerations**: Consent flow and proper disclaimers are necessary.
-4. **Conversation Management**: Tracking history provides context for AI responses.
-5. **Error Handling**: Robust error handling prevents application failures.
-6. **Multimodal Interfaces**: Text-to-speech adds another dimension to AI interactions.
-7. **Asynchronous Operations**: Running TTS in separate threads keeps the UI responsive.
-8. **Testing**: Comprehensive testing ensures application reliability.
+## Integration Points
 
-## Simple Execution Flow
-
-1. Initialize application and load character data
-2. Present consent message
-3. Wait for user to agree to terms
-4. Start narrative once user types "start game"
-5. Process user inputs and generate narrative responses
-6. Convert responses to speech and play audio
-7. Filter all content for safety
-8. Maintain conversation history for context
-
-This architecture allows for an interactive, educational experience while maintaining strict safety standards for sensitive topics like mental health.
+- **Claude API**: Main narrative generation
+- **ElevenLabs API**: Optional text-to-speech
+- **Gradio**: Web interface framework
+- **Content Filter**: Safety system
