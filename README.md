@@ -13,110 +13,108 @@ SootheAI creates an immersive, choice-based narrative that:
 
 ## Features
 
-### Current Version Features
-
-- **Interactive story experience** powered by Claude AI (using Anthropic's latest Claude 3.5 Sonnet model)
+- **Interactive storytelling experience** powered by Claude AI (using Anthropic's Claude 3.7 Sonnet model)
 - **Text-to-speech integration** via ElevenLabs for immersive audio narration
-- **Two application versions** with different feature sets:
-  - **main_v0.py**: Simple version with basic content filtering and adaptive ending system
-  - **main_v1.py**: Advanced version with comprehensive guardrail system (ending integration planned)
-- **Web interface** available in both Streamlit and HTML/CSS/JS versions with Gradio as the primary interface
+- **Multiple interface options**:
+  - Gradio-based chat interface for primary interaction
+  - Streamlit interface with enhanced visual elements
+  - HTML/CSS/JS prototype for static demonstrations
 - **Character-driven narrative** focusing on mental health themes
 - **Content safety filtering** to protect vulnerable users
 - **Culturally relevant storytelling** set in Singapore educational context
 - **Consent flow** that emphasizes ethical usage
 - **Comprehensive security measures** and content moderation
 
-### Version Comparison
-
-#### main_v0.py (Simple Version)
-
-- Basic blacklist content filtering
-- Adaptive ending system with 3 narrative branches
-- Simple ending that triggers after 12 interactions
-- Educational summary with key insights about anxiety
-- TTS integration for immersive experience
-- Less comprehensive content safety measures
-
-#### main_v1.py (Advanced Version)
-
-- **Enhanced content filtering system** with:
-  - Multi-level severity classification (LOW, MEDIUM, HIGH, CRITICAL)
-  - Context-aware pattern matching
-  - Configurable replacement strategies
-  - Comprehensive violation reporting
-- **Advanced guardrails**:
-  - Real-time content analysis
-  - Contextual safety responses
-  - Detailed logging of content filtering
-- **Same core features** as v0 (TTS, Claude integration, consent flow)
-- **Ending system integration** (planned for next release)
-
 ## Project Structure
 
 ```
 soothe_app/                   # Core Python application
-├── __init__.py 
-├── main_v0.py               # Simple version with basic filtering and endings
-├── main_v1.py               # Advanced version with enhanced guardrail system
-├── blacklist.py             # Enhanced content filtering and safety module
-├── stream.py                # Streamlit interface implementation
-├── characters/              # Character definition files
-│   ├── serena.json          # Main protagonist character
-│   ├── chloe.json           # Supporting character
-│   ├── mother.json          # Family member character
-│   └── therapist.json       # Mental health professional character
-├── tests/                   # Test suite
-│   ├── __init__.py
-│   ├── test_blacklist.py    # Unit tests for blacklist module
-│   ├── system_prompt_tester.py  # Tool for testing system prompts
-│   └── consent_flow_tests.json  # Test cases for consent flow
-├── enhance_filter_config.json   # Configuration for enhanced filtering
-├── harmful_patterns_file.json   # Pattern definitions for content filtering
-└── test_integration.py      # Integration tests for enhanced filter
+├── src/                      # Source code
+│   ├── core/                 # Core functionality
+│   │   ├── api_client.py     # Claude API integration
+│   │   ├── content_filter.py # Content safety system
+│   │   └── narrative_engine.py # Story generation engine
+│   ├── models/               # Data models
+│   │   ├── character.py      # Character definition
+│   │   └── game_state.py     # Game state tracking
+│   ├── ui/                   # User interfaces
+│   │   ├── gradio_interface.py # Primary Gradio interface
+│   │   └── tts_handler.py    # Text-to-speech functionality
+│   └── utils/                # Utility functions
+│       ├── file_loader.py    # File handling utilities
+│       ├── logger.py         # Logging configuration
+│       └── safety.py         # Safety utilities
+├── tests/                    # Test suite
+│   ├── fixtures/             # Test data
+│   │   ├── test_blacklist.py
+│   │   └── test_character.json
+│   ├── integration/          # Integration tests
+│   │   ├── test_api_integration.py
+│   │   └── test_full_flow.py
+│   ├── tools/                # Testing tools
+│   │   ├── consent_flow_tests.json
+│   │   └── system_prompt_tester.py
+│   ├── unit/                 # Unit tests
+│   │   ├── test_character_loader.py
+│   │   ├── test_content_filter.py
+│   │   ├── test_integration.py
+│   │   └── test_narrative_engine.py
+│   └── __init__.py
+├── characters/               # Character definition files
+│   └── serena.json           # Main protagonist character
 
 soothe_interface_dev/        # Web interface components
 ├── digital_prototype/       # HTML/CSS implementation
-│   ├── about.html
-│   ├── anxiety-education.html
-│   ├── game.html
-│   ├── helpline.html
-│   ├── index.html
-│   ├── scripts.js
-│   └── styles.css
-└── stream.py               # Streamlit interface
+│   ├── images/              # Image assets
+│   ├── about.html           # About page
+│   ├── anxiety-education.html # Educational content
+│   ├── game.html            # Interactive game screen
+│   ├── helpline.html        # Support resources
+│   ├── index.html           # Landing page
+│   ├── script.js            # JavaScript functionality
+│   └── styles.css           # CSS styling
+└── stream.py                # Streamlit interface implementation
 
-doc/                        # Documentation files
-├── anthropic-prompt-cheatsheet.md
-├── code-overview.md
-└── features/
-    ├── feature_1.md         # User input functionality docs
-    └── feature_2.md         # LLM text generation docs
+docs/                        # Documentation files
+├── api/                     # API documentation
+│   └── content_filter.md
+├── development/             # Development documentation
+│   ├── architecture.md
+│   └── contributing.md
+├── features/                # Feature documentation
+│   ├── feature_1.md         # User input functionality
+│   └── feature_2.md         # LLM text generation
+├── setup/                   # Setup documentation
+│   ├── configuration.md
+│   └── installation.md
+├── anthropic-prompt-cheatsheet.md # Prompt engineering guide
+└── code-overview.md         # Application architecture overview
 ```
 
 ## Key Components
 
-### 1. Content Safety
+### 1. Narrative Engine
+
+The heart of SootheAI is its narrative engine powered by Claude 3.7 Sonnet. The engine:
+
+- Generates contextually relevant responses based on user inputs
+- Maintains narrative consistency throughout the experience
+- Portrays subtle anxiety symptoms without explicitly labeling them
+- Adapts to user choices and preferences
+- Provides educational insights through storytelling
+
+### 2. Content Safety System
 
 SootheAI implements comprehensive content safety measures:
 
-#### Basic Version (main_v0.py)
+- Multi-tier content filtering with severity levels
+- Pattern-based detection using regex for complex harmful content identification
+- Context-aware analysis for better understanding of user intent
+- Configurable response strategies based on content severity
+- Dynamic content replacement with contextually appropriate alternatives
+- Comprehensive logging for monitoring and improvement
 
-- Simple blacklist filtering for potentially harmful content
-- Safety disclaimers for sensitive discussions
-- Redirection to helpline resources when needed
-- System prompts designed to avoid explicitly labeling anxiety
-
-#### Enhanced Version (main_v1.py)
-
-- **Multi-tier content filtering** with severity levels (LOW, MEDIUM, HIGH, CRITICAL)
-- **Pattern-based detection** using regex for complex harmful content identification
-- **Context-aware analysis** for better understanding of user intent
-- **Configurable response strategies** based on content severity
-- **Comprehensive logging** for monitoring and improvement
-- **Dynamic content replacement** with contextually appropriate alternatives
-
-### 2. Character Framework
+### 3. Character Framework
 
 Characters are defined through detailed JSON files that specify:
 
@@ -126,25 +124,27 @@ Characters are defined through detailed JSON files that specify:
 - Relationships with family, friends, and teachers
 - Coping mechanisms and triggers
 
-### 3. AI Integration
+### 4. Interface Options
 
-The application integrates with Anthropic's Claude API and ElevenLabs for TTS:
+SootheAI offers multiple user interface options:
 
-- Generate narrative responses based on user choices using Claude 3.5 Sonnet
-- Text-to-speech conversion for an immersive audio experience
-- Maintain conversation history and context
-- Filter responses for safety compliance
-- Present realistic character behaviors
+#### Gradio Interface
+- Primary chat-based interface
+- Conversation history tracking
+- Audio narration integration
+- Pre-populated consent message
 
-### 4. Adaptive Ending System (main_v0.py)
+#### Streamlit Interface
+- Visual character status dashboard
+- Progress tracking and visualization
+- Emotion state indicators
+- Quick-action buttons for common choices
 
-- Triggers after 12 user interactions
-- Three narrative branches based on user choices:
-  - Acknowledgment of feelings and physical symptoms
-  - Recognition of late study habits and balance
-  - Importance of talking to others and sharing burdens
-- Educational summary with key insights about anxiety
-- Singapore helpline resources
+#### HTML/CSS Prototype
+- Static demonstration of the application concept
+- Visual design elements and layout
+- Educational content pages
+- Support resource information
 
 ## Setup Instructions
 
@@ -170,21 +170,19 @@ ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 
 ### 3. Run the Application
 
+For the Gradio interface:
+
+```bash
+python -m soothe_app.src.ui.gradio_interface
+```
+
 For the Streamlit interface:
 
 ```bash
 streamlit run soothe_interface_dev/stream.py
 ```
 
-For the Gradio interface (choose version):
-
-```bash
-# Simple version with basic filtering and endings
-python soothe_app/main_v0.py
-
-# Advanced version with enhanced guardrails
-python soothe_app/main_v1.py
-```
+To view the HTML prototype, open the HTML files in the `soothe_interface_dev/digital_prototype/` directory in a web browser.
 
 ## Usage
 
@@ -193,7 +191,7 @@ python soothe_app/main_v1.py
 3. Read the story descriptions and make choices to navigate Serena's journey.
 4. Type custom responses or select from available options to shape the narrative.
 5. Listen to the narration through the text-to-speech feature (if enabled).
-6. In main_v0.py, the story will conclude after 12 interactions with an educational summary.
+6. The story will conclude with an educational summary about anxiety and coping strategies.
 
 ## Testing
 
@@ -206,28 +204,18 @@ python -m unittest discover -s soothe_app/tests
 For system prompt testing:
 
 ```bash
-python soothe_app/tests/system_prompt_tester.py --prompt path/to/prompt --consent-flow
+python soothe_app/tests/tools/system_prompt_tester.py --prompt path/to/prompt --consent-flow
 ```
 
 For enhanced filter integration testing:
 
 ```bash
-python soothe_app/test_integration.py
+python soothe_app/tests/unit/test_integration.py
 ```
 
 ## Development Notes
 
-See `doc/anthropic-prompt-cheatsheet.md` for guidance on structuring prompts for the Claude API, and `doc/code-overview.md` for a detailed explanation of the application's architecture.
-
-## Current Development Status
-
-- ✅ **main_v0.py**: Fully functional with basic filtering and adaptive ending system
-- ✅ **main_v1.py**: Enhanced guardrail system implemented
-- 🚧 **main_v2.py ending system**: Integration of adaptive endings (next milestone)
-- 🚧 **main_v3.py NPC integration**: Integration of different characters in Serena's life that players can interact with
-- ✅ **Enhanced content filtering**: Multi-tier safety system with pattern matching
-- ✅ **Text-to-speech integration**: Full audio narration support
-- ✅ **Comprehensive testing**: Unit tests and integration tests for core functionality
+See `docs/anthropic-prompt-cheatsheet.md` for guidance on structuring prompts for the Claude API, and `docs/code-overview.md` for a detailed explanation of the application's architecture.
 
 ## License
 
