@@ -73,3 +73,38 @@ The ala...
 2025-05-17 13:22:21,569 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-05-17 13:22:21,574 - soothe_app.src.models.game_state - INFO - Starting narrative set
 2025-05-17 13:22:21,577 - soothe_app.src.core.narrative_engine - INFO - Successfully initialized game with starting narrative
+2025-05-18 12:20:45,905 - soothe_app.src.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-18 12:20:45,906 - __main__ - INFO - Starting SootheAI application
+2025-05-18 12:20:45,907 - soothe_app.src.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-18 12:20:45,907 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-18 12:20:46,110 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-18 12:20:46,111 - soothe_app.src.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-18 12:20:46,111 - soothe_app.src.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-18 12:20:46,355 - soothe_app.src.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-18 12:20:46,356 - soothe_app.src.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-18 12:20:46,360 - soothe_app.src.utils.file_loader - INFO - Loading JSON file: soothe_app\config\characters\serena.json
+2025-05-18 12:20:46,361 - __main__ - INFO - Loaded character data for Serena
+2025-05-18 12:20:46,362 - __main__ - INFO - Creating Gradio interface
+2025-05-18 12:20:46,363 - soothe_app.src.models.game_state - INFO - Game state initialized at 2025-05-18 12:20:46
+2025-05-18 12:20:46,364 - soothe_app.src.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-18 12:20:46,364 - soothe_app.src.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-18 12:20:46,366 - soothe_app.src.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1747542046_79ac8f66
+2025-05-18 12:20:46,367 - soothe_app.src.ui.tts_handler - INFO - TTS handler initialized
+2025-05-18 12:20:46,368 - soothe_app.src.ui.gradio_interface - INFO - EnhancedGradioInterface initialized
+2025-05-18 12:20:46,369 - soothe_app.src.ui.gradio_interface - INFO - Creating enhanced Gradio interface
+2025-05-18 12:20:46,699 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-18 12:20:47,156 - httpx - INFO - HTTP Request: GET https://api.placid.app/u/pfot4gzld?width=320&height=320&text[name][text]=Serena "HTTP/1.1 404 Not Found"
+2025-05-18 12:20:47,199 - soothe_app.src.ui.gradio_interface - INFO - Launching enhanced Gradio interface
+2025-05-18 12:20:47,199 - soothe_app.src.ui.gradio_interface - WARNING - Favicon not found in common locations
+2025-05-18 12:20:47,200 - soothe_app.src.ui.gradio_interface - ERROR - Failed to launch Gradio interface: Blocks.launch() got an unexpected keyword argument 'default_enabled_dir'
+2025-05-18 12:20:47,200 - __main__ - CRITICAL - Unhandled exception: Blocks.launch() got an unexpected keyword argument 'default_enabled_dir'
+Traceback (most recent call last):
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\src\main.py", line 74, in main
+    interface.launch(share=True, server_name="0.0.0.0", server_port=7861)
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\src\ui\gradio_interface.py", line 406, in launch
+    self.interface.launch(
+TypeError: Blocks.launch() got an unexpected keyword argument 'default_enabled_dir'
+2025-05-18 12:20:47,399 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-18 12:20:47,400 - soothe_app.src.ui.tts_handler - INFO - TTS session stats: {'session_id': 'ses_1747542046_79ac8f66', 'session_duration_seconds': 1.0348236560821533, 'total_synthesis_count': 0, 'total_chars_synthesized': 0, 'average_length': 0, 'synthesis_categories': {}}
+2025-05-18 12:20:47,401 - soothe_app.src.ui.speech_audit_trail - INFO - Logged end of speech synthesis session: ses_1747542046_79ac8f66
+2025-05-18 12:20:47,401 - soothe_app.src.ui.tts_handler - INFO - TTS handler cleanup completed
