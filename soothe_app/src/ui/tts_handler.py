@@ -1,14 +1,17 @@
 """
-Text-to-speech handler for SootheAI.
-Manages audio narration using ElevenLabs API.
+Updated TTS handler with audit trail integration for SootheAI.
 """
 
+import atexit
 import time
 import logging
 import threading
 import subprocess
+import re
 from collections import deque
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
+
+from .speech_audit_trail import get_audit_trail
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -188,6 +191,9 @@ class TTSHandler:
         self.voice_id = "21m00Tcm4TlvDq8ikWAM"  # Default female voice
         self.model_id = "eleven_flash_v2_5"
 
+        # Get the audit trail instance
+        self.audit_trail = get_audit_trail()
+
         logger.info("TTS handler initialized")
         if not elevenlabs_client:
             logger.warning(
@@ -212,20 +218,61 @@ class TTSHandler:
         else:
             return text
 
-    def speak_text(self, text: str) -> None:
+    def detect_content_category(self, text: str) -> str:
+        """
+        Detect the category of content for audit purposes.
+
+        Args:
+            text: The text to categorize
+
+        Returns:
+            str: Content category
+        """
+        # Check for dialogue (text in quotation marks with speaker attribution)
+        if re.search(r'"[^"]+"\s*(?:said|asked|replied)', text):
+            return "dialogue"
+
+        # Check for inner thoughts (second person perspective)
+        if re.search(r'\byou (think|feel|wonder|worry|consider)\b', text, re.IGNORECASE):
+            return "inner_thoughts"
+
+        # Check for options/choices
+        if re.search(r'\d+\.\s+', text) or "what do you want to do?" in text.lower():
+            return "options"
+
+        # Default to narrative
+        return "narrative"
+
+    def speak_text(self, text: str, category: str = "narrative") -> None:
         """
         Stream text to speech using ElevenLabs API and play with ffmpeg.
 
         Args:
             text: Text to convert to speech
+            category: Category of speech content
         """
         if not self.elevenlabs_client:
             logger.warning("TTS disabled: ElevenLabs client not initialized")
+            self.audit_trail.log_synthesis_error(
+                text=text[:100] + "..." if len(text) > 100 else text,
+                error_message="TTS disabled: ElevenLabs client not initialized",
+                category=category
+            )
             return
 
         try:
             logger.info("[DEBUG] Starting TTS stream with ffmpeg pipe...")
             stream_start = time.time()
+
+            # Log the synthesis start
+            synthesis_entry = self.audit_trail.log_synthesis(
+                text=text,
+                category=category,
+                metadata={
+                    "voice_id": self.voice_id,
+                    "model_id": self.model_id
+                }
+            )
 
             process = subprocess.Popen(
                 ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
@@ -252,16 +299,23 @@ class TTSHandler:
 
         except Exception as tts_error:
             logger.error(f"TTS Error: {tts_error}")
+            # Log the synthesis error
+            self.audit_trail.log_synthesis_error(
+                text=text[:100] + "..." if len(text) > 100 else text,
+                error_message=str(tts_error),
+                category=category
+            )
 
-    def delayed_tts(self, text: str) -> None:
+    def delayed_tts(self, text: str, category: str = "narrative") -> None:
         """
         Delay TTS by a short time to allow UI to update first.
 
         Args:
             text: Text to speak
+            category: Category of speech content
         """
         time.sleep(0.1)  # Short delay to allow UI to update
-        self.speak_text(text)
+        self.speak_text(text, category)
 
     def run_tts_with_consent_and_limiting(self, text: str) -> None:
         """
@@ -284,14 +338,23 @@ class TTSHandler:
         can_process, limit_message = self.rate_limiter.can_process_tts(text)
         if not can_process:
             logger.warning(f"TTS rate limited: {limit_message}")
+            # Log the rate limiting in audit trail
+            self.audit_trail.log_synthesis_error(
+                text=text[:100] + "..." if len(text) > 100 else text,
+                error_message=f"Rate limiting: {limit_message}",
+                category="rate_limited"
+            )
             return
+
+        # Detect content category
+        category = self.detect_content_category(text)
 
         # Add voice disclaimer if needed
         text_with_disclaimer = self.add_voice_disclaimer(text)
 
         # Run TTS in thread to avoid blocking
         threading.Thread(target=self.delayed_tts, args=(
-            text_with_disclaimer,), daemon=True).start()
+            text_with_disclaimer, category), daemon=True).start()
         logger.info(f"Started TTS thread for text: {text[:50]}...")
 
     def process_command(self, message: str) -> Tuple[bool, Optional[str]]:
@@ -315,16 +378,47 @@ class TTSHandler:
 
         if message_lower == 'tts status':
             status = self.rate_limiter.get_status()
+            audit_stats = self.audit_trail.get_session_statistics()
+
             status_msg = (
                 f"TTS Status:\n"
                 f"- Audio enabled: {'Yes' if self.consent_manager.is_consent_given() else 'No'}\n"
                 f"- Rate limit: {status['requests_in_last_minute']}/{status['max_requests_per_minute']} requests/min\n"
                 f"- Daily usage: {status['chars_used_today']}/{status['daily_char_limit']} characters\n"
-                f"- Reset in: {status['time_until_reset']/3600:.1f} hours"
+                f"- Reset in: {status['time_until_reset']/3600:.1f} hours\n"
+                f"- Session stats: {audit_stats['total_synthesis_count']} TTS events, "
+                f"{audit_stats['total_chars_synthesized']} characters synthesized"
             )
             return True, status_msg
 
+        elif message_lower == 'tts report':
+            # Generate a simple report from the audit trail
+            try:
+                report = self.audit_trail.extract_audit_report(days=1)
+                report_msg = (
+                    f"TTS Audit Report (Last 24 hours):\n"
+                    f"- Total sessions: {report.get('total_sessions', 0)}\n"
+                    f"- Total synthesis events: {report.get('total_synthesis_events', 0)}\n"
+                    f"- Characters synthesized: {report.get('total_chars_synthesized', 0)}\n"
+                    f"- Categories: {', '.join(report.get('synthesis_by_category', {}).keys())}"
+                )
+                return True, report_msg
+            except Exception as e:
+                logger.error(f"Error generating TTS report: {e}")
+                return True, "Error generating TTS report. Please check logs."
+
         return False, None
+
+    def cleanup(self):
+        """Perform cleanup operations when shutting down."""
+        try:
+            # Log end of session
+            if hasattr(self, 'audit_trail'):
+                stats = self.audit_trail.get_session_statistics()
+                logger.info(f"TTS session stats: {stats}")
+                self.audit_trail.log_session_end()
+        except Exception as e:
+            logger.error(f"Error during TTS cleanup: {e}")
 
 
 # Singleton instance
@@ -345,3 +439,21 @@ def get_tts_handler(elevenlabs_client=None):
     if _tts_handler is None:
         _tts_handler = TTSHandler(elevenlabs_client)
     return _tts_handler
+
+
+# Register the cleanup function to run at exit
+
+
+def cleanup_on_exit():
+    """Perform cleanup when the application exits."""
+    global _tts_handler
+
+    if _tts_handler is not None:
+        try:
+            _tts_handler.cleanup()
+            logger.info("TTS handler cleanup completed")
+        except Exception as e:
+            logger.error(f"Error during TTS handler cleanup: {e}")
+
+
+atexit.register(cleanup_on_exit)

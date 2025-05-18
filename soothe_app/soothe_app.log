@@ -525,3 +525,33 @@
 2025-05-16 23:06:10,510 - __main__ - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
 2025-05-16 23:06:11,847 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
 2025-05-16 23:07:28,208 - __main__ - INFO - [DEBUG] TTS streaming duration: 77.70 seconds
+2025-05-18 11:50:53,168 - src.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-18 11:50:53,169 - __main__ - INFO - Starting SootheAI application with hybrid approach
+2025-05-18 11:50:53,170 - src.utils.safety - INFO - Content filter initialized successfully
+2025-05-18 11:50:53,171 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-18 11:50:53,635 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-18 11:50:53,636 - src.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-18 11:50:53,636 - src.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-18 11:50:54,082 - src.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-18 11:50:54,083 - src.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-18 11:50:54,096 - src.utils.file_loader - INFO - Loading JSON file: ..\soothe_app\config\characters\serena.json
+2025-05-18 11:50:54,098 - __main__ - INFO - Starting SootheAI application
+2025-05-18 11:50:54,100 - __main__ - INFO - Initializing game interface
+2025-05-18 11:50:54,333 - __main__ - INFO - Launching game interface
+2025-05-18 11:50:54,911 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-18 11:50:55,617 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-18 11:50:57,199 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-18 11:50:59,559 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-18 11:51:00,819 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-18 11:52:54,515 - __main__ - INFO - Processing message in main loop: i agree...
+2025-05-18 11:52:54,522 - __main__ - INFO - User consent received
+2025-05-18 11:52:58,447 - __main__ - INFO - Processing message in main loop: start game...
+2025-05-18 11:52:58,448 - __main__ - INFO - Starting new game
+2025-05-18 11:52:58,448 - __main__ - INFO - Requesting initial narrative from Claude API
+2025-05-18 11:52:58,449 - src.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-18 11:53:03,710 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-18 11:53:03,732 - __main__ - INFO - Started TTS thread for text: The early morning sun filters through the curtains...
+2025-05-18 11:53:03,737 - __main__ - INFO - Streaming TTS for initial narrative
+2025-05-18 11:53:03,833 - __main__ - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-18 11:53:05,257 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+2025-05-18 11:54:08,365 - __main__ - INFO - [DEBUG] TTS streaming duration: 64.53 seconds
