@@ -173,7 +173,7 @@ ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 For the Gradio interface:
 
 ```bash
-python -m soothe_app.src.ui.gradio_interface
+python -m soothe_app.src.main
 ```
 
 For the Streamlit interface:
