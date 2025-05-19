@@ -72,7 +72,7 @@ class ClaudeClient:
     def generate_response(self,
                           messages: List[Dict[str, str]],
                           system_prompt: str,
-                          model: str = "claude-3-5-sonnet-20240620",
+                          model: str = "claude-3-7-sonnet-20250219",
                           max_tokens: int = 1000,
                           temperature: float = 0) -> Tuple[Optional[str], Optional[str]]:
         """
