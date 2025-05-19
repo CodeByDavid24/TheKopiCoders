@@ -52,9 +52,28 @@ class GameState:
         # Tracks consecutive high overwhelm interactions
         self.high_overwhelm_count: int = 0
 
+        # Add a dedicated field for audio consent
+        self.audio_consent_asked = False
+
         # Initialize with timestamp for debugging
         logger.info(
             f"Game state initialized at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+    # Add a method to mark audio consent as asked
+    def mark_audio_consent_asked(self) -> None:
+        """Mark that audio consent has been explicitly asked."""
+        self.audio_consent_asked = True
+        logger.info("Audio consent marked as explicitly asked")
+
+    # Add a method to check if audio consent has been asked
+    def is_audio_consent_asked(self) -> bool:
+        """
+        Check if audio consent has been explicitly asked.
+
+        Returns:
+            True if audio consent has been asked, False otherwise
+        """
+        return self.audio_consent_asked
 
     def give_consent(self) -> None:
         """Mark user consent as given."""

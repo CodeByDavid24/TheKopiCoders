@@ -30,17 +30,25 @@ class GradioInterface:
         self.tts_handler = get_tts_handler(elevenlabs_client)
         self.interface = None
         self.consent_message = """
-        **Start Game - Important Information**
+        **Welcome to SootheAI - Serena's Story**
 
-        **Warning & Consent:**
+        **Important Information:**
         This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
 
-        Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience. By starting the game, you agree to these terms.
+        Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
 
-        Type 'I agree' then 'Start game' to continue.
+        **Audio Feature Option:**
+        SootheAI can narrate the story using AI-generated speech. The audio is processed in real-time and not stored.
+
+        **To begin:**
+        Type 'I agree with audio' to enable voice narration
+        OR
+        Type 'I agree without audio' to continue with text only
+
+        You can change audio settings at any time by typing 'enable audio' or 'disable audio'.
         """
 
-        logger.info("GradioInterface initialized")
+    logger.info("GradioInterface initialized")
 
     def main_loop(self, message: Optional[str], history: List[Tuple[str, str]]) -> str:
         """
@@ -62,17 +70,11 @@ class GradioInterface:
         logger.info(
             f"Processing message in main loop: {message[:50] if message else ''}...")
 
-        # Check for TTS commands first
-        is_tts_command, tts_response = self.tts_handler.process_command(
-            message)
-        if is_tts_command and tts_response:
-            return tts_response
-
         # Process the message using narrative engine
         response, success = self.narrative_engine.process_message(message)
 
-        # Process TTS if appropriate
-        if success:
+        # Process TTS if appropriate - only do this for game content, not consent messages
+        if success and self.narrative_engine.game_state.is_consent_given() and message.lower() not in ['i agree', 'enable audio', 'disable audio', 'start game']:
             self.tts_handler.run_tts_with_consent_and_limiting(response)
 
         return response

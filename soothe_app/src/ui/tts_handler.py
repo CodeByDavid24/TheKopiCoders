@@ -104,17 +104,14 @@ class VoiceConsentManager:
     def __init__(self):
         """Initialize the voice consent manager."""
         self.voice_consent_given = False
+        # Update the consent message to be more concise for integration with the main consent flow
         self.voice_consent_message = """
-        **Audio Feature Consent Required**
+        **Audio Feature Option**
         
-        SootheAI can narrate the story using AI-generated speech. Please note:
-        - This uses synthetic voice generation, not a real person
-        - Audio is processed in real-time and not stored
-        - You can disable audio at any time by typing 'disable audio'
-        
-        Would you like to enable audio narration?
+        Would you like to enable AI voice narration for this story?
         - Type 'enable audio' to activate voice narration
-        - Type 'disable audio' to continue with text only
+        - Type 'disable audio' or 'no audio' to continue with text only
+        - You can change this setting at any time
         """
 
         logger.info("Voice consent manager initialized")
@@ -419,6 +416,122 @@ class TTSHandler:
                 self.audit_trail.log_session_end()
         except Exception as e:
             logger.error(f"Error during TTS cleanup: {e}")
+
+    def run_tts_with_consent_and_limiting(self, text: str) -> None:
+        """
+        Run TTS with voice consent and rate limiting checks.
+
+        Args:
+            text: Text to convert to speech
+        """
+        # Check if TTS is disabled at the client level
+        if not self.elevenlabs_client:
+            logger.debug("TTS is disabled: ElevenLabs client not initialized")
+            return
+
+        # Check voice consent - but don't interrupt narrative flow by asking for consent
+        if not self.consent_manager.is_consent_given():
+            logger.debug("TTS skipped: Voice consent not given")
+            return
+
+        # Check rate limiting
+        can_process, limit_message = self.rate_limiter.can_process_tts(text)
+        if not can_process:
+            logger.warning(f"TTS rate limited: {limit_message}")
+            # Log the rate limiting in audit trail
+            self.audit_trail.log_synthesis_error(
+                text=text[:100] + "..." if len(text) > 100 else text,
+                error_message=f"Rate limiting: {limit_message}",
+                category="rate_limited"
+            )
+            return
+
+        # Detect content category
+        category = self.detect_content_category(text)
+
+        # Add voice disclaimer if needed
+        text_with_disclaimer = self.add_voice_disclaimer(text)
+
+        # Run TTS in thread to avoid blocking
+        threading.Thread(target=self.delayed_tts, args=(
+            text_with_disclaimer, category), daemon=True).start()
+        logger.info(f"Started TTS thread for text: {text[:50]}...")
+
+    def process_command(self, message: str) -> Tuple[bool, Optional[str]]:
+        """
+        Process potential TTS-related commands.
+
+        Args:
+            message: User message
+
+        Returns:
+            Tuple of (is_tts_command, response_message)
+        """
+        # Check for voice consent commands
+        message_lower = message.lower().strip()
+
+        if message_lower == 'enable audio':
+            if not self.consent_manager.is_consent_given():
+                self.consent_manager.give_consent()
+                logger.info("User enabled audio narration")
+                return True, "✅ Audio narration enabled! The story will now be read aloud."
+            else:
+                return True, "Audio narration is already enabled."
+
+        elif message_lower == 'disable audio' or message_lower == 'no audio':
+            if self.consent_manager.is_consent_given():
+                self.consent_manager.revoke_consent()
+                logger.info("User disabled audio narration")
+                return True, "🔇 Audio narration disabled. You'll continue with text only."
+            else:
+                return True, "Audio narration is already disabled."
+
+        # Handle the combined consent command
+        elif message_lower == 'i agree with audio':
+            self.consent_manager.give_consent()
+            logger.info(
+                "User enabled audio narration through combined consent")
+            return False, None  # Return False so the main flow continues
+
+        elif message_lower == 'i agree without audio':
+            self.consent_manager.revoke_consent()
+            logger.info(
+                "User disabled audio narration through combined consent")
+            return False, None  # Return False so the main flow continues
+
+        # Check for other TTS commands
+        if message_lower == 'tts status':
+            status = self.rate_limiter.get_status()
+            audit_stats = self.audit_trail.get_session_statistics()
+
+            status_msg = (
+                f"TTS Status:\n"
+                f"- Audio enabled: {'Yes' if self.consent_manager.is_consent_given() else 'No'}\n"
+                f"- Rate limit: {status['requests_in_last_minute']}/{status['max_requests_per_minute']} requests/min\n"
+                f"- Daily usage: {status['chars_used_today']}/{status['daily_char_limit']} characters\n"
+                f"- Reset in: {status['time_until_reset']/3600:.1f} hours\n"
+                f"- Session stats: {audit_stats['total_synthesis_count']} TTS events, "
+                f"{audit_stats['total_chars_synthesized']} characters synthesized"
+            )
+            return True, status_msg
+
+        elif message_lower == 'tts report':
+            # Generate a simple report from the audit trail
+            try:
+                report = self.audit_trail.extract_audit_report(days=1)
+                report_msg = (
+                    f"TTS Audit Report (Last 24 hours):\n"
+                    f"- Total sessions: {report.get('total_sessions', 0)}\n"
+                    f"- Total synthesis events: {report.get('total_synthesis_events', 0)}\n"
+                    f"- Characters synthesized: {report.get('total_chars_synthesized', 0)}\n"
+                    f"- Categories: {', '.join(report.get('synthesis_by_category', {}).keys())}"
+                )
+                return True, report_msg
+            except Exception as e:
+                logger.error(f"Error generating TTS report: {e}")
+                return True, "Error generating TTS report. Please check logs."
+
+        return False, None
 
 
 # Singleton instance

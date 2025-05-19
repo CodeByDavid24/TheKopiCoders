@@ -10,6 +10,7 @@ from typing import Dict, List, Tuple, Any, Optional
 from ..core.api_client import get_claude_client
 from ..models.game_state import GameState
 from ..utils.safety import filter_response_safety, check_input_safety
+from ..ui.tts_handler import get_tts_handler
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -205,9 +206,14 @@ CONSENT_MESSAGE = """
 **Warning & Consent:**
 This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
 
-Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience. By starting the game, you agree to these terms.
+Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
 
-Type 'I agree' then 'Start game' to continue.
+**Audio Feature Option:**
+SootheAI can narrate the story using AI-generated speech. The audio is processed in real-time and not stored.
+
+Type 'I agree' to continue, followed by either:
+- 'with audio' to enable voice narration
+- 'without audio' to continue with text only
 """
 
 
@@ -316,83 +322,40 @@ class NarrativeEngine:
         # Check consent and game start status
         if not self.game_state.is_consent_given():
             # Handle consent flow
-            if message.lower() == 'i agree':
+            message_lower = message.lower()
+
+            if message_lower == 'i agree with audio' or message_lower == 'i agree (with audio)':
+                logger.info("User consent received with audio enabled")
+                self.game_state.give_consent()
+                # Also enable audio
+                tts_handler = get_tts_handler()
+                tts_handler.consent_manager.give_consent()
+                return "Thank you for agreeing to the terms with audio enabled. Type 'start game' to begin.", True
+
+            elif message_lower == 'i agree without audio' or message_lower == 'i agree (without audio)':
+                logger.info("User consent received without audio")
+                self.game_state.give_consent()
+                # Make sure audio is disabled
+                tts_handler = get_tts_handler()
+                tts_handler.consent_manager.revoke_consent()
+                return "Thank you for agreeing to the terms. Audio narration is disabled. Type 'start game' to begin.", True
+
+            elif message_lower == 'i agree':
                 logger.info("User consent received")
                 self.game_state.give_consent()
-                return "Thank you for agreeing to the terms. Type 'start game' to begin.", True
+                # Ask about audio preference
+                tts_handler = get_tts_handler()
+                return "Thank you for agreeing to the terms.\n\n" + tts_handler.consent_manager.voice_consent_message, True
+
             else:
                 logger.info("Showing consent message to user")
                 return CONSENT_MESSAGE, True
 
-        # Handle game start command
-        if message.lower() == 'start game':
-            logger.info("Starting new game")
-
-            # Initialize game state if not already done
-            starting_narrative = self.game_state.get_starting_narrative()
-            if not starting_narrative:
-                narrative, success = self.initialize_game()
-                if not success:
-                    return narrative, False
-                return narrative, True
-            else:
-                return starting_narrative, True
-
-        # Check user input for safety
-        is_safe, safe_message = check_input_safety(message)
-        if not is_safe:
-            logger.warning("Blocked unsafe user input")
-            return safe_message, True
-
-        # Track interaction count
-        if message.lower() not in ['start game', 'i agree']:
-            self.game_state.increment_interaction_count()
-            logger.info(
-                f"Interaction count: {self.game_state.get_interaction_count()}")
-
-            # Check if we should trigger an ending
-            if self.game_state.should_trigger_ending():
-                logger.info("Ending triggered based on interaction count")
-                ending_narrative = self.generate_ending()
-                return ending_narrative, True
-
-        try:
-            # Prepare messages from history
-            messages = []
-
-            # Add conversation history
-            for user_msg, assistant_msg in self.game_state.get_history():
-                messages.append({"role": "user", "content": user_msg})
-                messages.append(
-                    {"role": "assistant", "content": assistant_msg})
-
-            # Add current message
-            messages.append({"role": "user", "content": message})
-
-            # Generate response from Claude
-            logger.info(f"Sending message to Claude API: {message[:50]}...")
-            response, error = self.claude_client.generate_response(
-                messages=messages,
-                system_prompt=self.system_prompt
-            )
-
-            if error:
-                return f"Error processing message: {error}", False
-
-            # Filter response for safety
-            safe_response = filter_response_safety(response)
-
-            # Update game state with new message pair
-            self.game_state.add_to_history(message, safe_response)
-
-            logger.info(
-                f"Successfully processed message and generated response")
-            return safe_response, True
-
-        except Exception as e:
-            error_msg = f"Error processing message: {str(e)}"
-            logger.error(error_msg)
-            return error_msg, False
+        # Handle audio consent separately after main consent is given
+        tts_handler = get_tts_handler()
+        is_tts_command, tts_response = tts_handler.process_command(message)
+        if is_tts_command:
+            return tts_response, True
 
     def generate_ending(self) -> str:
         """
