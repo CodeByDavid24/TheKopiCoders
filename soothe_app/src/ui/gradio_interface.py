@@ -56,7 +56,7 @@ class GradioInterface:
                     </p>
                     
                     <p style="color: #64748b; font-size: 16px;">
-                        To begin your journey, select the "Serena's Story" tab above.
+                        To begin your journey, select the "SootheAI" tab above.
                     </p>
                 </div>
             </div>
@@ -96,7 +96,7 @@ class GradioInterface:
                     
                     <div style="background-color: #e6f7ed; padding: 20px; border-radius: 8px; text-align: left; margin-top: 30px;">
                         <h3 style="color: #2f6846; margin-bottom: 10px;">Ready to start?</h3>
-                        <p style="color: #2f6846; line-height: 1.6;">Select the "Serena's Story" tab to start your journey, or explore our Anxiety Education and Helpline resources.</p>
+                        <p style="color: #2f6846; line-height: 1.6;">Select the "SootheAI" tab to start your journey, or explore our Anxiety Education and Helpline resources.</p>
                     </div>
                 </div>
             </div>
@@ -329,11 +329,11 @@ class GradioInterface:
         """
 
         # Create the interface
-        with gr.Blocks(theme=gr.themes.Soft(), title="SootheAI", css=custom_css) as blocks:
+        with gr.Blocks(theme=gr.themes.Soft(), title="TheKopiCoders", css=custom_css) as blocks:
             # Simple header with dark background
             gr.HTML("""
             <div style="width: 100%; background-color: #334155; color: white; padding: 15px 20px;">
-                <h1 style="margin: 0; font-size: 24px;">SootheAI</h1>
+                <h1 style="margin: 0; font-size: 24px;">TheKopiCoders</h1>
             </div>
             """)
 
@@ -343,7 +343,7 @@ class GradioInterface:
                     gr.HTML(self.homepage_content)
 
                 # Interactive Story Tab
-                with gr.Tab("Serena's Story"):
+                with gr.Tab("SootheAI"):
                     chat_interface = gr.ChatInterface(
                         self.main_loop,  # Main processing function
                         chatbot=gr.Chatbot(
