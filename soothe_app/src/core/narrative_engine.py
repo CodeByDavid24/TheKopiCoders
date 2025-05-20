@@ -300,6 +300,14 @@ class NarrativeEngine:
             # Store the narrative in game state
             self.game_state.set_starting_narrative(safe_narrative)
 
+            # Check if audio consent has been handled
+            tts_handler = get_tts_handler()
+            if tts_handler.consent_manager.is_consent_given() and not self.game_state.is_story_ended():
+                # User has consented to audio, so let's prepare the TTS system
+                tts_handler.mark_tts_session_started()
+                logger.info(
+                    "Audio consent is given, TTS session will be started with narrative")
+
             logger.info(
                 "Successfully initialized game with starting narrative")
             return safe_narrative, True
@@ -356,6 +364,49 @@ class NarrativeEngine:
         is_tts_command, tts_response = tts_handler.process_command(message)
         if is_tts_command:
             return tts_response, True
+
+        # Handle starting the game when consent has been given
+        if message.lower() == "start game":
+            # Initialize the game narrative
+            narrative, success = self.initialize_game()
+            return narrative, success
+
+        # For all other messages, generate narrative response
+        if self.claude_client.is_ready():
+            # Keep track of interactions for story progression
+            self.game_state.increment_interaction_count()
+
+            # Check if we should trigger the ending
+            if self.game_state.should_trigger_ending():
+                ending_narrative = self.generate_ending()
+                self.game_state.mark_story_ended()
+                return ending_narrative, True
+
+            # Add the user message to the conversation history
+            conversation_history = self.game_state.get_history()
+
+            # Default prompt if no history
+            prompt = message
+
+            # Generate a response from Claude
+            narrative, error = self.claude_client.get_narrative(
+                prompt=prompt,
+                system_prompt=self.system_prompt
+            )
+
+            if error:
+                return f"Error generating response: {error}", False
+
+            # Filter the response for safety
+            safe_narrative = filter_response_safety(narrative)
+
+            # Add to history
+            self.game_state.add_to_history(message, safe_narrative)
+
+            return safe_narrative, True
+        else:
+            error = self.claude_client.get_error()
+            return f"Error: Claude client not initialized: {error}", False
 
     def generate_ending(self) -> str:
         """
