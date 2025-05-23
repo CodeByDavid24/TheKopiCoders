@@ -137,19 +137,46 @@ class ClaudeClient:
             logger.error(error_msg)
             return None, error_msg
 
-    def get_narrative(self, prompt: str, system_prompt: str) -> Tuple[Optional[str], Optional[str]]:
+    def get_narrative(self, prompt: str, system_prompt: str, conversation_history: List[Dict[str, str]] = None) -> Tuple[str, Optional[str]]:
         """
-        Generate a narrative response for the SootheAI experience.
-
+        Get a narrative response from Claude API.
+        
         Args:
-            prompt: Prompt to send to Claude
-            system_prompt: System prompt with game mechanics
-
+            prompt: User's input prompt
+            system_prompt: System instructions
+            conversation_history: List of previous messages
+            
         Returns:
             Tuple of (narrative_text, error_message)
         """
-        messages = [{"role": "user", "content": prompt}]
-        return self.generate_response(messages, system_prompt)
+        try:
+            # Build messages list
+            messages = []
+            
+            # Add conversation history if provided
+            if conversation_history:
+                messages.extend(conversation_history)
+            
+            # Add current user message
+            messages.append({
+                "role": "user",
+                "content": prompt
+            })
+            
+            # Create message with conversation context
+            message = self.client.messages.create(
+                model="claude-3-opus-20240229",
+                max_tokens=1500,
+                temperature=0.7,
+                system=system_prompt,
+                messages=messages
+            )
+            
+            return message.content[0].text, None
+            
+        except Exception as e:
+            logger.error(f"Error getting narrative: {str(e)}")
+            return "", str(e)
 
 
 # Singleton instance for global use
