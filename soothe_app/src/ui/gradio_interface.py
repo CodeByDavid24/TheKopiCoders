@@ -3,15 +3,19 @@ Gradio interface module for SootheAI.
 Manages UI interactions and the web interface.
 """
 
-import logging
-import gradio as gr
+import logging  # For application logging
+import gradio as gr  # Web interface framework
+# Type hints for better code documentation
 from typing import Optional, Tuple, List, Dict, Any
 
+# Import narrative engine creation function
 from ..core.narrative_engine import create_narrative_engine
+# Import game state management
 from ..models.game_state import GameState
+# Import TTS handler for audio functionality
 from ..ui.tts_handler import get_tts_handler
 
-# Set up logger
+# Set up logger for this module
 logger = logging.getLogger(__name__)
 
 
@@ -19,10 +23,21 @@ class GradioInterface:
     """Class for managing the Gradio interface for SootheAI."""
 
     def __init__(self, character_data: Dict[str, Any], elevenlabs_client=None):
+        """
+        Initialize the Gradio interface with character data and optional TTS client.
+
+        Args:
+            character_data: Dictionary containing character information (name, personality, etc.)
+            elevenlabs_client: Optional ElevenLabs client for text-to-speech functionality
+        """
         # Keep your existing init code
-        self.narrative_engine = create_narrative_engine(character_data)
+        self.narrative_engine = create_narrative_engine(
+            character_data)  # Initialize AI narrative engine
+        # Initialize text-to-speech handler
         self.tts_handler = get_tts_handler(elevenlabs_client)
-        self.interface = None
+        self.interface = None  # Will hold the Gradio interface once created
+
+        # Consent message shown to users when they first access the application
         self.consent_message = """
         **Welcome to SootheAI - Serena's Story**
         
@@ -42,7 +57,7 @@ class GradioInterface:
         You can change audio settings at any time by typing 'enable audio' or 'disable audio'.
         """
 
-        # Homepage content - full width design with muted colors
+        # Homepage content - full width design with muted colors for professional appearance
         self.homepage_content = """
         <div style="width: 100%; background-color: #f1f5f9; padding: 0; margin: 0;">
             <!-- Main hero section -->
@@ -103,7 +118,7 @@ class GradioInterface:
         </div>
         """
 
-        # Content for the About tab - full width design
+        # Content for the About tab - full width design with team and mission information
         self.about_content = """
         <div style="width: 100%; background-color: #f1f5f9; padding: 40px 20px;">
             <div style="max-width: 800px; margin: 0 auto;">
@@ -146,7 +161,7 @@ class GradioInterface:
         </div>
         """
 
-        # Content for the Anxiety Education tab - full width design
+        # Content for the Anxiety Education tab - educational information about anxiety
         self.anxiety_education_content = """
         <div style="width: 100%; background-color: #f1f5f9; padding: 40px 20px;">
             <div style="max-width: 800px; margin: 0 auto;">
@@ -197,7 +212,7 @@ class GradioInterface:
         </div>
         """
 
-        # Content for the Helpline tab - full width design
+        # Content for the Helpline tab - mental health crisis resources
         self.helpline_content = """
         <div style="width: 100%; background-color: #f1f5f9; padding: 40px 20px;">
             <div style="max-width: 800px; margin: 0 auto;">
@@ -265,45 +280,47 @@ class GradioInterface:
         </div>
         """
 
-    logger.info("GradioInterface initialized")
+    logger.info("GradioInterface initialized")  # Log successful initialization
 
     def main_loop(self, message: Optional[str], history: List[Tuple[str, str]]) -> str:
         """
         Main game loop that processes player input and returns AI responses.
 
         Args:
-            message: Player's input message
-            history: Conversation history
+            message: Player's input message (can be None for initial load)
+            history: Conversation history as list of (user_message, ai_response) tuples
 
         Returns:
-            AI's response or error message
+            str: AI's response or error message
         """
-        # Handle None message
+        # Handle None message (initial page load)
         if message is None:
+            # Log empty message handling
             logger.info("Processing empty message in main loop")
-            return self.consent_message
+            return self.consent_message  # Return consent message for first time users
 
-        # Log message processing
+        # Log message processing with truncated content for privacy
         logger.info(
             f"Processing message in main loop: {message[:50] if message else ''}...")
 
-        # Process the message using narrative engine
+        # Process the message using narrative engine to generate AI response
         response, success = self.narrative_engine.process_message(message)
 
         # Process TTS if appropriate - only do this for game content, not consent messages
         if success and self.narrative_engine.game_state.is_consent_given() and message.lower() not in ['i agree', 'enable audio', 'disable audio', 'start game']:
-            self.tts_handler.run_tts_with_consent_and_limiting(response)
+            self.tts_handler.run_tts_with_consent_and_limiting(
+                response)  # Generate speech for response
 
-        return response
+        return response  # Return the AI-generated response
 
     def create_interface(self) -> gr.Blocks:
         """
         Create the Gradio interface with multiple tabs.
 
         Returns:
-            Gradio Blocks interface
+            gr.Blocks: Configured Gradio interface with all tabs and styling
         """
-        # Custom CSS to ensure full width
+        # Custom CSS to ensure full width layout and consistent styling
         custom_css = """
         .gradio-container {
             max-width: 100% !important;
@@ -328,86 +345,104 @@ class GradioInterface:
         }
         """
 
-        # Create the interface
+        # Create the interface using Gradio Blocks for custom layout
         with gr.Blocks(theme=gr.themes.Soft(), title="TheKopiCoders", css=custom_css) as blocks:
-            # Simple header with dark background
+            # Simple header with dark background for branding
             gr.HTML("""
             <div style="width: 100%; background-color: #334155; color: white; padding: 15px 20px;">
                 <h1 style="margin: 0; font-size: 24px;">TheKopiCoders</h1>
             </div>
             """)
 
+            # Create tabbed interface for different sections
             with gr.Tabs() as tabs:
-                # Home tab
+                # Home tab - landing page with overview
                 with gr.Tab("Home"):
+                    # Display homepage HTML content
                     gr.HTML(self.homepage_content)
 
-                # Interactive Story Tab
+                # Interactive Story Tab - main application functionality
                 with gr.Tab("SootheAI"):
                     chat_interface = gr.ChatInterface(
-                        self.main_loop,  # Main processing function
+                        self.main_loop,  # Main processing function for user messages
                         chatbot=gr.Chatbot(
-                            height=600,  # Increased height
-                            placeholder="Type 'I agree' to begin",
-                            show_copy_button=True,
-                            render_markdown=True,
+                            height=600,  # Increased height for better readability
+                            placeholder="Type 'I agree' to begin",  # Instruction for new users
+                            show_copy_button=True,  # Allow users to copy text
+                            render_markdown=True,  # Enable markdown formatting
+                            # Pre-populate with consent message
                             value=[[None, self.consent_message]]
                         ),
                         textbox=gr.Textbox(
-                            placeholder="Type 'I agree' to continue...",
-                            container=False,
-                            scale=7
+                            placeholder="Type 'I agree' to continue...",  # User instruction for consent
+                            container=False,  # Remove container styling for cleaner look
+                            scale=7  # Set relative width scaling
                         ),
-                        examples=[
+                        examples=[  # Provide example user inputs for guidance
                             "Listen to music",
                             "Journal",
                             "Continue the story"
                         ],
-                        cache_examples=False,
+                        cache_examples=False,  # Don't cache examples to ensure fresh responses
                     )
 
-                # Anxiety Education Tab
+                # Anxiety Education Tab - educational content about anxiety management
                 with gr.Tab("Anxiety Education"):
+                    # Display anxiety education HTML content
                     gr.HTML(self.anxiety_education_content)
 
-                # Helpline Tab
+                # Helpline Tab - crisis support resources
                 with gr.Tab("Helpline"):
+                    # Display helpline HTML content
                     gr.HTML(self.helpline_content)
 
-                # About Us Tab
+                # About Us Tab - information about the team and mission
                 with gr.Tab("About Us"):
+                    # Display about us HTML content
                     gr.HTML(self.about_content)
 
-            # Simple footer
+            # Simple footer with copyright and branding
             gr.HTML("""
             <div style="width: 100%; background-color: #334155; color: white; padding: 15px 20px; text-align: center;">
                 © 2025 SootheAI | Helping Singaporean Youth Navigate Anxiety
             </div>
             """)
 
-        self.interface = blocks
-        return blocks
+        self.interface = blocks  # Store the created interface
+        return blocks  # Return the configured interface
 
     def launch(self, share: bool = True, server_name: str = "0.0.0.0", server_port: int = 7861) -> None:
-        if self.interface is None:
+        """
+        Launch the Gradio interface on specified server settings.
+
+        Args:
+            share: Whether to create a public shareable link
+            server_name: Server hostname (0.0.0.0 for all interfaces)
+            server_port: Port number to run the server on
+        """
+        if self.interface is None:  # Create interface if not already created
             self.create_interface()
 
         try:
-            self.interface.launch(
-                share=share,
-                server_name=server_name,
-                server_port=server_port
+            self.interface.launch(  # Launch the web interface
+                share=share,  # Enable/disable public sharing
+                server_name=server_name,  # Set server hostname
+                server_port=server_port  # Set server port
             )
         except Exception as e:
+            # Log launch failure
             logger.error(f"Failed to launch Gradio interface: {str(e)}")
-            raise
+            raise  # Re-raise exception for calling code to handle
 
     def close(self) -> None:
-        if self.interface is not None:
+        """Close the Gradio interface gracefully."""
+        if self.interface is not None:  # Only close if interface exists
             try:
-                self.interface.close()
+                self.interface.close()  # Gracefully close the interface
+                # Log successful closure
                 logger.info("Closed Gradio interface")
             except Exception as e:
+                # Log closure error
                 logger.error(f"Error closing Gradio interface: {str(e)}")
 
 
@@ -416,10 +451,10 @@ def create_gradio_interface(character_data: Dict[str, Any], elevenlabs_client=No
     Create a Gradio interface instance.
 
     Args:
-        character_data: Character data dictionary
-        elevenlabs_client: ElevenLabs client instance, if any
+        character_data: Dictionary containing character information and personality
+        elevenlabs_client: Optional ElevenLabs client instance for TTS functionality
 
     Returns:
-        GradioInterface instance
+        GradioInterface: Configured interface instance ready for launch
     """
-    return GradioInterface(character_data, elevenlabs_client)
+    return GradioInterface(character_data, elevenlabs_client)  # Return new interface instance
