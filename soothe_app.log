@@ -330,3 +330,62 @@ TypeError: Blocks.launch() got an unexpected keyword argument 'default_enabled_d
 2025-05-20 14:06:19,865 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2025-05-20 14:06:19,872 - soothe_app.src.models.game_state - INFO - Starting narrative set
 2025-05-20 14:06:19,872 - soothe_app.src.core.narrative_engine - ERROR - Error initializing game: 'TTSHandler' object has no attribute 'mark_tts_session_started'
+2025-05-23 10:04:00,359 - soothe_app.src.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-23 10:04:00,360 - __main__ - INFO - Starting SootheAI application
+2025-05-23 10:04:00,361 - soothe_app.src.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-23 10:04:00,361 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-23 10:04:00,573 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-23 10:04:00,574 - soothe_app.src.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-23 10:04:00,575 - soothe_app.src.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-23 10:04:00,790 - soothe_app.src.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-23 10:04:00,791 - soothe_app.src.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-23 10:04:00,828 - soothe_app.src.utils.file_loader - INFO - Loading JSON file: soothe_app\config\characters\serena.json
+2025-05-23 10:04:00,829 - soothe_app.src.utils.file_loader - INFO - Loaded character data from: soothe_app\config\characters\serena
+2025-05-23 10:04:00,830 - __main__ - INFO - Loaded character data for Serena
+2025-05-23 10:04:00,831 - __main__ - INFO - Creating Gradio interface
+2025-05-23 10:04:00,831 - soothe_app.src.models.game_state - INFO - Game state initialized at 2025-05-23 10:04:00
+2025-05-23 10:04:00,832 - soothe_app.src.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-23 10:04:00,832 - soothe_app.src.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-23 10:04:00,833 - soothe_app.src.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1747965840_c29f5c14
+2025-05-23 10:04:00,833 - soothe_app.src.ui.tts_handler - INFO - TTS handler initialized
+2025-05-23 10:04:01,275 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-23 10:04:01,292 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-23 10:04:01,993 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-23 10:04:02,046 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-23 10:04:03,414 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-23 10:04:05,680 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-23 10:04:06,665 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-23 10:04:40,337 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: I agree with audio...
+2025-05-23 10:04:40,338 - soothe_app.src.core.narrative_engine - INFO - User consent received with audio enabled
+2025-05-23 10:04:40,339 - soothe_app.src.models.game_state - INFO - User consent recorded
+2025-05-23 10:04:40,340 - soothe_app.src.ui.tts_handler - INFO - Voice consent explicitly given
+2025-05-23 10:04:40,341 - soothe_app.src.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 83/50000 daily chars
+2025-05-23 10:04:40,344 - soothe_app.src.ui.tts_handler - INFO - Started TTS thread for text: Thank you for agreeing to the terms with audio ena...
+2025-05-23 10:04:40,445 - soothe_app.src.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-23 10:04:40,447 - soothe_app.src.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1747965840_c29f5c14_1, Length=132, Category=narrative
+2025-05-23 10:04:41,734 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-23 10:04:41,739 - soothe_app.src.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activity detected. Free Tier usage disabled. If you are using a proxy/VPN you might need to purchase a Paid Plan to not trigger our abuse detectors. Free Tier only works if users do not abuse it, for example by creating multiple free accounts. If we notice that many people try to abuse it, we will need to reconsider Free Tier altogether. \nPlease play fair and purchase any Paid Subscription to continue.'}}
+2025-05-23 10:04:41,741 - soothe_app.src.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1747965840_c29f5c14_2, Length=103, Category=narrative
+2025-05-23 10:04:41,741 - soothe_app.src.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activ
+2025-05-23 10:04:45,997 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: start game...
+2025-05-23 10:04:45,998 - soothe_app.src.core.narrative_engine - INFO - Requesting initial narrative from Claude API
+2025-05-23 10:04:45,999 - soothe_app.src.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-23 10:04:55,832 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-23 10:04:55,839 - soothe_app.src.models.game_state - INFO - Starting narrative set
+2025-05-23 10:04:55,843 - soothe_app.src.ui.tts_handler - INFO - TTS session marked as started
+2025-05-23 10:04:55,849 - soothe_app.src.core.narrative_engine - INFO - Audio consent is given, TTS session will be started with narrative
+2025-05-23 10:04:55,856 - soothe_app.src.core.narrative_engine - INFO - Successfully initialized game with starting narrative
+2025-05-23 10:05:44,721 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: Take a few minutes to write in your journal about ...
+2025-05-23 10:05:44,723 - soothe_app.src.models.game_state - INFO - Interaction count incremented to 1
+2025-05-23 10:05:44,725 - soothe_app.src.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-23 10:05:54,414 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-23 10:05:54,418 - soothe_app.src.ui.tts_handler - WARNING - TTS rate limited: Text too long for audio (1476 chars). Maximum 1000 characters.
+2025-05-23 10:05:54,420 - soothe_app.src.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1747965840_c29f5c14_3, Length=103, Category=rate_limited
+2025-05-23 10:05:54,422 - soothe_app.src.ui.speech_audit_trail - WARNING - Logged speech synthesis error: Rate limiting: Text too long for audio (1476 chars). Maximum 1000 characters.
+2025-05-23 10:08:02,873 - soothe_app.src.ui.gradio_interface - INFO - Processing message in main loop: Write about my crush in school...
+2025-05-23 10:08:02,874 - soothe_app.src.models.game_state - INFO - Interaction count incremented to 2
+2025-05-23 10:08:02,875 - soothe_app.src.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-23 10:08:13,124 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-23 10:08:13,128 - soothe_app.src.ui.tts_handler - WARNING - TTS rate limited: Text too long for audio (1680 chars). Maximum 1000 characters.
+2025-05-23 10:08:13,130 - soothe_app.src.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1747965840_c29f5c14_4, Length=103, Category=rate_limited
+2025-05-23 10:08:13,131 - soothe_app.src.ui.speech_audit_trail - WARNING - Logged speech synthesis error: Rate limiting: Text too long for audio (1680 chars). Maximum 1000 characters.
