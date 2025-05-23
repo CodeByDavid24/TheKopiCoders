@@ -215,6 +215,11 @@ class TTSHandler:
         else:
             return text
 
+    def mark_tts_session_started(self) -> None:
+        """Mark TTS session as started for tracking."""
+        self.tts_session_started = True
+        logger.info("TTS session marked as started")
+
     def detect_content_category(self, text: str) -> str:
         """
         Detect the category of content for audit purposes.
