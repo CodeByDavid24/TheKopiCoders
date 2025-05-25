@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class TTSRateLimiter:
     """Rate limiter for text-to-speech requests to prevent API abuse."""
 
-    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 1000):
+    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 3000):
         """
         Initialize the rate limiter with configurable limits.
 
@@ -293,29 +293,31 @@ class TTSHandler:
 
             # Start ffplay process for audio playback
             process = subprocess.Popen(
-                ["ffplay", "-nodisp", "-autoexit", "-loglevel",
-                    "quiet", "-"],  # ffplay with quiet output
+                ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
                 stdin=subprocess.PIPE,  # Accept audio data via stdin
                 stdout=subprocess.DEVNULL,  # Suppress stdout
                 stderr=subprocess.DEVNULL  # Suppress stderr
             )
 
-            # Stream audio data from ElevenLabs to ffplay
-            for chunk in self.elevenlabs_client.text_to_speech.convert_as_stream(
+            # Use the correct ElevenLabs streaming method
+            audio_stream = self.elevenlabs_client.text_to_speech.stream(
                 voice_id=self.voice_id,  # Voice to use
                 output_format="mp3_44100_128",  # Audio format specification
                 text=text,  # Text to synthesize
                 model_id=self.model_id  # Model to use
-            ):
+            )
+
+            # Stream audio data to ffplay
+            for chunk in audio_stream:
                 if process.stdin:  # Ensure stdin is available
                     process.stdin.write(chunk)  # Write audio chunk to ffplay
+            
             if process.stdin:
                 process.stdin.close()  # Close stdin when done
 
             process.wait()  # Wait for ffplay to finish
             stream_elapsed = time.time() - stream_start  # Calculate processing time
-            logger.info(
-                f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")  # Log performance
+            logger.info(f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
 
         except Exception as tts_error:
             logger.error(f"TTS Error: {tts_error}")  # Log TTS error

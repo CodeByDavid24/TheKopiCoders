@@ -3,6 +3,7 @@ Narrative engine for SootheAI.
 Handles story generation with fully autonomous character generation.
 """
 
+import random
 import logging
 import numpy as np
 from typing import Dict, List, Tuple, Any, Optional
@@ -147,6 +148,7 @@ SAFETY AND EDUCATIONAL STANDARDS
 ==============================================================================
 BEGIN EXPERIENCE
 ==============================================================================
+**Generate a completely new and different story each time with a unique protagonist and fresh scenario.**
 
 Create a compelling opening that introduces the protagonist and their world naturally. Establish the academic environment, family context, and internal experience without exposition. Begin with a specific scene that immediately shows rather than tells the character's relationship with academic pressure.
 
@@ -223,7 +225,8 @@ class NarrativeEngine:
             logger.info("Requesting autonomous narrative generation from Claude")
             narrative, error = self.claude_client.get_narrative(
                 "Begin the interactive story. Create the protagonist and opening scene.",
-                self._get_system_prompt()
+                self._get_system_prompt(),
+                temperature=0.3  # Add this parameter for high creativity
             )
 
             if error:

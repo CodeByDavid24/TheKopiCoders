@@ -184,7 +184,7 @@ class ClaudeClient:
             logger.error(error_msg)  # Log error for debugging
             return None, error_msg   # Return no response and error message
 
-    def get_narrative(self, prompt: str, system_prompt: str) -> Tuple[Optional[str], Optional[str]]:
+    def get_narrative(self, prompt: str, system_prompt: str, temperature: float = 0) -> Tuple[Optional[str], Optional[str]]:
         """
         Generate a narrative response for the SootheAI experience.
 
@@ -194,6 +194,7 @@ class ClaudeClient:
         Args:
             prompt: User prompt to send to Claude
             system_prompt: System prompt with game mechanics and context
+            temperature: Randomness parameter (0 = deterministic, 1 = creative)
 
         Returns:
             Tuple of (narrative_text, error_message)
@@ -202,8 +203,8 @@ class ClaudeClient:
         """
         # Convert single prompt to messages format
         messages = [{"role": "user", "content": prompt}]
-        # Use the main generate_response method
-        return self.generate_response(messages, system_prompt)
+        # Use the main generate_response method with temperature
+        return self.generate_response(messages, system_prompt, temperature=temperature)
 
 
 # Singleton pattern implementation for global client access
