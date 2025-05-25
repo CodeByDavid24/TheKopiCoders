@@ -432,3 +432,268 @@ TypeError: Blocks.launch() got an unexpected keyword argument 'default_enabled_d
 2025-05-25 15:04:13,975 - soothe_app.v2.ui.tts_handler - INFO - TTS session marked as started
 2025-05-25 15:04:13,979 - soothe_app.v2.core.narrative_engine - INFO - Audio consent is given, TTS session will be started with narrative
 2025-05-25 15:04:13,982 - soothe_app.v2.core.narrative_engine - INFO - Successfully initialized game with starting narrative
+2025-05-25 22:44:59,667 - soothe_app.v2.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-25 22:44:59,668 - __main__ - INFO - Starting SootheAI application with autonomous character generation
+2025-05-25 22:44:59,669 - soothe_app.v2.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-25 22:44:59,671 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-25 22:44:59,872 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-25 22:44:59,873 - soothe_app.v2.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-25 22:44:59,875 - soothe_app.v2.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-25 22:45:00,080 - __main__ - INFO - Creating autonomous Gradio interface
+2025-05-25 22:45:00,080 - soothe_app.v2.models.game_state - INFO - Game state initialized at 2025-05-25 22:45:00
+2025-05-25 22:45:00,081 - soothe_app.v2.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-25 22:45:00,084 - soothe_app.v2.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-25 22:45:00,086 - soothe_app.v2.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748184300_a105d032
+2025-05-25 22:45:00,086 - soothe_app.v2.ui.tts_handler - INFO - TTS handler initialized
+2025-05-25 22:45:00,575 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 22:45:00,576 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 22:45:01,313 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 22:45:01,313 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 22:45:02,661 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-25 22:45:05,014 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-25 22:45:06,044 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-25 23:09:34,708 - soothe_app.v1.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-25 23:09:34,709 - __main__ - INFO - Starting SootheAI application
+2025-05-25 23:09:34,710 - soothe_app.v1.utils.safety - INFO - Content filter initialized successfully
+2025-05-25 23:09:34,710 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-25 23:09:34,934 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-25 23:09:34,934 - soothe_app.v1.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-25 23:09:34,936 - soothe_app.v1.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-25 23:09:35,143 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-25 23:09:35,143 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-25 23:09:35,162 - soothe_app.v1.utils.file_loader - INFO - Loading JSON file: soothe_app\config\characters\serena.json
+2025-05-25 23:09:35,163 - soothe_app.v1.utils.file_loader - INFO - Loaded character data from: soothe_app\config\characters\serena
+2025-05-25 23:09:35,164 - __main__ - INFO - Loaded character data for Serena
+2025-05-25 23:09:35,165 - __main__ - INFO - Creating Gradio interface
+2025-05-25 23:09:35,166 - __main__ - CRITICAL - Unhandled exception: create_gradio_interface() takes from 0 to 1 positional arguments but 2 were given
+Traceback (most recent call last):
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\v1\main.py", line 92, in main
+    interface = create_gradio_interface(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: create_gradio_interface() takes from 0 to 1 positional arguments but 2 were given
+2025-05-25 23:10:24,536 - soothe_app.v1.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-25 23:10:24,536 - __main__ - INFO - Starting SootheAI application
+2025-05-25 23:10:24,537 - soothe_app.v1.utils.safety - INFO - Content filter initialized successfully
+2025-05-25 23:10:24,538 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-25 23:10:24,743 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-25 23:10:24,744 - soothe_app.v1.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-25 23:10:24,744 - soothe_app.v1.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-25 23:10:24,949 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-25 23:10:24,949 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-25 23:10:24,950 - soothe_app.v1.utils.file_loader - INFO - Loading JSON file: soothe_app\config\characters\serena.json
+2025-05-25 23:10:24,951 - soothe_app.v1.utils.file_loader - INFO - Loaded character data from: soothe_app\config\characters\serena
+2025-05-25 23:10:24,952 - __main__ - INFO - Loaded character data for Serena
+2025-05-25 23:10:24,952 - __main__ - INFO - Creating Gradio interface
+2025-05-25 23:10:24,953 - soothe_app.v1.models.game_state - INFO - Game state initialized at 2025-05-25 23:10:24
+2025-05-25 23:10:24,956 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 5000 chars/request, 50000 daily char limit
+2025-05-25 23:10:24,957 - soothe_app.v1.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-25 23:10:24,958 - soothe_app.v1.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748185824_d2e78f3b
+2025-05-25 23:10:24,959 - soothe_app.v1.ui.tts_handler - INFO - TTS handler initialized
+2025-05-25 23:10:25,360 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:10:25,409 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:10:26,096 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:10:26,130 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:10:27,539 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-25 23:10:29,634 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-25 23:10:30,649 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-25 23:18:07,421 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I agree with audio...
+2025-05-25 23:18:07,422 - soothe_app.v1.core.narrative_engine - INFO - User consent received with audio enabled
+2025-05-25 23:18:07,422 - soothe_app.v1.models.game_state - INFO - User consent recorded
+2025-05-25 23:18:07,425 - soothe_app.v1.ui.tts_handler - INFO - Voice consent explicitly given
+2025-05-25 23:18:07,427 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 83/50000 daily chars
+2025-05-25 23:18:07,429 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: Thank you for agreeing to the terms with audio ena...
+2025-05-25 23:18:07,529 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:18:07,529 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_1, Length=132, Category=narrative
+2025-05-25 23:18:08,988 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+2025-05-25 23:18:16,242 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] TTS streaming duration: 8.71 seconds
+2025-05-25 23:32:59,646 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I agree with audio...
+2025-05-25 23:32:59,648 - soothe_app.v1.ui.tts_handler - INFO - Voice consent explicitly given
+2025-05-25 23:32:59,650 - soothe_app.v1.ui.tts_handler - INFO - User enabled audio narration through combined consent
+2025-05-25 23:32:59,655 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 1
+2025-05-25 23:32:59,659 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:33:11,223 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:33:11,231 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 1740/50000 daily chars
+2025-05-25 23:33:11,239 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: **Monday Morning, 6:15 AM - Raffles Junior College...
+2025-05-25 23:33:11,340 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:33:11,342 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_2, Length=1657, Category=inner_thoughts
+2025-05-25 23:33:11,666 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:33:11,669 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 695 credits remaining, while 829 credits are required for this request.'}}
+2025-05-25 23:33:11,672 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_3, Length=103, Category=inner_thoughts
+2025-05-25 23:33:11,675 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:33:55,968 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I'm feeling really overwhelmed with school pressur...
+2025-05-25 23:33:55,970 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 2
+2025-05-25 23:33:55,971 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:34:05,515 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:34:05,518 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 2/10 requests, 3290/50000 daily chars
+2025-05-25 23:34:05,521 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: **Welcome to Serena's Story**
+
+---
+
+It's 5:30 AM a...
+2025-05-25 23:34:05,627 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:34:05,635 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_4, Length=1550, Category=inner_thoughts
+2025-05-25 23:34:05,939 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:34:05,942 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 695 credits remaining, while 775 credits are required for this request.'}}
+2025-05-25 23:34:05,944 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_5, Length=103, Category=inner_thoughts
+2025-05-25 23:34:05,944 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:34:35,252 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I wanna kill myself...
+2025-05-25 23:34:35,253 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 3
+2025-05-25 23:34:35,254 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:34:41,376 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:34:41,379 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 2/10 requests, 4202/50000 daily chars
+2025-05-25 23:34:41,385 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: I'm really concerned about what you've shared. If ...
+2025-05-25 23:34:41,485 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:34:41,487 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_6, Length=912, Category=options
+2025-05-25 23:34:41,897 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+2025-05-25 23:34:50,814 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I wanna kill myself...
+2025-05-25 23:34:50,815 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 4
+2025-05-25 23:34:50,816 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:34:57,051 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:34:57,054 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 3/10 requests, 5146/50000 daily chars
+2025-05-25 23:34:57,059 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: I'm really concerned about what you've shared. If ...
+2025-05-25 23:34:57,159 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:34:57,161 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_7, Length=944, Category=options
+2025-05-25 23:34:57,476 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:34:57,479 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activity detected. Free Tier usage disabled. If you are using a proxy/VPN you might need to purchase a Paid Plan to not trigger our abuse detectors. Free Tier only works if users do not abuse it, for example by creating multiple free accounts. If we notice that many people try to abuse it, we will need to reconsider Free Tier altogether. \nPlease play fair and purchase any Paid Subscription to continue.'}}
+2025-05-25 23:34:57,482 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_8, Length=103, Category=options
+2025-05-25 23:34:57,484 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activ
+2025-05-25 23:35:15,056 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: [Errno 32] Broken pipe
+2025-05-25 23:35:15,057 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748185824_d2e78f3b_9, Length=103, Category=options
+2025-05-25 23:35:15,058 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: [Errno 32] Broken pipe
+2025-05-25 23:35:44,819 - soothe_app.v2.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-25 23:35:44,820 - __main__ - INFO - Starting SootheAI application with autonomous character generation
+2025-05-25 23:35:44,820 - soothe_app.v2.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-25 23:35:44,821 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-25 23:35:45,017 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-25 23:35:45,018 - soothe_app.v2.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-25 23:35:45,019 - soothe_app.v2.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-25 23:35:45,234 - __main__ - INFO - Creating autonomous Gradio interface
+2025-05-25 23:35:45,235 - soothe_app.v2.models.game_state - INFO - Game state initialized at 2025-05-25 23:35:45
+2025-05-25 23:35:45,236 - soothe_app.v2.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-25 23:35:45,237 - soothe_app.v2.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-25 23:35:45,239 - soothe_app.v2.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748187345_ae75d713
+2025-05-25 23:35:45,240 - soothe_app.v2.ui.tts_handler - INFO - TTS handler initialized
+2025-05-25 23:35:45,684 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:35:45,727 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:35:46,398 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:35:46,451 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:35:47,817 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-25 23:35:49,930 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-25 23:35:50,863 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-25 23:36:35,484 - soothe_app.v1.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-25 23:36:35,484 - __main__ - INFO - Starting SootheAI application
+2025-05-25 23:36:35,486 - soothe_app.v1.utils.safety - INFO - Content filter initialized successfully
+2025-05-25 23:36:35,486 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-25 23:36:35,701 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-25 23:36:35,702 - soothe_app.v1.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-25 23:36:35,702 - soothe_app.v1.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-25 23:36:35,899 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: characters\serena.json
+2025-05-25 23:36:35,900 - soothe_app.v1.utils.file_loader - WARNING - JSON file not found in any location: soothe_app\characters\serena.json
+2025-05-25 23:36:35,900 - soothe_app.v1.utils.file_loader - INFO - Loading JSON file: soothe_app\config\characters\serena.json
+2025-05-25 23:36:35,901 - soothe_app.v1.utils.file_loader - INFO - Loaded character data from: soothe_app\config\characters\serena
+2025-05-25 23:36:35,902 - __main__ - INFO - Loaded character data for Serena
+2025-05-25 23:36:35,904 - __main__ - INFO - Creating Gradio interface
+2025-05-25 23:36:35,906 - soothe_app.v1.models.game_state - INFO - Game state initialized at 2025-05-25 23:36:35
+2025-05-25 23:36:35,907 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 5000 chars/request, 50000 daily char limit
+2025-05-25 23:36:35,908 - soothe_app.v1.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-25 23:36:35,909 - soothe_app.v1.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748187395_3a3c864c
+2025-05-25 23:36:35,914 - soothe_app.v1.ui.tts_handler - INFO - TTS handler initialized
+2025-05-25 23:36:36,350 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:36:36,358 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-25 23:36:36,991 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:36:37,082 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-25 23:36:38,439 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-25 23:36:40,540 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-25 23:36:41,500 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-25 23:37:05,754 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I agree with audio...
+2025-05-25 23:37:05,755 - soothe_app.v1.core.narrative_engine - INFO - User consent received with audio enabled
+2025-05-25 23:37:05,756 - soothe_app.v1.models.game_state - INFO - User consent recorded
+2025-05-25 23:37:05,757 - soothe_app.v1.ui.tts_handler - INFO - Voice consent explicitly given
+2025-05-25 23:37:05,759 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 83/50000 daily chars
+2025-05-25 23:37:05,764 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: Thank you for agreeing to the terms with audio ena...
+2025-05-25 23:37:05,864 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:37:05,866 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_1, Length=132, Category=narrative
+2025-05-25 23:37:06,292 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 200 OK"
+2025-05-25 23:37:13,940 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] TTS streaming duration: 8.07 seconds
+2025-05-25 23:45:51,041 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I agree...
+2025-05-25 23:45:51,043 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 1
+2025-05-25 23:45:51,044 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:46:01,192 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:46:37,349 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: Do self harm...
+2025-05-25 23:46:37,351 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 2
+2025-05-25 23:46:37,358 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:46:47,382 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:46:47,385 - soothe_app.v1.utils.safety - WARNING - Detected harmful content in LLM response. Severity: 4.0
+2025-05-25 23:46:47,386 - soothe_app.v1.utils.safety - WARNING - Categories violated: self_harm
+2025-05-25 23:46:47,390 - soothe_app.v1.utils.safety - ERROR - Critical content detected in LLM response, replacing entirely
+2025-05-25 23:46:47,393 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 1007/50000 daily chars
+2025-05-25 23:46:47,395 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: I notice this conversation is headed in a potentia...
+2025-05-25 23:46:47,497 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:46:47,498 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_2, Length=924, Category=options
+2025-05-25 23:46:47,824 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:46:47,829 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 462 credits are required for this request.'}}
+2025-05-25 23:46:47,832 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_3, Length=103, Category=options
+2025-05-25 23:46:47,835 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:53:29,365 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: continue the story...
+2025-05-25 23:53:29,366 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 3
+2025-05-25 23:53:29,366 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:53:39,230 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:53:39,233 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 2750/50000 daily chars
+2025-05-25 23:53:39,236 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: **Monday Morning, 6:15 AM - Raffles Junior College...
+2025-05-25 23:53:39,337 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:53:39,339 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_4, Length=1743, Category=inner_thoughts
+2025-05-25 23:53:39,653 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:53:39,658 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activity detected. Free Tier usage disabled. If you are using a proxy/VPN you might need to purchase a Paid Plan to not trigger our abuse detectors. Free Tier only works if users do not abuse it, for example by creating multiple free accounts. If we notice that many people try to abuse it, we will need to reconsider Free Tier altogether. \nPlease play fair and purchase any Paid Subscription to continue.'}}
+2025-05-25 23:53:39,665 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_5, Length=103, Category=inner_thoughts
+2025-05-25 23:53:39,668 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'detected_unusual_activity', 'message': 'Unusual activ
+2025-05-25 23:53:57,454 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: I can't take it anymore, I want to give up...
+2025-05-25 23:53:57,454 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 4
+2025-05-25 23:53:57,456 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:54:04,682 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:54:04,686 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 2/10 requests, 4007/50000 daily chars
+2025-05-25 23:54:04,688 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: You sit at your desk in your room, surrounded by s...
+2025-05-25 23:54:04,789 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:54:04,790 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_6, Length=1257, Category=inner_thoughts
+2025-05-25 23:54:05,068 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:54:05,072 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 629 credits are required for this request.'}}
+2025-05-25 23:54:05,075 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_7, Length=103, Category=inner_thoughts
+2025-05-25 23:54:05,077 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:54:49,238 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: Jump down a building...
+2025-05-25 23:54:49,239 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 5
+2025-05-25 23:54:49,244 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:54:59,027 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:54:59,028 - soothe_app.v1.utils.safety - WARNING - Detected harmful content in LLM response. Severity: 4.0
+2025-05-25 23:54:59,029 - soothe_app.v1.utils.safety - WARNING - Categories violated: self_harm
+2025-05-25 23:54:59,033 - soothe_app.v1.utils.safety - ERROR - Critical content detected in LLM response, replacing entirely
+2025-05-25 23:54:59,034 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 2/10 requests, 4931/50000 daily chars
+2025-05-25 23:54:59,037 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: I notice this conversation is headed in a potentia...
+2025-05-25 23:54:59,137 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:54:59,139 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_8, Length=924, Category=options
+2025-05-25 23:54:59,426 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:54:59,427 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 462 credits are required for this request.'}}
+2025-05-25 23:54:59,429 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_9, Length=103, Category=options
+2025-05-25 23:54:59,430 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:58:08,754 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: Continue the story...
+2025-05-25 23:58:08,756 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 6
+2025-05-25 23:58:08,757 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:58:18,794 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:58:18,798 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 1/10 requests, 6781/50000 daily chars
+2025-05-25 23:58:18,801 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: **Monday Morning, 6:15 AM - Raffles Junior College...
+2025-05-25 23:58:18,903 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:58:18,906 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_10, Length=1850, Category=inner_thoughts
+2025-05-25 23:58:19,201 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:58:19,202 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 925 credits are required for this request.'}}
+2025-05-25 23:58:19,204 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_11, Length=103, Category=inner_thoughts
+2025-05-25 23:58:19,206 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-25 23:58:37,040 - soothe_app.v1.ui.gradio_interface - INFO - Processing message in main loop: Ask chloe if she studied?...
+2025-05-25 23:58:37,041 - soothe_app.v1.models.game_state - INFO - Interaction count incremented to 7
+2025-05-25 23:58:37,041 - soothe_app.v1.core.api_client - INFO - Sending request to Claude API with 1 messages
+2025-05-25 23:58:45,076 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-05-25 23:58:45,079 - soothe_app.v1.ui.tts_handler - INFO - TTS rate limiter: 2/10 requests, 8135/50000 daily chars
+2025-05-25 23:58:45,081 - soothe_app.v1.ui.tts_handler - INFO - Started TTS thread for text: You spot Chloe at her usual table in the library, ...
+2025-05-25 23:58:45,182 - soothe_app.v1.ui.tts_handler - INFO - [DEBUG] Starting TTS stream with ffmpeg pipe...
+2025-05-25 23:58:45,183 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_12, Length=1354, Category=inner_thoughts
+2025-05-25 23:58:45,487 - httpx - INFO - HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM/stream?output_format=mp3_44100_128 "HTTP/1.1 401 Unauthorized"
+2025-05-25 23:58:45,490 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 677 credits are required for this request.'}}
+2025-05-25 23:58:45,492 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_13, Length=103, Category=inner_thoughts
+2025-05-25 23:58:45,498 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
