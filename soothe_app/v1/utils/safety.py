@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 # Try to import enhanced content filter with graceful fallback
 try:
-    from src.core.content_filter import (  # Import enhanced content filtering components
+    from ..core.content_filter import (  # Import enhanced content filtering components
         EnhancedContentFilter,  # Main content filter class
         ContentFilterResult,    # Result object from content analysis
         ContentMatch,          # Individual content match details

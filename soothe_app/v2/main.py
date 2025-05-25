@@ -7,15 +7,15 @@ to help users understand anxiety.
 """
 
 # Import core API client for Claude integration
-from soothe_app.src.core.api_client import get_claude_client
+from soothe_app.v2.core.api_client import get_claude_client
 # Import Gradio interface creation function
-from soothe_app.src.ui.gradio_interface import create_gradio_interface
+from soothe_app.v2.ui.gradio_interface import create_gradio_interface
 # Import content filtering initialization for safety
-from soothe_app.src.utils.safety import initialize_content_filter
+from soothe_app.v2.utils.safety import initialize_content_filter
 # Import character data loading utility
-from soothe_app.src.utils.file_loader import load_character_data
+from soothe_app.v2.utils.file_loader import load_character_data
 # Import logging configuration utility
-from soothe_app.src.utils.logger import configure_logging
+from soothe_app.v2.utils.logger import configure_logging
 
 # Standard library imports for system operations
 import os

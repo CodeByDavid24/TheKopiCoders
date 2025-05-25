@@ -12,7 +12,7 @@ import logging                  # Standard logging for debugging and monitoring
 
 # Try to import the enhanced content filter with graceful fallback
 try:
-    from soothe_app.src.core.content_filter import EnhancedContentFilter, ContentFilterResult, SeverityLevel
+    from soothe_app.v1.core.content_filter import EnhancedContentFilter, ContentFilterResult, SeverityLevel
     # Flag indicating enhanced features are available
     ENHANCED_FILTER_AVAILABLE = True
 except ImportError:
