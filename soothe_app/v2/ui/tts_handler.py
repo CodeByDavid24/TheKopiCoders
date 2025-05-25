@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class TTSRateLimiter:
     """Rate limiter for text-to-speech requests to prevent API abuse."""
 
-    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 3000):
+    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 1000):
         """
         Initialize the rate limiter with configurable limits.
 

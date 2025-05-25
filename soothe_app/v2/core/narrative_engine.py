@@ -242,6 +242,7 @@ class NarrativeEngine:
             tts_handler = get_tts_handler()
             if tts_handler.consent_manager.is_consent_given() and not self.game_state.is_story_ended():
                 tts_handler.mark_tts_session_started()
+                tts_handler.run_tts_with_consent_and_limiting(safe_narrative)
 
             logger.info("Successfully initialized autonomous narrative game")
             return safe_narrative, True
