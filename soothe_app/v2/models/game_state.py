@@ -1,27 +1,20 @@
 """
 Game state model for SootheAI.
-Manages the state of the narrative experience.
+Manages the state of the narrative experience without character data dependency.
 """
 
 import time
 import logging
 from typing import Dict, List, Tuple, Any, Optional
 
-# Set up logger
 logger = logging.getLogger(__name__)
 
 
 class GameState:
     """Class for managing the state of the SootheAI narrative experience."""
 
-    def __init__(self, character_data: Dict[str, Any]):
-        """
-        Initialize the game state.
-
-        Args:
-            character_data: Character configuration data
-        """
-        self.character = character_data
+    def __init__(self):
+        """Initialize the game state without character data dependency."""
         self.history: List[Tuple[str, str]] = []
         self.consent_given: bool = False
         self.start_narrative: Optional[str] = None
@@ -31,27 +24,6 @@ class GameState:
         self.story_ended: bool = False
         self.start_time = time.time()
 
-        # Internal game mechanics state
-        # Scale: 1-10 (10=overwhelmed, 1=balanced)
-        self.wellbeing_level: int = 5
-        self.self_awareness: str = "Low"  # None, Low, Developing, Growing, High
-        # Relaxed, Mild tension, Moderate tension, High tension, Physical distress
-        self.physical_state: str = "Moderate tension"
-        # Rare worries, Occasional worries, Frequent worries, Constant worries, Overwhelming thoughts
-        self.mental_state: str = "Frequent worries"
-
-        # Relationship scores (0-10)
-        self.relationships = {
-            "parents": 6,
-            "friends": 7,
-            "teachers": 7,
-            "classmates": 5
-        }
-
-        # Trigger tracking
-        # Tracks consecutive high overwhelm interactions
-        self.high_overwhelm_count: int = 0
-
         # Add a dedicated field for audio consent
         self.audio_consent_asked = False
 
@@ -59,13 +31,11 @@ class GameState:
         logger.info(
             f"Game state initialized at {time.strftime('%Y-%m-%d %H:%M:%S')}")
 
-    # Add a method to mark audio consent as asked
     def mark_audio_consent_asked(self) -> None:
         """Mark that audio consent has been explicitly asked."""
         self.audio_consent_asked = True
         logger.info("Audio consent marked as explicitly asked")
 
-    # Add a method to check if audio consent has been asked
     def is_audio_consent_asked(self) -> bool:
         """
         Check if audio consent has been explicitly asked.
@@ -201,84 +171,6 @@ class GameState:
         """
         return self.story_ended
 
-    def update_wellbeing_level(self, change: int) -> int:
-        """
-        Update the character's wellbeing level.
-
-        Args:
-            change: Amount to change wellbeing level by (positive = more overwhelmed)
-
-        Returns:
-            New wellbeing level
-        """
-        # Update the wellbeing level, ensuring it stays within bounds
-        old_level = self.wellbeing_level
-        self.wellbeing_level = max(1, min(10, self.wellbeing_level + change))
-
-        # Track consecutive high overwhelm states
-        if self.wellbeing_level >= 8:
-            self.high_overwhelm_count += 1
-        else:
-            self.high_overwhelm_count = 0
-
-        logger.info(
-            f"Wellbeing level changed from {old_level} to {self.wellbeing_level}")
-        return self.wellbeing_level
-
-    def get_wellbeing_level(self) -> int:
-        """
-        Get the current wellbeing level.
-
-        Returns:
-            Current wellbeing level
-        """
-        return self.wellbeing_level
-
-    def is_in_crisis(self) -> bool:
-        """
-        Check if character is in crisis state.
-
-        Returns:
-            True if in crisis, False otherwise
-        """
-        return self.wellbeing_level >= 9 or self.high_overwhelm_count >= 3
-
-    def update_relationship(self, relationship: str, change: int) -> int:
-        """
-        Update a relationship score.
-
-        Args:
-            relationship: Relationship type ('parents', 'friends', 'teachers', 'classmates')
-            change: Amount to change relationship score by
-
-        Returns:
-            New relationship score
-        """
-        if relationship not in self.relationships:
-            logger.warning(
-                f"Attempted to update unknown relationship: {relationship}")
-            return -1
-
-        old_score = self.relationships[relationship]
-        self.relationships[relationship] = max(
-            0, min(10, self.relationships[relationship] + change))
-
-        logger.info(
-            f"Relationship '{relationship}' changed from {old_score} to {self.relationships[relationship]}")
-        return self.relationships[relationship]
-
-    def get_relationship_score(self, relationship: str) -> int:
-        """
-        Get a relationship score.
-
-        Args:
-            relationship: Relationship type
-
-        Returns:
-            Relationship score or -1 if relationship not found
-        """
-        return self.relationships.get(relationship, -1)
-
     def get_session_duration(self) -> float:
         """
         Get the duration of the current session in seconds.
@@ -301,46 +193,26 @@ class GameState:
             "audio_enabled": self.audio_enabled,
             "tts_session_started": self.tts_session_started,
             "story_ended": self.story_ended,
-            "wellbeing_level": self.wellbeing_level,
-            "self_awareness": self.self_awareness,
-            "physical_state": self.physical_state,
-            "mental_state": self.mental_state,
-            "relationships": self.relationships,
-            "high_overwhelm_count": self.high_overwhelm_count,
             "session_duration": self.get_session_duration()
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any], character_data: Dict[str, Any]) -> 'GameState':
+    def from_dict(cls, data: Dict[str, Any]) -> 'GameState':
         """
         Create a GameState instance from a dictionary.
 
         Args:
             data: Dictionary containing game state data
-            character_data: Character configuration data
 
         Returns:
             GameState instance
         """
-        state = cls(character_data)
+        state = cls()  # No character data needed
 
         state.consent_given = data.get("consent_given", False)
         state.interaction_count = data.get("interaction_count", 0)
         state.audio_enabled = data.get("audio_enabled", False)
         state.tts_session_started = data.get("tts_session_started", False)
         state.story_ended = data.get("story_ended", False)
-        state.wellbeing_level = data.get("wellbeing_level", 5)
-        state.self_awareness = data.get("self_awareness", "Low")
-        state.physical_state = data.get("physical_state", "Moderate tension")
-        state.mental_state = data.get("mental_state", "Frequent worries")
-        state.relationships = data.get("relationships", {
-            "parents": 6,
-            "friends": 7,
-            "teachers": 7,
-            "classmates": 5
-        })
-        state.high_overwhelm_count = data.get("high_overwhelm_count", 0)
-
-        # History can't be easily serialized, so it starts empty
 
         return state

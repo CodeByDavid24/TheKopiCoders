@@ -22,17 +22,15 @@ logger = logging.getLogger(__name__)
 class GradioInterface:
     """Class for managing the Gradio interface for SootheAI."""
 
-    def __init__(self, character_data: Dict[str, Any], elevenlabs_client=None):
+    def __init__(self, elevenlabs_client=None):
         """
-        Initialize the Gradio interface with character data and optional TTS client.
+        Initialize the Gradio interface without character data dependency.
 
         Args:
-            character_data: Dictionary containing character information (name, personality, etc.)
             elevenlabs_client: Optional ElevenLabs client for text-to-speech functionality
         """
-        # Keep your existing init code
-        self.narrative_engine = create_narrative_engine(
-            character_data)  # Initialize AI narrative engine
+        # Initialize with autonomous narrative engine (no character data needed)
+        self.narrative_engine = create_narrative_engine()
         # Initialize text-to-speech handler
         self.tts_handler = get_tts_handler(elevenlabs_client)
         self.interface = None  # Will hold the Gradio interface once created
@@ -104,9 +102,8 @@ class GradioInterface:
                 <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                     <h2 style="color: #64748b; margin-bottom: 20px; font-size: 28px;">How SootheAI Works</h2>
                     <p style="color: #64748b; line-height: 1.6; margin-bottom: 30px;">
-                        SootheAI combines interactive storytelling with educational content about anxiety management. Follow Serena's 
-                        journey through the pressures of student life in Singapore, make choices that affect her story, and learn valuable 
-                        coping skills along the way.
+                        SootheAI combines interactive storytelling with AI-generated characters to create unique educational experiences about anxiety management. 
+                        Each playthrough features organically created characters and situations that emerge from your choices.
                     </p>
                     
                     <div style="background-color: #e6f7ed; padding: 20px; border-radius: 8px; text-align: left; margin-top: 30px;">
@@ -369,7 +366,7 @@ class GradioInterface:
                             height=600,  # Increased height for better readability
                             placeholder="Type 'I agree' to begin",  # Instruction for new users
                             show_copy_button=True,  # Allow users to copy text
-                            render_markdown=True,  # Enable markdown formatting
+                            render_markdown=False,  # Enable markdown formatting
                             # Pre-populate with consent message
                             value=[[None, self.consent_message]]
                         ),
@@ -446,15 +443,14 @@ class GradioInterface:
                 logger.error(f"Error closing Gradio interface: {str(e)}")
 
 
-def create_gradio_interface(character_data: Dict[str, Any], elevenlabs_client=None) -> GradioInterface:
+def create_gradio_interface(elevenlabs_client=None) -> GradioInterface:
     """
-    Create a Gradio interface instance.
+    Create a Gradio interface instance without character data dependency.
 
     Args:
-        character_data: Dictionary containing character information and personality
         elevenlabs_client: Optional ElevenLabs client instance for TTS functionality
 
     Returns:
         GradioInterface: Configured interface instance ready for launch
     """
-    return GradioInterface(character_data, elevenlabs_client)  # Return new interface instance
+    return GradioInterface(elevenlabs_client)
