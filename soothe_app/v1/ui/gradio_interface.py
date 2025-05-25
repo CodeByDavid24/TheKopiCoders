@@ -369,7 +369,7 @@ class GradioInterface:
                             height=600,  # Increased height for better readability
                             placeholder="Type 'I agree' to begin",  # Instruction for new users
                             show_copy_button=True,  # Allow users to copy text
-                            render_markdown=True,  # Enable markdown formatting
+                            render_markdown=False,  # Enable markdown formatting
                             # Pre-populate with consent message
                             value=[[None, self.consent_message]]
                         ),

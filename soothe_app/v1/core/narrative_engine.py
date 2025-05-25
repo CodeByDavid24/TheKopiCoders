@@ -338,12 +338,12 @@ class NarrativeEngine:
             if tts_handler.consent_manager.is_consent_given() and not self.game_state.is_story_ended():
                 # User has consented to audio, prepare TTS system
                 tts_handler.mark_tts_session_started()
-                logger.info(
-                    "Audio consent is given, TTS session will be started with narrative")
+                # FIX: Actually call TTS for the initial story
+                tts_handler.run_tts_with_consent_and_limiting(safe_narrative)
+                logger.info("Audio consent is given, TTS session started with initial narrative")
 
             # Log success
-            logger.info(
-                "Successfully initialized game with starting narrative")
+            logger.info("Successfully initialized game with starting narrative")
             return safe_narrative, True  # Return narrative and success flag
 
         except Exception as e:
@@ -351,7 +351,7 @@ class NarrativeEngine:
             error_msg = f"Error initializing game: {str(e)}"
             logger.error(error_msg)  # Log the full error for debugging
             return error_msg, False  # Return error message and failure flag
-
+    
     def process_message(self, message: str) -> Tuple[str, bool]:
         """
         Process a player message and generate a response.
