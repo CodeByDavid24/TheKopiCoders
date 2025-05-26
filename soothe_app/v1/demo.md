@@ -3,7 +3,7 @@
 ## 📋 Project Overview
 > **SootheAI** is an interactive narrative experience that helps Singaporean youth understand and manage anxiety through AI-powered storytelling, featuring dynamic content generation, safety filtering, and optional voice narration.
 
-![alt text](image-6.png)
+![alt text](image-7.png)
 ---
 
 ## 💻 Key Code Snippets to Highlight
@@ -33,21 +33,6 @@ chat_interface = gr.ChatInterface(
 > 💬 Sets up the chat display area to show conversation history  
 > 🔗 Connects the input field to the processing function
 
-#### **🛡️ Ethics/Security Requirements:**
-```python
-# From narrative_engine.py - CONSENT_MESSAGE
-CONSENT_MESSAGE = """
-**Warning & Consent:**
-This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
-
-Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
-"""
-```
-> ⚠️ Clearly informs users that their input affects the story direction  
-> 🔄 Explains that user inputs are used within the system for narrative generation  
-> 🚨 Provides important safety warnings about the fictional nature of content  
-> 🆘 Encourages seeking professional help if users feel distressed
-
 ---
 
 ### 🤖 **Feature 2: LLM Text Generation**
@@ -74,32 +59,6 @@ return result, None
 > 🌐 Makes the actual API call to Claude's servers  
 > 📚 Sends conversation history and character data as context  
 > 🔤 Extracts the text response from Claude's API format
-
-#### **🛡️ Ethics/Security Requirements:**
-```python
-# From safety.py
-def check_input_safety(message: str) -> Tuple[bool, str]:
-    result = _content_filter.analyze_content(message)
-    if result.has_violations:
-        return False, get_safe_response_alternative()
-    return True, message
-```
-> 🔍 Scans user input for harmful content like self-harm mentions  
-> 🚫 Blocks dangerous messages and provides mental health resources instead  
-> ✅ Allows safe messages to continue through the system
-
-```python
-# From content_filter.py
-def analyze_content(self, text: str) -> ContentFilterResult:
-    self._check_blacklist_phrases(text, result)     # Phrase matching
-    self._check_pattern_matches(text, result)       # Regex detection
-    self._analyze_context(text, result)             # Context analysis
-    result.filtered_text = self._apply_filtering(text, result)
-    return result
-```
-> 🔧 Uses 4 different methods to detect harmful content  
-> 🎯 Checks against banned phrases, suspicious patterns, and dangerous combinations  
-> 🔄 Replaces harmful content with supportive messages and resources
 
 ---
 
@@ -132,35 +91,6 @@ def check_voice_consent(self, message: str) -> Tuple[bool, Optional[str]]:
 > 👂 Listens for user commands to turn audio on or off  
 > 💾 Remembers the user's audio preference throughout the session  
 > 📢 Provides clear feedback when audio settings change
-
-#### **🛡️ Ethics/Security Requirements:**
-```python
-# From tts_handler.py
-def run_tts_with_consent_and_limiting(self, text: str) -> None:
-    if not self.consent_manager.is_consent_given(): return  # Consent check
-    can_process, msg = self.rate_limiter.can_process_tts(text)  # Rate limiting
-    if not can_process:
-        self.audit_trail.log_synthesis_error(text, msg)  # Error logging
-        return
-    threading.Thread(target=self.delayed_tts, args=(text,)).start()
-```
-> ✋ Only generates audio if user has given permission  
-> ⏱️ Prevents API abuse by limiting requests (10 per minute, 50k chars per day)  
-> 📊 Logs any issues or rate limiting for monitoring purposes  
-> 🧵 Runs audio generation in background thread to keep UI responsive
-
-```python
-# From speech_audit_trail.py
-def log_synthesis(self, text: str, category: str) -> Dict:
-    content_hash = hashlib.sha256(text.encode()).hexdigest()  # Privacy hash
-    entry = {"synthesis_id": f"syn_{self.session_id}_{count}", 
-             "content_hash": content_hash, "content_preview": text[:30]}
-    self._write_log_entry(entry)  # Audit trail
-    return entry
-```
-> 🔐 Creates privacy-preserving logs of audio generation without storing full text  
-> 🔒 Uses cryptographic hashing to protect user privacy  
-> 📈 Tracks usage statistics while maintaining accountability
 
 ---
 
@@ -227,21 +157,5 @@ You are creating an interactive narrative experience about {name}, a {age}-year-
 > 🔗 Shows the actual template where character data gets injected using {placeholders}  
 > 🎭 Demonstrates how JSON character data becomes AI instructions  
 > 🇸🇬 Creates culturally relevant context for Singapore's education system
-
-#### **🛡️ Ethics/Security Requirements:**
-```python
-# From file_loader.py
-def load_json(filename: str) -> Dict[str, Any]:
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:  # Input validation
-            data = json.load(file)  # Safe JSON parsing
-            return data
-    except json.JSONDecodeError as e:
-        logger.error(f"Error decoding JSON: {str(e)}")  # Error handling
-        return {}  # Safe fallback
-```
-> ✅ Safely handles corrupted or invalid JSON files without crashing  
-> 📝 Logs errors for debugging while providing safe fallback behavior  
-> 🔒 Validates file input to prevent security vulnerabilities
 
 ---
