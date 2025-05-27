@@ -5,10 +5,10 @@ This module serves as the entry point for the SootheAI application,
 an interactive narrative experience with autonomous character generation.
 """
 
-from soothe_app.v2.core.api_client import get_claude_client
-from soothe_app.v2.ui.gradio_interface import create_gradio_interface
-from soothe_app.v2.utils.safety import initialize_content_filter
-from soothe_app.v2.utils.logger import configure_logging
+from soothe_app.v3.core.api_client import get_claude_client
+from soothe_app.v3.ui.gradio_interface import create_gradio_interface
+from soothe_app.v3.utils.safety import initialize_content_filter
+from soothe_app.v3.utils.logger import configure_logging
 
 import os
 import sys

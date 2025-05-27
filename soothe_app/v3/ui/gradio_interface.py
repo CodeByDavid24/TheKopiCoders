@@ -2056,7 +2056,7 @@ class GradioInterface:
                             height="65vh",
                             placeholder="🌸 **Welcome to your safe space!** Your supportive conversation will begin here. Take your time and start when you're ready.",
                             show_copy_button=True,
-                            render_markdown=True,
+                            render_markdown=False,
                             value=[[None, self.consent_message]],
                             avatar_images=None,
                             bubble_full_width=False,
