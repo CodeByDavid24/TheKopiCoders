@@ -6,14 +6,11 @@ import logging
 import gradio as gr
 from typing import Optional, Tuple, List, Dict, Any
 # ADD THESE IMPORTS:
-from ..core.narrative_engine import create_narrative_engine, CONSENT_MESSAGE
+# ADD THESE IMPORTS:
 from ..core.api_client import get_claude_client
-from ..ui.tts_handler import get_tts_handler
 from ..utils.safety import check_input_safety, filter_response_safety
 from ..utils.tts_audit_utils import get_tts_statistics, create_tts_report, format_tts_report_for_display
-from ..models.game_state import GameState
-
-from ..core.narrative_engine import create_narrative_engine
+from ..core.narrative_engine import create_narrative_engine, CONSENT_MESSAGE
 from ..models.game_state import GameState
 from ..ui.tts_handler import get_tts_handler
 
@@ -67,9 +64,11 @@ class GradioInterface:
             'shadow_xl': 'rgba(30, 58, 95, 0.20)',
 }
 
+        self.claude_client = get_claude_client()
         self.narrative_engine = create_narrative_engine()  # Remove character_data parameter
         self.tts_handler = get_tts_handler(elevenlabs_client)
         self.interface = None
+        self.conversation_history = []  
 
         self.disclaimer_banner = """
         <div style='
@@ -93,20 +92,20 @@ class GradioInterface:
 
         self.consent_message = """
         **Welcome to SootheAI - Serena's Story**
-        
+
         **Important Information:**
         This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
-        
+
         Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
-        
+
         **Audio Feature Option:**
         SootheAI can narrate the story using AI-generated speech. The audio is processed in real-time and not stored.
-        
+
         **To begin:**
         Type 'I agree with audio' to enable voice narration
         OR
         Type 'I agree without audio' to continue with text only
-        
+
         You can change audio settings at any time by typing 'enable audio' or 'disable audio'.
         """
 
@@ -1781,7 +1780,10 @@ class GradioInterface:
         }}
         """
 
-
+    def process_tts_commands(self, message: str) -> Tuple[bool, Optional[str]]:
+        """Process TTS-related commands."""
+        is_tts_command, tts_response = self.tts_handler.process_command(message)
+        return is_tts_command, tts_response
 
 
     def create_enhanced_theme(self) -> gr.Theme:
@@ -1815,13 +1817,23 @@ class GradioInterface:
         )
 
     def main_loop(self, message: Optional[str], history: List[Tuple[str, str]]) -> str:
-        
+        """
+        Main game loop that processes player input and returns AI responses.
+
+        Args:
+            message: Player's input message (can be None for initial load)
+            history: Conversation history as list of (user_message, ai_response) tuples
+
+        Returns:
+            str: AI's response or error message
+        """
+        # Handle None message (initial page load)
         if message is None:
             logger.info("Processing empty message in main loop")
             return self.consent_message
 
         logger.info(f"Processing message in main loop: {message[:50] if message else ''}...")
-        
+
         try:
             response, success = self.narrative_engine.process_message(message)
             
@@ -2056,7 +2068,7 @@ class GradioInterface:
                             height="65vh",
                             placeholder="🌸 **Welcome to your safe space!** Your supportive conversation will begin here. Take your time and start when you're ready.",
                             show_copy_button=True,
-                            render_markdown=True,
+                            render_markdown=False,
                             value=[[None, self.consent_message]],
                             avatar_images=None,
                             bubble_full_width=False,
