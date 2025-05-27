@@ -697,3 +697,89 @@ It's 5:30 AM a...
 2025-05-25 23:58:45,490 - soothe_app.v1.ui.tts_handler - ERROR - TTS Error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds your quota of 10000. You have 173 credits remaining, while 677 credits are required for this request.'}}
 2025-05-25 23:58:45,492 - soothe_app.v1.ui.speech_audit_trail - INFO - Logged speech synthesis: ID=syn_ses_1748187395_3a3c864c_13, Length=103, Category=inner_thoughts
 2025-05-25 23:58:45,498 - soothe_app.v1.ui.speech_audit_trail - WARNING - Logged speech synthesis error: status_code: 401, body: {'detail': {'status': 'quota_exceeded', 'message': 'This request exceeds you
+2025-05-27 11:28:57,546 - soothe_app.v2.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-27 11:28:57,546 - __main__ - INFO - Starting SootheAI application with autonomous character generation
+2025-05-27 11:28:57,547 - soothe_app.v2.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-27 11:28:57,547 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-27 11:28:57,796 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-27 11:28:57,797 - soothe_app.v2.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-27 11:28:57,798 - soothe_app.v2.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-27 11:28:58,035 - __main__ - INFO - Creating autonomous Gradio interface
+2025-05-27 11:28:58,036 - soothe_app.v2.models.game_state - INFO - Game state initialized at 2025-05-27 11:28:58
+2025-05-27 11:28:58,037 - soothe_app.v2.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-27 11:28:58,038 - soothe_app.v2.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-27 11:28:58,039 - soothe_app.v2.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748316538_a979213f
+2025-05-27 11:28:58,040 - soothe_app.v2.ui.tts_handler - INFO - TTS handler initialized
+2025-05-27 11:28:58,540 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:28:58,565 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:28:59,330 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:28:59,393 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:29:00,670 - httpx - INFO - HTTP Request: GET http://localhost:7861/startup-events "HTTP/1.1 200 OK"
+2025-05-27 11:29:02,935 - httpx - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-05-27 11:29:03,999 - httpx - INFO - HTTP Request: GET https://api.gradio.app/v2/tunnel-request "HTTP/1.1 200 OK"
+2025-05-27 11:32:32,421 - soothe_app.v2.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-27 11:32:32,422 - __main__ - INFO - Starting SootheAI application with autonomous character generation
+2025-05-27 11:32:32,422 - soothe_app.v2.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-27 11:32:32,423 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-27 11:32:32,650 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-27 11:32:32,650 - soothe_app.v2.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-27 11:32:32,651 - soothe_app.v2.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-27 11:32:32,865 - __main__ - INFO - Creating autonomous Gradio interface
+2025-05-27 11:32:32,866 - soothe_app.v2.models.game_state - INFO - Game state initialized at 2025-05-27 11:32:32
+2025-05-27 11:32:32,867 - soothe_app.v2.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-27 11:32:32,868 - soothe_app.v2.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-27 11:32:32,877 - soothe_app.v2.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748316752_49a064ba
+2025-05-27 11:32:32,878 - soothe_app.v2.ui.tts_handler - INFO - TTS handler initialized
+2025-05-27 11:32:33,336 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:32:33,349 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:32:34,305 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:32:34,305 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:32:38,072 - soothe_app.v2.ui.gradio_interface - ERROR - Failed to launch Gradio interface: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-05-27 11:32:38,073 - __main__ - CRITICAL - Unhandled exception: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+Traceback (most recent call last):
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\v2\main.py", line 65, in main
+    interface.launch(share=True, server_name="0.0.0.0", server_port=7861)
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\v2\ui\gradio_interface.py", line 425, in launch
+    self.interface.launch(  # Launch the web interface
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\venv\Lib\site-packages\gradio\blocks.py", line 2371, in launch
+    ) = http_server.start_server(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\venv\Lib\site-packages\gradio\http_server.py", line 154, in start_server
+    raise OSError(
+OSError: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-05-27 11:32:38,119 - soothe_app.v2.ui.tts_handler - INFO - TTS session stats: {'session_id': 'ses_1748316752_49a064ba', 'session_duration_seconds': 5.248709678649902, 'total_synthesis_count': 0, 'total_chars_synthesized': 0, 'average_length': 0, 'synthesis_categories': {}}
+2025-05-27 11:32:38,121 - soothe_app.v2.ui.speech_audit_trail - INFO - Logged end of speech synthesis session: ses_1748316752_49a064ba
+2025-05-27 11:32:38,121 - soothe_app.v2.ui.tts_handler - INFO - TTS handler cleanup completed
+2025-05-27 11:33:13,408 - soothe_app.v2.utils.logger - INFO - Logging configured: console=INFO, file=INFO, log_file=soothe_app.log
+2025-05-27 11:33:13,408 - __main__ - INFO - Starting SootheAI application with autonomous character generation
+2025-05-27 11:33:13,409 - soothe_app.v2.utils.safety - WARNING - Enhanced content filter not available, cannot initialize
+2025-05-27 11:33:13,410 - __main__ - INFO - Setting up ElevenLabs client
+2025-05-27 11:33:13,651 - __main__ - INFO - ElevenLabs client initialized successfully
+2025-05-27 11:33:13,652 - soothe_app.v2.core.api_client - INFO - Attempting to initialize Claude client with standard configuration
+2025-05-27 11:33:13,652 - soothe_app.v2.core.api_client - WARNING - Proxy configuration error, attempting alternative initialization
+2025-05-27 11:33:13,865 - __main__ - INFO - Creating autonomous Gradio interface
+2025-05-27 11:33:13,865 - soothe_app.v2.models.game_state - INFO - Game state initialized at 2025-05-27 11:33:13
+2025-05-27 11:33:13,866 - soothe_app.v2.ui.tts_handler - INFO - TTS rate limiter initialized with 10 requests/min, 1000 chars/request, 50000 daily char limit
+2025-05-27 11:33:13,867 - soothe_app.v2.ui.tts_handler - INFO - Voice consent manager initialized
+2025-05-27 11:33:13,869 - soothe_app.v2.ui.speech_audit_trail - INFO - Speech synthesis audit trail initialized with session ID: ses_1748316793_e17f8018
+2025-05-27 11:33:13,869 - soothe_app.v2.ui.tts_handler - INFO - TTS handler initialized
+2025-05-27 11:33:14,374 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:33:14,389 - httpx - INFO - HTTP Request: GET https://checkip.amazonaws.com/ "HTTP/1.1 200 "
+2025-05-27 11:33:15,210 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:33:15,233 - httpx - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-05-27 11:33:19,038 - soothe_app.v2.ui.gradio_interface - ERROR - Failed to launch Gradio interface: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-05-27 11:33:19,040 - __main__ - CRITICAL - Unhandled exception: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+Traceback (most recent call last):
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\v2\main.py", line 65, in main
+    interface.launch(share=True, server_name="0.0.0.0", server_port=7861)
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\soothe_app\v2\ui\gradio_interface.py", line 425, in launch
+    self.interface.launch(  # Launch the web interface
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\venv\Lib\site-packages\gradio\blocks.py", line 2371, in launch
+    ) = http_server.start_server(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dteo8\OneDrive\Documents\Projects\TheKopiCoders\venv\Lib\site-packages\gradio\http_server.py", line 154, in start_server
+    raise OSError(
+OSError: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-05-27 11:33:19,050 - soothe_app.v2.ui.tts_handler - INFO - TTS session stats: {'session_id': 'ses_1748316793_e17f8018', 'session_duration_seconds': 5.181210279464722, 'total_synthesis_count': 0, 'total_chars_synthesized': 0, 'average_length': 0, 'synthesis_categories': {}}
+2025-05-27 11:33:19,052 - soothe_app.v2.ui.speech_audit_trail - INFO - Logged end of speech synthesis session: ses_1748316793_e17f8018
+2025-05-27 11:33:19,053 - soothe_app.v2.ui.tts_handler - INFO - TTS handler cleanup completed
