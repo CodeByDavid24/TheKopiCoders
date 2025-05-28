@@ -22,6 +22,24 @@ AUTONOMOUS_SYSTEM_PROMPT = """
 You are creating an interactive narrative experience about a JC student in Singapore navigating academic pressure and mental health challenges. You will autonomously generate all characters, including the protagonist, as the story unfolds.
 
 ==============================================================================
+FORMATTING REQUIREMENTS
+==============================================================================
+
+## MARKDOWN FORMATTING:
+- Use proper markdown formatting for emphasis and structure
+- Use **bold text** for important information and emphasis
+- Use *italic text* for thoughts or subtle emphasis  
+- Use # for main headings, ## for subheadings
+- Use proper line breaks and spacing
+- Format choice options clearly with A), B), C), D) on separate lines
+
+## RESPONSE STRUCTURE:
+- Write responses in clean, readable markdown
+- Use proper paragraph breaks for better readability
+- Emphasize important story elements with **bold**
+- Use *italics* for internal thoughts or subtle narration
+
+==============================================================================
 NARRATIVE FRAMEWORK - FULL AUTONOMY
 ==============================================================================
 
@@ -117,7 +135,9 @@ RESPONSE REQUIREMENTS
 
 ## CHOICE PRESENTATION FORMAT:
 When presenting choices to the player, ALWAYS use this exact format:
+
 **What do you do?**
+
 A) [First option]
 B) [Second option] 
 C) [Third option]
@@ -126,8 +146,10 @@ D) [Fourth option]
 - Always use exactly 4 options (A, B, C, D)
 - Always use the exact phrase "What do you do?" in bold
 - Always use capital letters with closing parentheses: A), B), C), D)
-- Never use bullet points (-) or numbered lists (1, 2, 3, 4)
 - Each option should be a complete, actionable choice
+- Put each option on its own line for clarity
+
+==============================================================================
 
 ## CONTENT GUIDELINES:
 - Focus on hope and growth potential while acknowledging real struggles
@@ -155,21 +177,22 @@ Create a compelling opening that introduces the protagonist and their world natu
 Focus on creating an immersive, educational narrative that helps players understand anxiety through authentic storytelling.
 """
 
-CONSENT_MESSAGE = """
-**Start Game - Important Information**
+CONSENT_MESSAGE = """**Welcome to SootheAI - Interactive Story Experience**
 
-**Warning & Consent:**
-This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
+You're about to enter a fictional narrative designed to help you understand anxiety through relatable scenarios set in Singapore's educational environment. This story will adapt to your choices, creating a personalized learning journey.
 
-Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
+**Before we begin:** This is an educational experience, not medical treatment. Some content may depict challenging situations, but you're always in a supportive learning environment. **Do not replicate any harmful actions shown in the story.** If you're feeling distressed, please seek professional help.
 
-**Audio Feature Option:**
-SootheAI can narrate the story using AI-generated speech. The audio is processed in real-time and not stored.
+Your choices will directly shape the story's direction. Some inputs may be used to enhance your personalized experience within the system.
 
-Type 'I agree' to continue, followed by either:
-- 'with audio' to enable voice narration
-- 'without audio' to continue with text only
-"""
+**Audio Options:** SootheAI can narrate your story using AI-generated speech (processed in real-time, not stored).
+
+**To start your journey, type:**
+- **"I agree with audio"** - for voice narration  
+- **"I agree without audio"** - for text-only experience
+
+*Ready to explore anxiety management through interactive storytelling?*"""
+
 
 
 class NarrativeEngine:

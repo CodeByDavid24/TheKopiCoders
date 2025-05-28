@@ -90,24 +90,29 @@ class GradioInterface:
         </div>
         """
 
-        self.consent_message = """
-        **Welcome to SootheAI - Serena's Story**
+        self.consent_message = """# 🌟 Welcome to SootheAI
 
-        **Important Information:**
-        This is a fictional story designed to help you understand anxiety. Please be aware that some of the content may depict distressing situations. **Do not replicate or engage in any harmful actions shown in the game.** If you're feeling distressed, we encourage you to seek professional help.
+*Helping you navigate anxiety through interactive storytelling*
+---
+## 📖 What to Expect
+SootheAI is a fun, educational project to help you understand anxiety management. This is **not a treatment tool**. Some content may depict challenging situations, but you're always in a supportive learning environment.
 
-        Your choices and input will directly shape the direction of the story. Your decisions may influence the narrative, and some of your inputs might be used within the system to enhance your experience.
+## 🚦 Important Disclaimer
+**SootheAI does NOT provide mental health diagnosis or treatment. If you are in distress, seek professional help.**
 
-        **Audio Feature Option:**
-        SootheAI can narrate the story using AI-generated speech. The audio is processed in real-time and not stored.
+## 🎧 Audio Experience
+Choose your preferred way to engage:
+- **With voice narration** - Immersive AI-generated storytelling  
+- **Text only** - Read at your own comfortable pace
 
-        **To begin:**
-        Type 'I agree with audio' to enable voice narration
-        OR
-        Type 'I agree without audio' to continue with text only
+## 🚀 Ready to Begin?
+Type one of these commands to start:
+- `I agree with audio` - for full audio experience
+- `I agree without audio` - for text-only experience
 
-        You can change audio settings at any time by typing 'enable audio' or 'disable audio'.
-        """
+*You can change audio settings anytime by typing 'enable audio' or 'disable audio'*
+---
+"""
 
         self.narrative_engine = create_narrative_engine()
         self.claude_client = get_claude_client()
@@ -1670,7 +1675,161 @@ class GradioInterface:
         return f"""
         {self._get_font_imports()}
         {self._create_css_variables()}
+            
+        /* COMPREHENSIVE HORIZONTAL SCROLL FIX */
+        
+        /* Global overflow control */
+        html, body {{
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }}
+        
+        /* Gradio container fixes */
+        .gradio-container {{
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+            width: 100% !important;
+        }}
+        
+        /* Chat interface specific fixes */
+        .gradio-container .chatbot,
+        .gradio-container .chat-interface {{
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }}
+        
+        /* Message bubble fixes - THIS IS THE KEY */
+        .gradio-container .message,
+        .gradio-container .chat-message,
+        .gradio-container .message-wrap,
+        .gradio-container .message-content {{
+            max-width: 100% !important;
+            width: 100% !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            hyphens: auto !important;
+            box-sizing: border-box !important;
+            overflow-x: hidden !important;
+        }}
+        
+        /* Text content fixes */
+        .gradio-container p,
+        .gradio-container div,
+        .gradio-container span {{
+            max-width: 100% !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            hyphens: auto !important;
+        }}
+        
+        /* Markdown content fixes */
+        .gradio-container .markdown,
+        .gradio-container .markdown p,
+        .gradio-container .markdown div {{
+            max-width: 100% !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            white-space: pre-wrap !important;
+        }}
+        
+        /* Pre and code block fixes */
+        .gradio-container pre,
+        .gradio-container code {{
+            max-width: 100% !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+            overflow-x: auto !important;
+            box-sizing: border-box !important;
+        }}
+        
+        /* Input and button fixes */
+        .gradio-container input,
+        .gradio-container textarea,
+        .gradio-container button {{
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }}
 
+        /* Background and theme */
+        html, body, .soothe-page-wrapper {{
+            background: linear-gradient(135deg, #29406e 0%, #224075 38%, #21a2e1 100%) !important;
+            color: #1e293b;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+        }}
+
+        /* CLEAN CHAT INTERFACE STYLES */
+        .soothe-chatbot {{
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 1rem !important;
+            backdrop-filter: blur(10px) !important;
+        }}
+
+        .soothe-textbox {{
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            border-radius: 0.8rem !important;
+            color: #1e293b !important;
+        }}
+
+        .soothe-textbox:focus {{
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1) !important;
+        }}
+
+        /* Chat specific tab styling */
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(2) {{
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+            color: white !important;
+            border: none !important;
+        }}
+
+        /* Chat message bubbles */
+        .gradio-container .chat-message {{
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-radius: 1rem !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        }}
+
+        /* User message bubbles */
+        .gradio-container .chat-message.user {{
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+            color: white !important;
+        }}
+
+        /* Bot message bubbles */
+        .gradio-container .chat-message.bot {{
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: #1e293b !important;
+            border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        }}
+
+        /* Examples styling */
+        .gradio-container .examples {{
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-radius: 0.8rem !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }}
+
+        /* Submit button styling */
+        .gradio-container button[aria-label="Submit"] {{
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+            border: none !important;
+            border-radius: 0.6rem !important;
+            color: white !important;
+            transition: all 0.2s ease !important;
+        }}
+
+        .gradio-container button[aria-label="Submit"]:hover {{
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3) !important;
+        }}
         html, body, .soothe-page-wrapper {{
             background: linear-gradient(135deg, #29406e 0%, #224075 38%, #21a2e1 100%) !important;
             color: #1e293b;
@@ -1985,122 +2144,54 @@ class GradioInterface:
         """
 
     def create_interface(self) -> gr.Blocks:
-        """Create the complete Gradio interface with all tabs."""
         with gr.Blocks(
             theme=self.create_enhanced_theme(),
             title="SootheAI - Mental Health Support",
             css=self.create_enhanced_css()
         ) as blocks:
             with gr.Tabs(elem_classes="soothe-tabs") as tabs:
-                # Home Tab
                 with gr.Tab("🏠 Home"):
                     gr.HTML(self.create_enhanced_homepage() + self.create_footer())
                 
-                # Chat Tab - Main functionality
                 with gr.Tab("💬 SootheAI Chat"):
-                    gr.HTML("""
-                        <div style="
-                            background: linear-gradient(135deg, #1E3A5F 0%, #2B4A75 50%, #0EA5E9 100%);
-                            color: white;
-                            padding: 32px;
-                            border-radius: 16px;
-                            margin-bottom: 24px;
-                            text-align: center;
-                            box-shadow: 0 12px 40px rgba(30, 58, 95, 0.2);
-                        ">
-                            <h1 style="
-                                margin: 0 0 16px 0;
-                                font-size: 36px;
-                                font-weight: 700;
-                                font-family: 'Inter', sans-serif;
-                            ">🌟 Your Safe Space for Mental Wellness</h1>
-                            <p style="
-                                margin: 0 0 24px 0;
-                                font-size: 18px;
-                                opacity: 0.95;
-                                max-width: 600px;
-                                margin-left: auto;
-                                margin-right: auto;
-                                line-height: 1.6;
-                            ">Connect with your personal AI companion designed to understand, support, and guide you through anxiety management</p>
-                            <div style="
-                                background: rgba(255, 255, 255, 0.15);
-                                border-radius: 12px;
-                                padding: 24px;
-                                margin-top: 24px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                            ">
-                                <div style="
-                                    display: grid;
-                                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                                    gap: 16px;
-                                    margin-bottom: 16px;
-                                ">
-                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span style="font-size: 20px;">🔒</span>
-                                        <span style="font-weight: 500;">100% Confidential</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span style="font-size: 20px;">🤖</span>
-                                        <span style="font-weight: 500;">AI-Powered Support</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span style="font-size: 20px;">🇸🇬</span>
-                                        <span style="font-weight: 500;">Singapore-Focused</span>
-                                    </div>
-                                </div>
-                                <div style="
-                                    color: #38BDF8;
-                                    font-weight: 600;
-                                    font-size: 16px;
-                                    text-align: center;
-                                ">
-                                    💡 Ready to start? Choose "I agree with audio" or "I agree without audio" below
-                                </div>
-                            </div>
-                        </div>
-                    """)
-                    
-                    # Main chat interface
+                    # Clean chat interface without header/footer
                     gr.ChatInterface(
                         self.main_loop,
                         chatbot=gr.Chatbot(
-                            height="65vh",
+                            height="80vh",  # Increased height since no header/footer
                             placeholder="🌸 **Welcome to your safe space!** Your supportive conversation will begin here. Take your time and start when you're ready.",
                             show_copy_button=True,
-                            render_markdown=False,
+                            render_markdown=True,
                             value=[[None, self.consent_message]],
                             avatar_images=None,
                             bubble_full_width=False,
                             show_share_button=False,
+                            elem_classes="soothe-chatbot"
                         ),
                         textbox=gr.Textbox(
-                            placeholder="💭 e.g., 'I agree with audio' or 'start game' ",
+                            placeholder="💭 Share what's on your mind... (e.g., 'I agree with audio' or 'I'm feeling anxious about school')",
                             container=False,
                             scale=7,
                             lines=1,
                             max_lines=4,
+                            elem_classes="soothe-textbox"
                         ),
                         examples=[
                             "I agree with audio",
-                            "I agree without audio",
+                            "I agree without audio", 
                             "start game"
                         ],
                         cache_examples=False,
                         title=None,
                         description=None,
                     )
-                    gr.HTML(self.create_footer())
-
-                # Education Tab
+                
                 with gr.Tab("📚 Learn About Anxiety"):
                     gr.HTML(self.create_anxiety_education_content() + self.create_footer())
                 
-                # Help Tab
                 with gr.Tab("🆘 Get Help"):
                     gr.HTML(self.create_helpline_content() + self.create_footer())
                 
-                # About Tab
                 with gr.Tab("ℹ️ About"):
                     gr.HTML(self.create_about_content() + self.create_footer())
 
