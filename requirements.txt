@@ -1,77 +1,22 @@
-# Core AI and API Dependencies
-anthropic>=0.34.0               # Claude API client
-elevenlabs>=1.10.0              # Text-to-speech API
+# Core AI and API packages
+anthropic>=0.19.1            # Claude API client for narrative generation
+elevenlabs>=1.58.1           # Text-to-speech API client
 
-# Web Framework and UI
-gradio>=4.44.0                  # Web interface framework
+# User Interface frameworks
+gradio>=4.44.1               # Primary chat interface framework
+streamlit>=1.22.0            # Alternative UI framework for dashboard interface
 
-# HTTP and Networking
-httpx>=0.27.0                   # HTTP client for API requests
-requests>=2.31.0                # HTTP library
+# Core Python packages
+numpy>=1.26.1                # Used for random number generation and data operations
+python-dotenv>=1.0.0         # For loading environment variables from .env file
 
-# Data Processing and Analysis
-numpy>=1.24.0                   # Numerical computing
-pandas>=2.0.0                   # Data manipulation (if needed for analytics)
+# HTTP client and async support
+httpx>=0.24.0                # HTTP client used for API communication
 
-# Text Processing and NLP
-regex>=2023.0.0                 # Advanced regex patterns
+# Testing packages
+pytest>=7.4.3                # Testing framework for unit tests
+pytest-mock>=3.12.0          # Mock library for testing
 
-# Configuration and Environment
-python-dotenv>=1.0.0            # Environment variable management
-
-# Audio Processing (for TTS)
-# Note: FFmpeg must be installed separately on the system
-
-# JSON and File Handling
-pathlib2>=2.3.7                # Enhanced path handling (for older Python versions)
-
-# Logging and Monitoring
-colorlog>=6.7.0                 # Colored logging output
-
-# Date and Time
-python-dateutil>=2.8.0         # Date parsing utilities
-
-# Development and Testing (optional)
-pytest>=7.4.0                  # Testing framework
-pytest-asyncio>=0.21.0         # Async testing support
-black>=23.0.0                   # Code formatting
-flake8>=6.0.0                   # Code linting
-
-# Type Checking (optional)
-mypy>=1.5.0                     # Static type checking
-
-# Security and Validation
-cryptography>=41.0.0            # Cryptographic functions
-validators>=0.22.0              # Input validation
-
-# System Utilities
-psutil>=5.9.0                   # System monitoring
-
-# Additional Dependencies for Enhanced Features
-Pillow>=10.0.0                  # Image processing (if needed for UI)
-markdown>=3.5.0                 # Markdown processing
-
-# Database (if persistence is added later)
-# sqlite3 is included in Python standard library
-
-# Web Security (if deploying publicly)
-# Add these if deploying to production:
-# gunicorn>=21.2.0              # WSGI server
-# uvicorn>=0.23.0               # ASGI server
-
-# Compatibility and Utilities
-typing-extensions>=4.7.0       # Extended type hints
-importlib-metadata>=6.8.0      # Package metadata
-
-# Optional: For advanced content filtering
-# scikit-learn>=1.3.0          # Machine learning for content analysis
-# nltk>=3.8.0                   # Natural language processing
-# spacy>=3.6.0                  # Advanced NLP
-
-# Version Pinning for Stability
-# Core dependencies with specific version constraints
-anthropic>=0.34.0,<1.0.0
-gradio>=4.44.0,<5.0.0
-elevenlabs>=1.10.0,<2.0.0
-httpx>=0.27.0,<1.0.0
-numpy>=1.24.0,<2.0.0
+# Additional utilities
+dataclasses>=0.6             # For structured data classes (built-in Python 3.7+)
+typing-extensions>=4.7.0     # Extended typing support for older Python versions
