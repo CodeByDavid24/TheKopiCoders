@@ -1,5 +1,5 @@
 """
-Updated TTS handler with audit trail integration for SootheAI.
+Updated TTS handler with corrected ElevenLabs API usage for SootheAI.
 """
 
 import atexit  # For cleanup on application exit
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 class TTSRateLimiter:
     """Rate limiter for text-to-speech requests to prevent API abuse."""
 
-    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 3000):
+    def __init__(self, max_requests_per_minute: int = 10, max_chars_per_request: int = 5000):
         """
         Initialize the rate limiter with configurable limits.
 
@@ -259,7 +259,7 @@ class TTSHandler:
 
     def speak_text(self, text: str, category: str = "narrative") -> None:
         """
-        Stream text to speech using ElevenLabs API and play with ffmpeg.
+        Convert text to speech using ElevenLabs API and play with ffmpeg.
 
         Args:
             text: Text to convert to speech
@@ -278,8 +278,8 @@ class TTSHandler:
 
         try:
             # Log TTS start
-            logger.info("[DEBUG] Starting TTS stream with ffmpeg pipe...")
-            stream_start = time.time()  # Record start time for performance monitoring
+            logger.info("[DEBUG] Starting TTS synthesis with ElevenLabs...")
+            synthesis_start = time.time()  # Record start time for performance monitoring
 
             # Log the synthesis start in audit trail
             synthesis_entry = self.audit_trail.log_synthesis(
@@ -291,33 +291,77 @@ class TTSHandler:
                 }
             )
 
-            # Start ffplay process for audio playback
-            process = subprocess.Popen(
-                ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
-                stdin=subprocess.PIPE,  # Accept audio data via stdin
-                stdout=subprocess.DEVNULL,  # Suppress stdout
-                stderr=subprocess.DEVNULL  # Suppress stderr
-            )
+            # Use the correct ElevenLabs API method based on the client version
+            try:
+                # Try the newer API structure first
+                if hasattr(self.elevenlabs_client, 'text_to_speech') and hasattr(self.elevenlabs_client.text_to_speech, 'stream'):
+                    logger.debug("Using text_to_speech.stream API")
+                    audio_stream = self.elevenlabs_client.text_to_speech.stream(
+                        voice_id=self.voice_id,
+                        output_format="mp3_44100_128",
+                        text=text,
+                        model_id=self.model_id
+                    )
+                # Try the generate method with streaming
+                elif hasattr(self.elevenlabs_client, 'generate'):
+                    logger.debug("Using generate API with stream=True")
+                    audio_stream = self.elevenlabs_client.generate(
+                        text=text,
+                        voice=self.voice_id,
+                        model=self.model_id,
+                        stream=True
+                    )
+                # Try the direct stream method
+                elif hasattr(self.elevenlabs_client, 'stream'):
+                    logger.debug("Using direct stream API")
+                    audio_stream = self.elevenlabs_client.stream(
+                        text=text,
+                        voice_id=self.voice_id,
+                        model_id=self.model_id
+                    )
+                else:
+                    # Fallback to non-streaming if streaming is not available
+                    logger.debug("Using non-streaming API as fallback")
+                    if hasattr(self.elevenlabs_client, 'generate'):
+                        audio_data = self.elevenlabs_client.generate(
+                            text=text,
+                            voice=self.voice_id,
+                            model=self.model_id
+                        )
+                        # Convert to stream-like object
+                        audio_stream = [audio_data]
+                    else:
+                        raise AttributeError("No compatible TTS method found on ElevenLabs client")
 
-            # Use the correct ElevenLabs streaming method
-            audio_stream = self.elevenlabs_client.text_to_speech.stream(
-                voice_id=self.voice_id,  # Voice to use
-                output_format="mp3_44100_128",  # Audio format specification
-                text=text,  # Text to synthesize
-                model_id=self.model_id  # Model to use
-            )
+                # Start ffplay process for audio playback
+                process = subprocess.Popen(
+                    ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet", "-"],
+                    stdin=subprocess.PIPE,  # Accept audio data via stdin
+                    stdout=subprocess.DEVNULL,  # Suppress stdout
+                    stderr=subprocess.DEVNULL  # Suppress stderr
+                )
 
-            # Stream audio data to ffplay
-            for chunk in audio_stream:
-                if process.stdin:  # Ensure stdin is available
-                    process.stdin.write(chunk)  # Write audio chunk to ffplay
-            
-            if process.stdin:
-                process.stdin.close()  # Close stdin when done
+                # Stream audio data to ffplay
+                for chunk in audio_stream:
+                    if process.stdin:  # Ensure stdin is available
+                        process.stdin.write(chunk)  # Write audio chunk to ffplay
+                
+                if process.stdin:
+                    process.stdin.close()  # Close stdin when done
 
-            process.wait()  # Wait for ffplay to finish
-            stream_elapsed = time.time() - stream_start  # Calculate processing time
-            logger.info(f"[DEBUG] TTS streaming duration: {stream_elapsed:.2f} seconds")
+                process.wait()  # Wait for ffplay to finish
+                synthesis_elapsed = time.time() - synthesis_start  # Calculate processing time
+                logger.info(f"[DEBUG] TTS synthesis duration: {synthesis_elapsed:.2f} seconds")
+
+            except AttributeError as api_error:
+                logger.error(f"ElevenLabs API method not found: {api_error}")
+                logger.info("Available methods on client: " + str(dir(self.elevenlabs_client)))
+                self.audit_trail.log_synthesis_error(
+                    text=text[:100] + "..." if len(text) > 100 else text,
+                    error_message=f"API method not found: {api_error}",
+                    category=category
+                )
+                return
 
         except Exception as tts_error:
             logger.error(f"TTS Error: {tts_error}")  # Log TTS error

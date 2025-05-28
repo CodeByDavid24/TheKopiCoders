@@ -1,230 +1,283 @@
-# SootheAI: Interactive Mental Health Narrative Application
+# SootheAI - Interactive Mental Health Support for Singapore's Youth
 
-An AI-powered interactive narrative experience designed to help Singaporean youths understand, manage, and overcome anxiety through engaging storytelling set in culturally relevant contexts.
+SootheAI is an AI-powered interactive storytelling platform designed to help Singaporean students understand and manage anxiety through engaging narrative experiences. The application uses Claude AI to generate dynamic, culturally-relevant stories that provide mental health education and coping strategies.
 
-## About The Project
+## 🌟 Features
 
-SootheAI creates an immersive, choice-based narrative that:
+- **Interactive AI Storytelling**: Dynamic narratives that adapt to user choices
+- **Mental Health Education**: Evidence-based anxiety management techniques
+- **Singapore Context**: Stories set in familiar educational and cultural environments
+- **Text-to-Speech Support**: Optional AI-generated voice narration
+- **Safety Systems**: Comprehensive content filtering and crisis support resources
+- **Multiple Versions**: Three iterations with progressive improvements
 
-- Educates users about anxiety in a relatable context of Singaporean student life
-- Presents realistic scenarios based on everyday situations faced by JC students
-- Offers meaningful choices that demonstrate different coping strategies
-- Provides a safe space to explore mental health challenges through fictional characters
-
-## Features
-
-- **Interactive storytelling experience** powered by Claude AI (using Anthropic's Claude 3.7 Sonnet model)
-- **Text-to-speech integration** via ElevenLabs for immersive audio narration
-- **Multiple interface options**:
-  - Gradio-based chat interface for primary interaction
-  - Streamlit interface with enhanced visual elements
-  - HTML/CSS/JS prototype for static demonstrations
-- **Character-driven narrative** focusing on mental health themes
-- **Content safety filtering** to protect vulnerable users
-- **Culturally relevant storytelling** set in Singapore educational context
-- **Consent flow** that emphasizes ethical usage
-- **Comprehensive security measures** and content moderation
-
-## Project Structure
+## 📋 Project Structure
 
 ```
-soothe_app/                   # Core Python application
-├── src/                      # Source code
-│   ├── core/                 # Core functionality
-│   │   ├── api_client.py     # Claude API integration
-│   │   ├── content_filter.py # Content safety system
-│   │   └── narrative_engine.py # Story generation engine
-│   ├── models/               # Data models
-│   │   ├── character.py      # Character definition
-│   │   └── game_state.py     # Game state tracking
-│   ├── ui/                   # User interfaces
-│   │   ├── gradio_interface.py # Primary Gradio interface
-│   │   └── tts_handler.py    # Text-to-speech functionality
-│   └── utils/                # Utility functions
-│       ├── file_loader.py    # File handling utilities
-│       ├── logger.py         # Logging configuration
-│       └── safety.py         # Safety utilities
-├── tests/                    # Test suite
-│   ├── fixtures/             # Test data
-│   │   ├── test_blacklist.py
-│   │   └── test_character.json
-│   ├── integration/          # Integration tests
-│   │   ├── test_api_integration.py
-│   │   └── test_full_flow.py
-│   ├── tools/                # Testing tools
-│   │   ├── consent_flow_tests.json
-│   │   └── system_prompt_tester.py
-│   ├── unit/                 # Unit tests
-│   │   ├── test_character_loader.py
-│   │   ├── test_content_filter.py
-│   │   ├── test_integration.py
-│   │   └── test_narrative_engine.py
-│   └── __init__.py
-├── characters/               # Character definition files
-│   └── serena.json           # Main protagonist character
-
-soothe_interface_dev/        # Web interface components
-├── digital_prototype/       # HTML/CSS implementation
-│   ├── images/              # Image assets
-│   ├── about.html           # About page
-│   ├── anxiety-education.html # Educational content
-│   ├── game.html            # Interactive game screen
-│   ├── helpline.html        # Support resources
-│   ├── index.html           # Landing page
-│   ├── script.js            # JavaScript functionality
-│   └── styles.css           # CSS styling
-└── stream.py                # Streamlit interface implementation
-
-docs/                        # Documentation files
-├── api/                     # API documentation
-│   └── content_filter.md
-├── development/             # Development documentation
-│   ├── architecture.md
-│   └── contributing.md
-├── features/                # Feature documentation
-│   ├── feature_1.md         # User input functionality
-│   └── feature_2.md         # LLM text generation
-├── setup/                   # Setup documentation
-│   ├── configuration.md
-│   └── installation.md
-├── anthropic-prompt-cheatsheet.md # Prompt engineering guide
-└── code-overview.md         # Application architecture overview
+soothe_app/
+├── v1/                     # Initial prototype version
+├── v2/                     # Core stable version
+│   ├── core/              # Core engine components
+│   │   ├── api_client.py          # Claude API integration
+│   │   ├── narrative_engine.py    # Story generation logic
+│   │   ├── content_filter.py      # Safety filtering system
+│   │   └── filter_compatibility.py
+│   ├── models/            # Data models
+│   │   ├── character.py           # Character data structures
+│   │   └── game_state.py          # Session management
+│   ├── ui/                # User interface components
+│   │   ├── gradio_interface.py    # Web interface
+│   │   ├── tts_handler.py         # Text-to-speech system
+│   │   └── speech_audit_trail.py  # TTS usage tracking
+│   ├── utils/             # Utility modules
+│   │   ├── file_loader.py         # File handling
+│   │   ├── logger.py              # Logging configuration
+│   │   ├── safety.py              # Safety utilities
+│   │   └── tts_audit_utils.py     # TTS audit functions
+│   └── main.py            # Application entry point
+├── v3/                     # Enhanced UI version
+│   └── ui/                # Improved interface components
+├── config/                # Configuration files
+│   ├── characters/        # Character definitions
+│   ├── system_prompts/    # AI prompts
+│   └── blacklist/         # Content filtering rules
+├── game_data/             # Game content
+│   ├── milestones/        # Story milestones
+│   └── endings/           # Story endings
+└── logs/                  # Application logs
 ```
 
-## Key Components
+## 🚀 Quick Start
 
-### 1. Narrative Engine
+### Prerequisites
 
-The heart of SootheAI is its narrative engine powered by Claude 3.7 Sonnet. The engine:
+- Python 3.8 or higher
+- Claude API key from Anthropic
+- ElevenLabs API key (optional, for TTS)
+- FFmpeg (for audio playback)
 
-- Generates contextually relevant responses based on user inputs
-- Maintains narrative consistency throughout the experience
-- Portrays subtle anxiety symptoms without explicitly labeling them
-- Adapts to user choices and preferences
-- Provides educational insights through storytelling
+### Installation
 
-### 2. Content Safety System
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd soothe_app
+   ```
 
-SootheAI implements comprehensive content safety measures:
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- Multi-tier content filtering with severity levels
-- Pattern-based detection using regex for complex harmful content identification
-- Context-aware analysis for better understanding of user intent
-- Configurable response strategies based on content severity
-- Dynamic content replacement with contextually appropriate alternatives
-- Comprehensive logging for monitoring and improvement
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys
+   ```
 
-### 3. Character Framework
+4. **Install FFmpeg** (for audio support)
+   - **Windows**: Download from https://ffmpeg.org/
+   - **macOS**: `brew install ffmpeg`
+   - **Linux**: `sudo apt install ffmpeg`
 
-Characters are defined through detailed JSON files that specify:
+### Running the Application
 
-- Personality traits and background
-- Academic environment and pressures
-- Behavioral patterns related to anxiety
-- Relationships with family, friends, and teachers
-- Coping mechanisms and triggers
+Choose your preferred version:
 
-### 4. Interface Options
-
-SootheAI offers multiple user interface options:
-
-#### Gradio Interface
-- Primary chat-based interface
-- Conversation history tracking
-- Audio narration integration
-- Pre-populated consent message
-
-#### Streamlit Interface
-- Visual character status dashboard
-- Progress tracking and visualization
-- Emotion state indicators
-- Quick-action buttons for common choices
-
-#### HTML/CSS Prototype
-- Static demonstration of the application concept
-- Visual design elements and layout
-- Educational content pages
-- Support resource information
-
-## Setup Instructions
-
-### 1. Install Dependencies
-
+**V2 (Stable)**
 ```bash
-# Create a virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install required packages
-pip install -r requirements.txt
+python -m soothe_app.v2.main
 ```
 
-### 2. API Configuration
-
-Create a `.env` file in the project root with your API keys:
-
+**V3 (Enhanced UI)**
+```bash
+python -m soothe_app.v3.main
 ```
-CLAUDE_API_KEY=your_anthropic_api_key_here
+
+The application will launch a web interface accessible at `http://localhost:7861`
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+# Required
+CLAUDE_API_KEY=your_claude_api_key_here
+
+# Optional (for text-to-speech)
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+
+# Optional (logging level)
+LOG_LEVEL=INFO
 ```
 
-### 3. Run the Application
+### Character Configuration
 
-For the Gradio interface:
+Characters are defined in JSON files under `config/characters/`:
+- `serena.json` - Main protagonist
+- `mother.json` - Family dynamics
+- `therapist.json` - Professional support
+- `chloe.json` - Academic rival
+- `teacher.json` - Educational support
+
+### Content Filtering
+
+Safety systems are configured in `config/blacklist/`:
+- `blacklist.txt` - Harmful phrases
+- `harmful_patterns_file.json` - Pattern matching rules
+- `enhance_filter_config.json` - Filter settings
+
+## 🎮 Usage
+
+### Basic Interaction
+
+1. **Start the application** and navigate to the web interface
+2. **Read the consent message** and agree to terms
+3. **Choose audio preferences** (with/without TTS)
+4. **Type "start game"** to begin the interactive story
+5. **Make choices** by selecting options or typing responses
+
+### Available Commands
+
+- `start game` - Begin the interactive story
+- `enable audio` / `disable audio` - Toggle text-to-speech
+- `tts status` - Check TTS usage statistics
+- `tts report` - Generate TTS audit report
+
+### Story Features
+
+- **Autonomous Character Generation**: AI creates unique characters for each playthrough
+- **Multiple Endings**: Different story outcomes based on choices
+- **Educational Milestones**: Key learning moments about anxiety management
+- **Cultural Authenticity**: Singapore-specific contexts and scenarios
+
+## 🛡️ Safety Features
+
+### Content Filtering
+- **Multi-layer filtering** for harmful content
+- **Pattern matching** for complex detection
+- **Severity scoring** for appropriate responses
+- **Context analysis** for comprehensive safety
+
+### Crisis Support
+- **Emergency contacts** prominently displayed
+- **Safety disclaimers** throughout the experience
+- **Professional help** guidance when appropriate
+- **Resource links** to local mental health services
+
+### Privacy Protection
+- **No data storage** of personal conversations
+- **Audit trails** for TTS usage only (anonymized)
+- **Session-based** state management
+- **Local processing** where possible
+
+## 📊 Monitoring and Auditing
+
+### TTS Audit Trail
+The system tracks text-to-speech usage for:
+- **Usage statistics** and rate limiting
+- **Content categorization** for analytics
+- **Error tracking** and performance monitoring
+- **Privacy-preserving** hashed content logging
+
+### Logging
+Comprehensive logging includes:
+- **Application events** and errors
+- **Safety filter** activations
+- **User interactions** (anonymized)
+- **System performance** metrics
+
+## 🧪 Development
+
+### Project Versions
+
+**V1**: Initial prototype with basic functionality
+**V2**: Stable version with full feature set
+**V3**: Enhanced UI with improved design and accessibility
+
+### Architecture
+
+- **Modular design** with clear separation of concerns
+- **Plugin architecture** for easy feature additions
+- **Configuration-driven** character and content management
+- **Async-compatible** for scalability
+
+### Testing
+
+Run tests with appropriate test frameworks (add specific commands based on your test setup):
 
 ```bash
-python -m soothe_app.src.main
+# Example test commands
+python -m pytest tests/
+python -m unittest discover tests/
 ```
 
-For the Streamlit interface:
+## 📚 Educational Content
 
-```bash
-streamlit run soothe_interface_dev/stream.py
-```
+### Mental Health Topics
+- Anxiety recognition and symptoms
+- Healthy coping strategies
+- Academic pressure management
+- Support system building
+- Professional help seeking
 
-To view the HTML prototype, open the HTML files in the `soothe_interface_dev/digital_prototype/` directory in a web browser.
+### Singapore Context
+- Local education system pressures
+- Cultural family dynamics
+- Available mental health resources
+- Community support networks
 
-## Usage
+## 🤝 Contributing
 
-1. When you launch the application, you'll first see a consent message. Type "I agree" to continue.
-2. Type "start game" to begin the narrative.
-3. Read the story descriptions and make choices to navigate Serena's journey.
-4. Type custom responses or select from available options to shape the narrative.
-5. Listen to the narration through the text-to-speech feature (if enabled).
-6. The story will conclude with an educational summary about anxiety and coping strategies.
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
 
-## Testing
+### Development Guidelines
 
-Run unit tests with:
+- Follow Python PEP 8 style guidelines
+- Add comprehensive docstrings
+- Include appropriate error handling
+- Test safety features thoroughly
+- Maintain cultural sensitivity
 
-```bash
-python -m unittest discover -s soothe_app/tests
-```
+## 📄 License
 
-For system prompt testing:
+This project is licensed under [Your License] - see the LICENSE file for details.
 
-```bash
-python soothe_app/tests/tools/system_prompt_tester.py --prompt path/to/prompt --consent-flow
-```
+## 🆘 Support and Resources
 
-For enhanced filter integration testing:
+### Mental Health Resources (Singapore)
+- **Emergency**: 999
+- **Samaritans of Singapore (SOS)**: 1-767
+- **National Care Hotline**: 1800-202-6868
+- **IMH Mental Health Helpline**: 6389-2222
+- **CHAT (Youth 16-30)**: 6493-6500
 
-```bash
-python soothe_app/tests/unit/test_integration.py
-```
+### Technical Support
+- Check the [Issues](link-to-issues) page for common problems
+- Review the documentation in `/docs/`
+- Contact the development team
 
-## Development Notes
+## ⚠️ Important Disclaimers
 
-See `docs/anthropic-prompt-cheatsheet.md` for guidance on structuring prompts for the Claude API, and `docs/code-overview.md` for a detailed explanation of the application's architecture.
+- **Educational Tool Only**: SootheAI is for educational awareness and is not a substitute for professional medical advice
+- **Emergency Situations**: For mental health emergencies, contact emergency services immediately
+- **Professional Help**: The tool complements but does not replace professional mental health care
+- **Content Warning**: Stories may depict distressing situations related to anxiety and academic pressure
 
-## License
+## 🔮 Future Development
 
-This project is intended for educational purposes only. All character data and scenarios are fictional.
+- Enhanced multilingual support
+- Extended character interaction systems
+- Advanced personalization features
+- Mobile application development
+- Integration with local mental health services
 
-## Helpline Resources
+---
 
-If you're experiencing anxiety or mental health challenges, please contact:
-
-- National Care Hotline (Singapore): 1800-202-6868
-- Samaritans of Singapore (SOS): 1-767
-- IMH Mental Health Helpline: 6389-2222
+**Made with ❤️ for Singapore's youth mental health**
