@@ -1,11 +1,10 @@
 """
-Enhanced Gradio interface module for SootheAI with improved design consistency, accessibility, and robust disclaimers.
+Enhanced Gradio interface module for SootheAI with professional chatbot design.
 """
 
 import logging
 import gradio as gr
 from typing import Optional, Tuple, List, Dict, Any
-# ADD THESE IMPORTS:
 # ADD THESE IMPORTS:
 from ..core.api_client import get_claude_client
 from ..utils.safety import check_input_safety, filter_response_safety
@@ -24,10 +23,10 @@ def process_tts_commands(self, message: str) -> Tuple[bool, Optional[str]]:
 
 
 class GradioInterface:
-    """Enhanced Gradio interface for SootheAI with improved design consistency and accessibility."""
+    """Enhanced Gradio interface for SootheAI with professional chatbot design."""
 
     def __init__(self, elevenlabs_client=None):
-        # Enhanced color palette with warmer, more accessible colors
+        # Enhanced color palette with professional design
         self.colors = {
             'primary': '#2563eb',        # Rich blue
             'primary_light': '#3b82f6',  # Lighter blue
@@ -50,7 +49,10 @@ class GradioInterface:
             'error': '#dc2626',          # Error red
             'gradient_start': '#667eea',  # Gradient start
             'gradient_end': '#764ba2',   # Gradient end
-            'shadow_sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',  # Small shadow
+            'chat_bg': '#fafbfc',        # Chat background
+            'user_bubble': '#2563eb',    # User message bubble
+            'bot_bubble': '#ffffff',     # Bot message bubble
+            'shadow_sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         }
 
         self.claude_client = get_claude_client()
@@ -61,34 +63,30 @@ class GradioInterface:
 
         # Enhanced consent message with better formatting
         self.consent_message = """
-# 🌸 Welcome to SootheAI
+🌸 Welcome to SootheAI
 
 *Your supportive companion for understanding anxiety through interactive storytelling*
 
----
-
-## 🎯 What You'll Experience
+🎯 What You'll Experience
 SootheAI is an educational tool designed to help Singapore's youth explore anxiety management through engaging, AI-powered stories. This is **not a medical treatment** but a supportive learning environment.
 
-## ⚠️ Important Disclaimer
+⚠️ Important Disclaimer
 **SootheAI provides educational support only.** If you're experiencing distress or mental health concerns, please seek professional help from qualified practitioners.
 
-## 🎧 Choose Your Experience
+🎧 Choose Your Experience
 - **Type 'I agree with audio'** - For immersive voice narration
 - **Type 'I agree without audio'** - For peaceful text-only experience
 
 *You can change audio settings anytime by typing 'enable audio' or 'disable audio'*
 
----
-
 🤗 **Ready when you are!** Take your time and begin when you feel comfortable.
 """
 
         logger.info(
-            "SootheAI Gradio interface initialized with enhanced styling")
+            "SootheAI Gradio interface initialized with professional design")
 
     def create_enhanced_css(self) -> str:
-        """Create comprehensive CSS with modern design improvements"""
+        """Create comprehensive CSS with professional chatbot design"""
         return f"""
         /* Import modern fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
@@ -106,6 +104,9 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             --background: {self.colors['background']};
             --border: {self.colors['border']};
             --border-focus: {self.colors['border_focus']};
+            --chat-bg: {self.colors['chat_bg']};
+            --user-bubble: {self.colors['user_bubble']};
+            --bot-bubble: {self.colors['bot_bubble']};
             --border-radius: 12px;
             --border-radius-lg: 16px;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -133,9 +134,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             max-width: calc(100vw - 40px) !important;
         }}
 
-/* Enhanced Tab styling - Add this to your create_enhanced_css() method */
-
-        /* Tab container improvements */
+        /* Enhanced Tab styling */
         .gradio-container .gradio-tabs {{
             background: transparent !important;
             margin-bottom: 20px !important;
@@ -186,157 +185,385 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             transform: translateY(-2px) !important;
         }}
 
-        .gradio-container .gradio-tabs .tab-nav button.selected:hover {{
-            background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
-            transform: translateY(-2px) !important;
+        /* PROFESSIONAL CHATBOT STYLING */
+        
+        /* Chat container */
+        .chat-tab .gradio-container {{
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
         }}
 
-        /* Add subtle animation to tab switching */
-        .gradio-container .gradio-tabs .tab-nav button::before {{
-            content: '' !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: -100% !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
-            transition: left 0.6s !important;
-        }}
-
-        .gradio-container .gradio-tabs .tab-nav button:hover::before {{
-            left: 100% !important;
-        }}
-
-        /* Mobile responsiveness for tabs */
-        @media (max-width: 768px) {{
-            .gradio-container .gradio-tabs .tab-nav {{
-                padding: 8px !important;
-                gap: 6px !important;
-            }}
-            
-            .gradio-container .gradio-tabs .tab-nav button {{
-                padding: 10px 16px !important;
-                min-width: 100px !important;
-                font-size: 13px !important;
-            }}
-        }}
-
-        /* Chat interface improvements */
+        /* Chatbot main container */
         .gradio-container .chatbot {{
-            background: linear-gradient(145deg, #f8fafc, #f1f5f9) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: var(--border-radius) !important;
-            box-shadow: inset var(--shadow-sm) !important;
-            padding: 20px !important;
+            background: #1e293b !important;  /* Dark background */
+            border: 1px solid #475569 !important;  /* Dark border */
+            border-radius: 20px !important;
+            box-shadow: var(--shadow-lg) !important;
+            padding: 0 !important;
+            margin: 20px !important;
+            overflow: hidden !important;
+            position: relative !important;
         }}
 
-        /* Message styling */
-        .gradio-container .message {{
-            background: white !important;
-            border: 1px solid var(--border) !important;
-            border-radius: var(--border-radius) !important;
-            padding: 16px 20px !important;
-            margin: 8px 0 !important;
-            box-shadow: var(--shadow-sm) !important;
-            transition: all 0.2s ease !important;
+        /* Chat header */
+        .chatbot::before {{
+            display: none !important;
         }}
 
-        .gradio-container .message:hover {{
-            box-shadow: var(--shadow-md) !important;
-            transform: translateY(-1px) !important;
+        /* Chat messages container */
+        .gradio-container .chatbot .message-container,
+        .gradio-container .chatbot > div {{
+            padding: 24px !important;
+            max-height: 60vh !important;
+            overflow-y: auto !important;
+            scroll-behavior: smooth !important;
+            background: #1e293b !important;
         }}
 
-        .gradio-container .message.user {{
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
+        /* Individual message styling */
+        .gradio-container .chatbot .message {{
+            margin: 16px 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+        }}
+
+        /* User messages (right-aligned) */
+        .gradio-container .chatbot .message.user,
+        .gradio-container .chatbot .message:nth-child(odd) {{
+            flex-direction: row-reverse !important;
+            margin-left: 80px !important;
+            margin-right: 0 !important;
+        }}
+
+        .gradio-container .chatbot .message.user .message-content,
+        .gradio-container .chatbot .message:nth-child(odd) .message-content,
+        .gradio-container .chatbot .message:nth-child(odd) > div:last-child {{
+            background: linear-gradient(135deg, var(--user-bubble), var(--primary-light)) !important;
             color: white !important;
-            border-color: var(--primary-color) !important;
-            margin-left: 40px !important;
+            padding: 16px 20px !important;
+            border-radius: 20px 20px 8px 20px !important;
+            box-shadow: var(--shadow-md) !important;
+            border: none !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            word-wrap: break-word !important;
         }}
 
-        .gradio-container .message.bot {{
-            background: linear-gradient(135deg, white, #f8fafc) !important;
-            border-left: 4px solid var(--accent-color) !important;
-            margin-right: 40px !important;
+        /* Bot messages (left-aligned) */
+        .gradio-container .chatbot .message.bot,
+        .gradio-container .chatbot .message:nth-child(even) {{
+            margin-right: 80px !important;
+            margin-left: 0 !important;
         }}
 
-        /* Input improvements */
-        .gradio-container input[type="text"],
-        .gradio-container textarea {{
+        .gradio-container .chatbot .message.bot .message-content,
+        .gradio-container .chatbot .message:nth-child(even) .message-content,
+        .gradio-container .chatbot .message:nth-child(even) > div:last-child {{
+            background: var(--bot-bubble) !important;
+            color: var(--text-secondary) !important;
+            padding: 16px 20px !important;
+            border-radius: 20px 20px 20px 8px !important;
+            box-shadow: var(--shadow-md) !important;
+            border: 1px solid var(--border) !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            word-wrap: break-word !important;
+            position: relative !important;
+        }}
+
+        /* Message avatars */
+        .gradio-container .chatbot .message::before {{
+            content: "";
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }}
+
+        .gradio-container .chatbot .message.user::before,
+        .gradio-container .chatbot .message:nth-child(odd)::before {{
+            content: "👤";
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            color: white;
+            order: 2;
+        }}
+
+        .gradio-container .chatbot .message.bot::before,
+        .gradio-container .chatbot .message:nth-child(even)::before {{
+            content: "🤖";
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }}
+
+        /* Typing indicator */
+        .chatbot .typing-indicator {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--bot-bubble);
+            border-radius: 20px 20px 20px 8px;
+            margin: 16px 80px 16px 52px;
+            box-shadow: var(--shadow-sm);
+        }}
+
+        .typing-indicator::after {{
+            content: "SootheAI is typing";
+            animation: pulse 1.5s infinite;
+            color: var(--text-muted);
+            font-style: italic;
+        }}
+
+        /* Enhanced input area */
+        .gradio-container .chat-interface-input {{
             background: white !important;
             border: 2px solid var(--border) !important;
-            border-radius: var(--border-radius) !important;
-            padding: 14px 16px !important;
-            font-size: 16px !important;
+            border-radius: 25px !important;
+            padding: 16px 24px !important;
+            margin: 20px !important;
+            box-shadow: var(--shadow-lg) !important;
             transition: all 0.3s ease !important;
-            box-shadow: var(--shadow-sm) !important;
+            position: relative !important;
         }}
 
-        .gradio-container input[type="text"]:focus,
-        .gradio-container textarea:focus {{
+        .gradio-container .chat-interface-input:focus-within {{
             border-color: var(--border-focus) !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), var(--shadow-md) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), var(--shadow-lg) !important;
+        }}
+
+        /* Input textbox styling */
+        .gradio-container input[type="text"].soothe-textbox,
+        .gradio-container textarea.soothe-textbox {{
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 4px 0 !important;
+            font-size: 16px !important;
+            line-height: 1.5 !important;
+            resize: none !important;
+            box-shadow: none !important;
             outline: none !important;
         }}
 
-        /* Button improvements */
-        .gradio-container button {{
+        .gradio-container input[type="text"].soothe-textbox::placeholder,
+        .gradio-container textarea.soothe-textbox::placeholder {{
+            color: var(--text-muted) !important;
+            opacity: 0.7 !important;
+        }}
+
+        /* Send button styling */
+        .gradio-container .chat-interface-input button {{
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
             color: white !important;
             border: none !important;
-            border-radius: var(--border-radius) !important;
-            padding: 12px 24px !important;
+            border-radius: 20px !important;
+            padding: 12px 20px !important;
             font-weight: 600 !important;
             font-size: 14px !important;
+            cursor: pointer !important;
             transition: all 0.3s ease !important;
             box-shadow: var(--shadow-md) !important;
-            cursor: pointer !important;
+            position: absolute !important;
+            right: 8px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
         }}
 
-        .gradio-container button:hover {{
-            transform: translateY(-2px) !important;
-            box-shadow: var(--shadow-lg) !important;
+        .gradio-container .chat-interface-input button:hover {{
             background: linear-gradient(135deg, var(--primary-light), var(--primary-color)) !important;
+            transform: translateY(-50%) scale(1.05) !important;
+            box-shadow: var(--shadow-lg) !important;
         }}
 
-        .gradio-container button:active {{
-            transform: translateY(0) !important;
-            box-shadow: var(--shadow-sm) !important;
-        }}
-
-        /* Secondary button variant */
-        .gradio-container button.secondary {{
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light)) !important;
-        }}
-
-        .gradio-container button.secondary:hover {{
-            background: linear-gradient(135deg, var(--accent-light), var(--accent-color)) !important;
+        .gradio-container .chat-interface-input button:active {{
+            transform: translateY(-50%) scale(0.98) !important;
         }}
 
         /* Examples styling */
         .gradio-container .examples {{
-            background: linear-gradient(145deg, #f1f5f9, #e2e8f0) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: var(--border-radius) !important;
-            padding: 16px !important;
-            margin-top: 16px !important;
+            background: #334155 !important;
+            border: 1px solid #475569 !important;
+            border-radius: var(--border-radius-lg) !important;
+            padding: 20px !important;
+            margin: 20px !important;
+            box-shadow: var(--shadow-sm) !important;
+        }}
+
+        .gradio-container .examples h4 {{
+            color: #f1f5f9 !important;
+            font-weight: 600 !important;
+            margin-bottom: 12px !important;
+            font-size: 16px !important;
         }}
 
         .gradio-container .examples button {{
-            background: white !important;
-            color: var(--text-secondary) !important;
+            background: #475569 !important;
+            color: #f1f5f9 !important;
             border: 1px solid var(--border) !important;
-            margin: 4px !important;
+            border-radius: 20px !important;
+            padding: 8px 16px !important;
+            margin: 4px 8px 4px 0 !important;
             font-weight: 500 !important;
+            font-size: 14px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: var(--shadow-sm) !important;
         }}
 
         .gradio-container .examples button:hover {{
             background: var(--primary-color) !important;
             color: white !important;
             border-color: var(--primary-color) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: var(--shadow-md) !important;
         }}
 
-        /* Content sections */
+        /* Scrollbar styling for chat */
+        .gradio-container .chatbot ::-webkit-scrollbar {{
+            width: 6px !important;
+        }}
+
+        .gradio-container .chatbot ::-webkit-scrollbar-track {{
+            background: var(--background) !important;
+            border-radius: 3px !important;
+        }}
+
+        .gradio-container .chatbot ::-webkit-scrollbar-thumb {{
+            background: var(--border) !important;
+            border-radius: 3px !important;
+        }}
+
+        .gradio-container .chatbot ::-webkit-scrollbar-thumb:hover {{
+            background: var(--text-muted) !important;
+        }}
+
+        /* Message content formatting */
+        .gradio-container .chatbot .message h1,
+        .gradio-container .chatbot .message h2,
+        .gradio-container .chatbot .message h3 {{
+            color: inherit !important;
+            margin: 12px 0 8px 0 !important;
+            line-height: 1.3 !important;
+        }}
+
+        .gradio-container .chatbot .message p {{
+            margin: 8px 0 !important;
+            line-height: 1.6 !important;
+        }}
+
+        .gradio-container .chatbot .message ul,
+        .gradio-container .chatbot .message ol {{
+            margin: 8px 0 !important;
+            padding-left: 20px !important;
+        }}
+
+        .gradio-container .chatbot .message li {{
+            margin: 4px 0 !important;
+        }}
+
+        .gradio-container .chatbot .message code {{
+            background: rgba(0, 0, 0, 0.1) !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            font-family: 'JetBrains Mono', monospace !important;
+        }}
+
+        .gradio-container .chatbot .message pre {{
+            background: rgba(0, 0, 0, 0.05) !important;
+            padding: 12px !important;
+            border-radius: 8px !important;
+            overflow-x: auto !important;
+            margin: 8px 0 !important;
+        }}
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {{
+            .gradio-container .chatbot {{
+                margin: 10px !important;
+                border-radius: 16px !important;
+            }}
+            
+            .gradio-container .chatbot .message.user,
+            .gradio-container .chatbot .message:nth-child(odd) {{
+                margin-left: 40px !important;
+            }}
+            
+            .gradio-container .chatbot .message.bot,
+            .gradio-container .chatbot .message:nth-child(even) {{
+                margin-right: 40px !important;
+            }}
+
+            .gradio-container .chat-interface-input {{
+                margin: 10px !important;
+                padding: 12px 16px !important;
+            }}
+            
+            .gradio-container .examples {{
+                margin: 10px !important;
+                padding: 16px !important;
+            }}
+        }}
+
+        /* Animation keyframes */
+        @keyframes fadeIn {{
+            from {{ opacity: 0; transform: translateY(10px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
+        }}
+
+        @keyframes pulse {{
+            0%, 100% {{ opacity: 1; }}
+            50% {{ opacity: 0.5; }}
+        }}
+
+        @keyframes slideUp {{
+            from {{ transform: translateY(20px); opacity: 0; }}
+            to {{ transform: translateY(0); opacity: 1; }}
+        }}
+
+        /* Message animations */
+        .gradio-container .chatbot .message {{
+            animation: slideUp 0.3s ease-out !important;
+        }}
+
+        /* Focus indicators for accessibility */
+        .gradio-container button:focus,
+        .gradio-container input:focus,
+        .gradio-container textarea:focus {{
+            outline: 2px solid var(--accent-color) !important;
+            outline-offset: 2px !important;
+        }}
+
+        /* Status indicators */
+        .chat-status {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+            margin: 10px 20px;
+            font-size: 14px;
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }}
+
+        .chat-status::before {{
+            content: "🟢";
+            font-size: 12px;
+        }}
+
+        /* Enhanced content sections */
         .soothe-content-section {{
             background: linear-gradient(145deg, white, #f8fafc) !important;
             border: 1px solid var(--border) !important;
@@ -363,20 +590,6 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             gap: 12px !important;
         }}
 
-        .soothe-content-section h3 {{
-            color: var(--text-primary) !important;
-            font-family: 'Space Grotesk', sans-serif !important;
-            font-weight: 600 !important;
-            font-size: 20px !important;
-            margin: 20px 0 12px 0 !important;
-        }}
-
-        .soothe-content-section p {{
-            color: var(--text-secondary) !important;
-            line-height: 1.7 !important;
-            margin-bottom: 16px !important;
-        }}
-
         /* Feature cards */
         .soothe-feature-card {{
             background: linear-gradient(145deg, white, #f8fafc) !important;
@@ -398,40 +611,11 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             border-color: var(--accent-color) !important;
         }}
 
-        .soothe-feature-card .feature-icon {{
-            font-size: 48px !important;
-            margin-bottom: 16px !important;
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light)) !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-        }}
-
-        /* Stats cards */
-        .soothe-stats-card {{
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
-            color: white !important;
-            border-radius: var(--border-radius-lg) !important;
-            padding: 24px !important;
-            text-align: center !important;
-            box-shadow: var(--shadow-lg) !important;
-            transition: all 0.3s ease !important;
-        }}
-
-        .soothe-stats-card:hover {{
-            transform: translateY(-2px) !important;
-            box-shadow: var(--shadow-xl) !important;
-        }}
-
         /* Typography improvements */
         h1, h2, h3, h4, h5, h6 {{
             font-family: 'Space Grotesk', sans-serif !important;
             color: var(--text-primary) !important;
             line-height: 1.3 !important;
-        }}
-
-        p, span, div {{
-            color: var(--text-secondary) !important;
         }}
 
         /* Links */
@@ -447,113 +631,32 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             text-decoration: underline !important;
         }}
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {{
-            width: 8px !important;
+        .gradio-container .chatbot,
+        .gradio-container .chatbot > *,
+        .gradio-container .chatbot div,
+        .gradio-container .chatbot .wrap,
+        .gradio-container .chatbot .contain,
+        .gradio-container .chatbot .message-wrap,
+        .gradio-container .chatbot .message-container {{
+            background: #1e293b !important;
+            background-color: #1e293b !important;
         }}
 
-        ::-webkit-scrollbar-track {{
-            background: var(--background) !important;
-            border-radius: 4px !important;
+        /* Target the specific Gradio chat elements */
+        .gradio-container [data-testid="chatbot"],
+        .gradio-container [data-testid="chatbot"] > div,
+        .gradio-container [data-testid="chatbot"] .overflow-y-auto {{
+            background: #1e293b !important;
+            background-color: #1e293b !important;
         }}
 
-        ::-webkit-scrollbar-thumb {{
-            background: var(--border) !important;
-            border-radius: 4px !important;
+        /* Override any inherited white backgrounds */
+        .gradio-container .chatbot * {{
+            background-color: transparent !important;
         }}
 
-        ::-webkit-scrollbar-thumb:hover {{
-            background: var(--text-muted) !important;
-        }}
-
-        /* Loading and placeholder improvements */
-        .gradio-container .placeholder {{
-            color: var(--text-muted) !important;
-            font-style: italic !important;
-        }}
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {{
-            .gradio-container {{
-                margin: 10px !important;
-                max-width: calc(100vw - 20px) !important;
-            }}
-            
-            .soothe-content-section {{
-                padding: 20px !important;
-                margin: 16px 0 !important;
-            }}
-            
-            .gradio-container .message.user {{
-                margin-left: 0 !important;
-            }}
-            
-            .gradio-container .message.bot {{
-                margin-right: 0 !important;
-            }}
-        }}
-
-        /* Animation keyframes */
-        @keyframes fadeIn {{
-            from {{ opacity: 0; transform: translateY(10px); }}
-            to {{ opacity: 1; transform: translateY(0); }}
-        }}
-
-        @keyframes pulse {{
-            0%, 100% {{ transform: scale(1); }}
-            50% {{ transform: scale(1.05); }}
-        }}
-
-        /* Add animations to content */
-        .soothe-content-section,
-        .soothe-feature-card,
-        .gradio-container .message {{
-            animation: fadeIn 0.5s ease-out !important;
-        }}
-
-        /* Focus indicators for accessibility */
-        button:focus,
-        input:focus,
-        textarea:focus {{
-            outline: 2px solid var(--accent-color) !important;
-            outline-offset: 2px !important;
-        }}
-
-        /* Dark mode support (optional) */
-        @media (prefers-color-scheme: dark) {{
-            .gradio-container {{
-                background: rgba(15, 23, 42, 0.95) !important;
-            }}
-            
-            .soothe-content-section,
-            .soothe-feature-card {{
-                background: linear-gradient(145deg, #1e293b, #334155) !important;
-                color: #f1f5f9 !important;
-            }}
-            
-            .gradio-container .chatbot {{
-                background: linear-gradient(145deg, #1e293b, #334155) !important;
-            }}
-        }}
-
-        /* SootheAI gradient animation */
-        .sootheai-gradient-text {{
-            background: linear-gradient(45deg, #10b981, #34d399, #6ee7b7, #10b981) !important;
-            background-size: 300% 300% !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            color: transparent !important;
-            animation: gradientShift 3s ease-in-out infinite !important;
-        }}
-
-        @keyframes gradientShift {{
-            0%, 100% {{ 
-                background-position: 0% 50% !important; 
-            }}
-            50% {{ 
-                background-position: 100% 50% !important; 
-            }}
+        .gradio-container .chatbot .prose {{
+            background: transparent !important;
         }}
         """
 
@@ -597,7 +700,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                 line-height: 1.1 !important;
             ">
                 Welcome to<br>
-                <span class="sootheai-gradient-text">SootheAI</span>
+                <span style="background: linear-gradient(45deg, #10b981, #34d399, #6ee7b7, #10b981); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradientShift 3s ease-in-out infinite;">SootheAI</span>
             </h1>
 
             <p style="
@@ -1029,7 +1132,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                 </div>
 
                 <div style="
-                    background: linear-gradient(135d, #f0fdf4, #dcfce7);
+                    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['success']};
@@ -1160,7 +1263,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             return "🤖 I apologize, but I encountered an unexpected error. Please try again or refresh the page if the issue continues."
 
     def create_interface(self) -> gr.Blocks:
-        """Create the enhanced Gradio interface"""
+        """Create the enhanced Gradio interface with professional chatbot design"""
         with gr.Blocks(
             theme=self.create_enhanced_theme(),
             title="SootheAI - Mental Health Support for Singapore's Youth",
@@ -1172,10 +1275,11 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                     gr.HTML(self.create_enhanced_homepage())
 
                 with gr.Tab("💬 SootheAI Chat", elem_classes="chat-tab"):
+                    # Professional chatbot interface
                     chat_interface = gr.ChatInterface(
                         self.main_loop,
                         chatbot=gr.Chatbot(
-                            height="70vh",
+                            height="65vh",
                             placeholder="🌸 **Welcome to your safe space!** Your supportive conversation will begin here. Take your time and start when you're ready.",
                             show_copy_button=True,
                             render_markdown=True,
@@ -1183,25 +1287,35 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                             avatar_images=None,
                             bubble_full_width=False,
                             show_share_button=False,
-                            elem_classes="soothe-chatbot"
+                            elem_classes="soothe-chatbot",
+                            container=True,
+                            scale=1,
+                            min_width=300,
                         ),
                         textbox=gr.Textbox(
                             placeholder="💭 Share what's on your mind... (e.g., 'I agree with audio' or 'I'm feeling anxious about school')",
                             container=False,
                             scale=7,
                             lines=1,
-                            max_lines=4,
-                            elem_classes="soothe-textbox"
+                            max_lines=3,
+                            elem_classes="soothe-textbox",
+                            show_label=False,
                         ),
                         examples=[
                             "🎵 I agree with audio",
                             "📝 I agree without audio",
-                            "🚀 start game",
-                            "💡 Tell me about anxiety"
+                            "🚀 Start my story",
+                            "💡 Tell me about anxiety",
+                            "🎯 I need help with school stress",
+                            "🤝 What coping strategies can you teach me?"
                         ],
                         cache_examples=False,
                         title=None,
                         description=None,
+                        submit_btn="Send Message",
+                        retry_btn="↻ Retry",
+                        undo_btn="↶ Undo",
+                        clear_btn="🗑️ Clear",
                     )
 
                 with gr.Tab("📚 Learn About Anxiety"):
