@@ -34,24 +34,24 @@ class GradioInterface:
             'secondary': '#64748b',      # Slate gray
             'accent': '#10b981',         # Emerald green
             'accent_light': '#34d399',   # Light emerald
-            'background': '#f8fafc',     # Very light gray-blue
+            'background': "#83b5e7",     # Very light gray-blue
             'surface': '#ffffff',        # Pure white
             'surface_alt': '#f1f5f9',    # Light gray-blue
             'surface_hover': '#f8fafc',  # Surface hover state
             'text_primary': '#0f172a',   # Very dark slate
             'text_secondary': '#334155',  # Medium slate
             'text_muted': '#64748b',     # Light slate
-            'border': '#e2e8f0',         # Light border
-            'border_light': '#f1f5f9',   # Even lighter border
+            'border': "#a3bcd6",         # Light border
+            'border_light': "#859fba",   # Even lighter border
             'border_focus': '#3b82f6',   # Blue focus border
             'success': '#059669',        # Success green
             'warning': '#d97706',        # Warning orange
             'error': '#dc2626',          # Error red
             'gradient_start': '#667eea',  # Gradient start
             'gradient_end': '#764ba2',   # Gradient end
-            'chat_bg': '#fafbfc',        # Chat background
+            'chat_bg': "#4ea3f8",        # Chat background
             'user_bubble': '#2563eb',    # User message bubble
-            'bot_bubble': '#ffffff',     # Bot message bubble
+            'bot_bubble': '#334155',     # Bot message bubble
             'shadow_sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         }
 
@@ -265,8 +265,8 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
         .gradio-container .chatbot .message.bot .message-content,
         .gradio-container .chatbot .message:nth-child(even) .message-content,
         .gradio-container .chatbot .message:nth-child(even) > div:last-child {{
-            background: var(--bot-bubble) !important;
-            color: var(--text-secondary) !important;
+            background: #334155 !important;
+            color: #f1f5f9 !important;
             padding: 16px 20px !important;
             border-radius: 20px 20px 20px 8px !important;
             box-shadow: var(--shadow-md) !important;
@@ -629,34 +629,6 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
         a:hover {{
             color: var(--primary-light) !important;
             text-decoration: underline !important;
-        }}
-
-        .gradio-container .chatbot,
-        .gradio-container .chatbot > *,
-        .gradio-container .chatbot div,
-        .gradio-container .chatbot .wrap,
-        .gradio-container .chatbot .contain,
-        .gradio-container .chatbot .message-wrap,
-        .gradio-container .chatbot .message-container {{
-            background: #1e293b !important;
-            background-color: #1e293b !important;
-        }}
-
-        /* Target the specific Gradio chat elements */
-        .gradio-container [data-testid="chatbot"],
-        .gradio-container [data-testid="chatbot"] > div,
-        .gradio-container [data-testid="chatbot"] .overflow-y-auto {{
-            background: #1e293b !important;
-            background-color: #1e293b !important;
-        }}
-
-        /* Override any inherited white backgrounds */
-        .gradio-container .chatbot * {{
-            background-color: transparent !important;
-        }}
-
-        .gradio-container .chatbot .prose {{
-            background: transparent !important;
         }}
         """
 
