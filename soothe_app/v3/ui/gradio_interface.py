@@ -115,77 +115,175 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }}
 
-        /* Base styling */
+        /* Dark Mode Mental Health Calming Background */
         html, body {{
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text-primary);
+            background: linear-gradient(135deg, 
+                rgba(15, 23, 42, 0.95) 0%,
+                rgba(30, 41, 59, 0.95) 25%,
+                rgba(51, 65, 85, 0.95) 50%,
+                rgba(30, 41, 59, 0.95) 75%,
+                rgba(15, 23, 42, 0.95) 100%
+            ), 
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23475569' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+            background-attachment: fixed !important;
+            background-size: cover, 60px 60px !important;
+            color: #f1f5f9;
             line-height: 1.6;
         }}
 
-        /* Main container improvements */
+        /* Dark Mode Main container */
         .gradio-container {{
-            background: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(30, 41, 59, 0.95) !important;
             backdrop-filter: blur(20px) !important;
             border-radius: var(--border-radius-lg) !important;
-            box-shadow: var(--shadow-xl) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 8px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(71, 85, 105, 0.3) !important;
             margin: 20px !important;
             max-width: calc(100vw - 40px) !important;
         }}
 
-        /* Enhanced Tab styling */
+        /* ===== ENHANCED PROFESSIONAL TAB STYLING ===== */
         .gradio-container .gradio-tabs {{
             background: transparent !important;
-            margin-bottom: 20px !important;
+            margin-bottom: 30px !important;
         }}
 
         .gradio-container .gradio-tabs .tab-nav {{
-            background: rgba(255, 255, 255, 0.95) !important;
-            border-radius: 16px !important;
-            padding: 12px !important;
+            background: rgba(51, 65, 85, 0.95) !important;
+            border-radius: 25px !important;
+            padding: 8px !important;
             display: flex !important;
-            gap: 8px !important;
+            gap: 4px !important;
             justify-content: center !important;
             flex-wrap: wrap !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-            backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3), 
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(71, 85, 105, 0.4) !important;
+            position: relative !important;
+            max-width: 900px !important;
+            margin: 0 auto 20px auto !important;
+            overflow: hidden !important;
         }}
 
+        /* Enhanced tab buttons for dark mode */
         .gradio-container .gradio-tabs .tab-nav button {{
             background: transparent !important;
-            color: #64748b !important;
+            color: #94a3b8 !important;
             border: none !important;
-            border-radius: 12px !important;
-            padding: 12px 20px !important;
+            border-radius: 20px !important;
+            padding: 14px 20px !important;
             margin: 0 !important;
             font-weight: 500 !important;
             font-size: 14px !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
             min-width: 120px !important;
             text-align: center !important;
             position: relative !important;
             overflow: hidden !important;
             box-shadow: none !important;
+            z-index: 1 !important;
+            letter-spacing: 0.025em !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            white-space: nowrap !important;
         }}
 
+        /* Dark mode hover effect */
         .gradio-container .gradio-tabs .tab-nav button:hover {{
-            background: rgba(59, 130, 246, 0.1) !important;
-            color: #2563eb !important;
-            transform: translateY(-1px) !important;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.25)) !important;
+            color: #60a5fa !important;
+            transform: translateY(-2px) scale(1.03) !important;
+            box-shadow: 
+                0 8px 25px rgba(59, 130, 246, 0.3),
+                0 4px 12px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            border: 1px solid rgba(59, 130, 246, 0.4) !important;
         }}
 
+        /* Premium selected state */
         .gradio-container .gradio-tabs .tab-nav button.selected {{
-            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%) !important;
             color: white !important;
             font-weight: 600 !important;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3) !important;
-            transform: translateY(-2px) !important;
+            box-shadow: 
+                0 12px 28px rgba(37, 99, 235, 0.35),
+                0 6px 16px rgba(37, 99, 235, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+            transform: translateY(-3px) !important;
+            border: 1px solid rgba(37, 99, 235, 0.5) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+            z-index: 2 !important;
         }}
 
-        /* PROFESSIONAL CHATBOT STYLING */
+        /* Glossy effect for selected tab */
+        .gradio-container .gradio-tabs .tab-nav button.selected::before {{
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            right: 1px;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            border-radius: 19px 19px 10px 10px;
+            z-index: -1;
+            transition: all 0.4s ease;
+        }}
+
+        /* Subtle glow animation for selected tab */
+        .gradio-container .gradio-tabs .tab-nav button.selected::after {{
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
+            border-radius: 22px;
+            z-index: -2;
+            opacity: 0;
+            animation: selectedGlow 3s ease-in-out infinite;
+        }}
+
+        /* Active/click state for tactile feedback */
+        .gradio-container .gradio-tabs .tab-nav button:active {{
+            transform: translateY(-1px) scale(0.98) !important;
+            transition: all 0.1s ease !important;
+        }}
+
+        /* Focus state for accessibility */
+        .gradio-container .gradio-tabs .tab-nav button:focus {{
+            outline: 2px solid rgba(59, 130, 246, 0.6) !important;
+            outline-offset: 3px !important;
+        }}
+
+        /* Loading animation for tabs */
+        .gradio-container .gradio-tabs .tab-nav button {{
+            animation: tabSlideIn 0.6s ease-out backwards !important;
+        }}
+
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(1) {{ animation-delay: 0.1s !important; }}
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(2) {{ animation-delay: 0.2s !important; }}
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(3) {{ animation-delay: 0.3s !important; }}
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(4) {{ animation-delay: 0.4s !important; }}
+        .gradio-container .gradio-tabs .tab-nav button:nth-child(5) {{ animation-delay: 0.5s !important; }}
+
+        /* Tab content area styling */
+        .gradio-container .gradio-tabs .tabitem {{
+            padding: 20px 0 !important;
+            animation: contentFadeIn 0.5s ease-out !important;
+        }}
+
+        /* ===== PROFESSIONAL CHATBOT STYLING ===== */
         
         /* Chat container */
         .chat-tab .gradio-container {{
@@ -194,94 +292,95 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             padding: 0 !important;
         }}
 
-        /* Chatbot main container */
+        /* Enhanced chatbot container */
         .gradio-container .chatbot {{
-            background: #1e293b !important;  /* Dark background */
-            border: 1px solid #475569 !important;  /* Dark border */
-            border-radius: 20px !important;
-            box-shadow: var(--shadow-lg) !important;
+            background: linear-gradient(145deg, #2a3441 0%, #232b36 100%) !important;
+            border: 1px solid #3f4b5a !important;
+            border-radius: 16px !important;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
             padding: 0 !important;
             margin: 20px !important;
             overflow: hidden !important;
             position: relative !important;
         }}
 
-        /* Chat header */
-        .chatbot::before {{
-            display: none !important;
-        }}
-
-        /* Chat messages container */
+        /* Messages container with better padding */
         .gradio-container .chatbot .message-container,
         .gradio-container .chatbot > div {{
             padding: 24px !important;
-            max-height: 60vh !important;
+            max-height: 65vh !important;
             overflow-y: auto !important;
             scroll-behavior: smooth !important;
-            background: #1e293b !important;
+            background: transparent !important;
         }}
 
-        /* Individual message styling */
+        /* Enhanced individual message styling */
         .gradio-container .chatbot .message {{
-            margin: 16px 0 !important;
+            margin: 24px 0 !important;
             padding: 0 !important;
             background: transparent !important;
             border: none !important;
             box-shadow: none !important;
             display: flex !important;
             align-items: flex-start !important;
-            gap: 12px !important;
+            gap: 16px !important;
+            font-size: 15px !important;
+            line-height: 1.6 !important;
+            animation: messageSlideIn 0.4s ease-out !important;
         }}
 
-        /* User messages (right-aligned) */
-        .gradio-container .chatbot .message.user,
-        .gradio-container .chatbot .message:nth-child(odd) {{
-            flex-direction: row-reverse !important;
-            margin-left: 80px !important;
-            margin-right: 0 !important;
-        }}
-
-        .gradio-container .chatbot .message.user .message-content,
-        .gradio-container .chatbot .message:nth-child(odd) .message-content,
-        .gradio-container .chatbot .message:nth-child(odd) > div:last-child {{
-            background: linear-gradient(135deg, var(--user-bubble), var(--primary-light)) !important;
-            color: white !important;
-            padding: 16px 20px !important;
-            border-radius: 20px 20px 8px 20px !important;
-            box-shadow: var(--shadow-md) !important;
-            border: none !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-            word-wrap: break-word !important;
-        }}
-
-        /* Bot messages (left-aligned) */
-        .gradio-container .chatbot .message.bot,
+        /* Bot messages (left-aligned) - Enhanced */
         .gradio-container .chatbot .message:nth-child(even) {{
-            margin-right: 80px !important;
+            margin-right: 60px !important;
             margin-left: 0 !important;
         }}
 
-        .gradio-container .chatbot .message.bot .message-content,
-        .gradio-container .chatbot .message:nth-child(even) .message-content,
         .gradio-container .chatbot .message:nth-child(even) > div:last-child {{
-            background: #334155 !important;
+            background: linear-gradient(145deg, #374151, #4b5563) !important;
             color: #f1f5f9 !important;
-            padding: 16px 20px !important;
-            border-radius: 20px 20px 20px 8px !important;
-            box-shadow: var(--shadow-md) !important;
-            border: 1px solid var(--border) !important;
+            padding: 18px 22px !important;
+            border-radius: 18px 18px 18px 6px !important;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.2),
+                0 2px 6px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid #475569 !important;
             margin: 0 !important;
             max-width: 100% !important;
             word-wrap: break-word !important;
             position: relative !important;
         }}
 
-        /* Message avatars */
+        /* User messages (right-aligned) - Enhanced */
+        .gradio-container .chatbot .message:nth-child(odd) {{
+            flex-direction: row-reverse !important;
+            margin-left: 60px !important;
+            margin-right: 0 !important;
+        }}
+
+        .gradio-container .chatbot .message:nth-child(odd) > div:last-child {{
+            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+            color: white !important;
+            padding: 18px 22px !important;
+            border-radius: 18px 18px 6px 18px !important;
+            box-shadow: 
+                0 4px 12px rgba(37, 99, 235, 0.3),
+                0 2px 6px rgba(37, 99, 235, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            border: none !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            word-wrap: break-word !important;
+        }}
+
+        /* Enhanced message avatars */
         .gradio-container .chatbot .message::before {{
             content: "";
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
@@ -289,61 +388,51 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             justify-content: center;
             font-size: 18px;
             font-weight: 600;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.15),
+                0 2px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }}
 
-        .gradio-container .chatbot .message.user::before,
+        .gradio-container .chatbot .message:nth-child(even)::before {{
+            content: "🤖";
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            order: 0;
+        }}
+
         .gradio-container .chatbot .message:nth-child(odd)::before {{
             content: "👤";
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            background: linear-gradient(135deg, #10b981, #34d399);
             color: white;
             order: 2;
         }}
 
-        .gradio-container .chatbot .message.bot::before,
-        .gradio-container .chatbot .message:nth-child(even)::before {{
-            content: "🤖";
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white;
-        }}
-
-        /* Typing indicator */
-        .chatbot .typing-indicator {{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: var(--bot-bubble);
-            border-radius: 20px 20px 20px 8px;
-            margin: 16px 80px 16px 52px;
-            box-shadow: var(--shadow-sm);
-        }}
-
-        .typing-indicator::after {{
-            content: "SootheAI is typing";
-            animation: pulse 1.5s infinite;
-            color: var(--text-muted);
-            font-style: italic;
-        }}
-
-        /* Enhanced input area */
+        /* Professional input area - Dark Mode */
         .gradio-container .chat-interface-input {{
-            background: white !important;
-            border: 2px solid var(--border) !important;
-            border-radius: 25px !important;
-            padding: 16px 24px !important;
+            background: rgba(51, 65, 85, 0.9) !important;
+            border: 2px solid #475569 !important;
+            border-radius: 24px !important;
+            padding: 16px 60px 16px 24px !important;
             margin: 20px !important;
-            box-shadow: var(--shadow-lg) !important;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
             transition: all 0.3s ease !important;
             position: relative !important;
+            backdrop-filter: blur(10px) !important;
         }}
 
         .gradio-container .chat-interface-input:focus-within {{
-            border-color: var(--border-focus) !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), var(--shadow-lg) !important;
+            border-color: #60a5fa !important;
+            box-shadow: 
+                0 0 0 3px rgba(96, 165, 250, 0.2),
+                0 8px 24px rgba(0, 0, 0, 0.3) !important;
+            transform: translateY(-2px) !important;
         }}
 
-        /* Input textbox styling */
+        /* Input textbox styling - Dark Mode */
         .gradio-container input[type="text"].soothe-textbox,
         .gradio-container textarea.soothe-textbox {{
             background: transparent !important;
@@ -355,232 +444,179 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             resize: none !important;
             box-shadow: none !important;
             outline: none !important;
+            color: #f1f5f9 !important;
         }}
 
         .gradio-container input[type="text"].soothe-textbox::placeholder,
         .gradio-container textarea.soothe-textbox::placeholder {{
-            color: var(--text-muted) !important;
-            opacity: 0.7 !important;
+            color: #94a3b8 !important;
+            opacity: 0.8 !important;
         }}
 
-        /* Send button styling */
+        /* Enhanced send button */
         .gradio-container .chat-interface-input button {{
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
+            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
             color: white !important;
             border: none !important;
             border-radius: 20px !important;
-            padding: 12px 20px !important;
+            padding: 12px 16px !important;
             font-weight: 600 !important;
             font-size: 14px !important;
             cursor: pointer !important;
             transition: all 0.3s ease !important;
-            box-shadow: var(--shadow-md) !important;
+            box-shadow: 
+                0 4px 12px rgba(37, 99, 235, 0.3),
+                0 2px 6px rgba(37, 99, 235, 0.2) !important;
             position: absolute !important;
             right: 8px !important;
             top: 50% !important;
             transform: translateY(-50%) !important;
+            width: 44px !important;
+            height: 44px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }}
 
         .gradio-container .chat-interface-input button:hover {{
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-color)) !important;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb) !important;
             transform: translateY(-50%) scale(1.05) !important;
-            box-shadow: var(--shadow-lg) !important;
+            box-shadow: 
+                0 6px 16px rgba(37, 99, 235, 0.4),
+                0 4px 8px rgba(37, 99, 235, 0.3) !important;
         }}
 
         .gradio-container .chat-interface-input button:active {{
-            transform: translateY(-50%) scale(0.98) !important;
+            transform: translateY(-50%) scale(0.95) !important;
         }}
 
-        /* Examples styling */
+        /* Enhanced examples section */
         .gradio-container .examples {{
-            background: #334155 !important;
-            border: 1px solid #475569 !important;
-            border-radius: var(--border-radius-lg) !important;
-            padding: 20px !important;
+            background: linear-gradient(145deg, #374151, #4b5563) !important;
+            border: 1px solid #6b7280 !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
             margin: 20px !important;
-            box-shadow: var(--shadow-sm) !important;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         }}
 
         .gradio-container .examples h4 {{
-            color: #f1f5f9 !important;
+            color: #f9fafb !important;
             font-weight: 600 !important;
-            margin-bottom: 12px !important;
+            margin-bottom: 16px !important;
             font-size: 16px !important;
         }}
 
         .gradio-container .examples button {{
-            background: #475569 !important;
-            color: #f1f5f9 !important;
-            border: 1px solid var(--border) !important;
+            background: linear-gradient(135deg, #6b7280, #9ca3af) !important;
+            color: #f9fafb !important;
+            border: 1px solid #9ca3af !important;
             border-radius: 20px !important;
-            padding: 8px 16px !important;
-            margin: 4px 8px 4px 0 !important;
+            padding: 10px 18px !important;
+            margin: 6px 8px 6px 0 !important;
             font-weight: 500 !important;
             font-size: 14px !important;
             transition: all 0.3s ease !important;
-            box-shadow: var(--shadow-sm) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
         }}
 
         .gradio-container .examples button:hover {{
-            background: var(--primary-color) !important;
+            background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
             color: white !important;
-            border-color: var(--primary-color) !important;
+            border-color: #3b82f6 !important;
             transform: translateY(-2px) !important;
-            box-shadow: var(--shadow-md) !important;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
         }}
 
-        /* Scrollbar styling for chat */
+        /* Professional scrollbar */
         .gradio-container .chatbot ::-webkit-scrollbar {{
-            width: 6px !important;
+            width: 8px !important;
         }}
 
         .gradio-container .chatbot ::-webkit-scrollbar-track {{
-            background: var(--background) !important;
-            border-radius: 3px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-radius: 4px !important;
         }}
 
         .gradio-container .chatbot ::-webkit-scrollbar-thumb {{
-            background: var(--border) !important;
-            border-radius: 3px !important;
+            background: linear-gradient(180deg, #64748b, #475569) !important;
+            border-radius: 4px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }}
 
         .gradio-container .chatbot ::-webkit-scrollbar-thumb:hover {{
-            background: var(--text-muted) !important;
+            background: linear-gradient(180deg, #475569, #334155) !important;
         }}
 
-        /* Message content formatting */
+        /* Enhanced content formatting */
         .gradio-container .chatbot .message h1,
         .gradio-container .chatbot .message h2,
         .gradio-container .chatbot .message h3 {{
             color: inherit !important;
-            margin: 12px 0 8px 0 !important;
+            margin: 16px 0 12px 0 !important;
             line-height: 1.3 !important;
+            font-weight: 600 !important;
         }}
 
         .gradio-container .chatbot .message p {{
-            margin: 8px 0 !important;
+            margin: 12px 0 !important;
             line-height: 1.6 !important;
         }}
 
         .gradio-container .chatbot .message ul,
         .gradio-container .chatbot .message ol {{
-            margin: 8px 0 !important;
-            padding-left: 20px !important;
+            margin: 12px 0 !important;
+            padding-left: 24px !important;
         }}
 
         .gradio-container .chatbot .message li {{
-            margin: 4px 0 !important;
+            margin: 6px 0 !important;
+            line-height: 1.5 !important;
         }}
 
         .gradio-container .chatbot .message code {{
-            background: rgba(0, 0, 0, 0.1) !important;
-            padding: 2px 6px !important;
-            border-radius: 4px !important;
-            font-family: 'JetBrains Mono', monospace !important;
+            background: rgba(0, 0, 0, 0.2) !important;
+            padding: 3px 8px !important;
+            border-radius: 6px !important;
+            font-family: 'JetBrains Mono', 'Consolas', monospace !important;
+            font-size: 14px !important;
         }}
 
         .gradio-container .chatbot .message pre {{
-            background: rgba(0, 0, 0, 0.05) !important;
-            padding: 12px !important;
-            border-radius: 8px !important;
+            background: rgba(0, 0, 0, 0.3) !important;
+            padding: 16px !important;
+            border-radius: 10px !important;
             overflow-x: auto !important;
-            margin: 8px 0 !important;
+            margin: 16px 0 !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }}
 
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {{
-            .gradio-container .chatbot {{
-                margin: 10px !important;
-                border-radius: 16px !important;
-            }}
-            
-            .gradio-container .chatbot .message.user,
-            .gradio-container .chatbot .message:nth-child(odd) {{
-                margin-left: 40px !important;
-            }}
-            
-            .gradio-container .chatbot .message.bot,
-            .gradio-container .chatbot .message:nth-child(even) {{
-                margin-right: 40px !important;
-            }}
-
-            .gradio-container .chat-interface-input {{
-                margin: 10px !important;
-                padding: 12px 16px !important;
-            }}
-            
-            .gradio-container .examples {{
-                margin: 10px !important;
-                padding: 16px !important;
-            }}
-        }}
-
-        /* Animation keyframes */
-        @keyframes fadeIn {{
-            from {{ opacity: 0; transform: translateY(10px); }}
-            to {{ opacity: 1; transform: translateY(0); }}
-        }}
-
-        @keyframes pulse {{
-            0%, 100% {{ opacity: 1; }}
-            50% {{ opacity: 0.5; }}
-        }}
-
-        @keyframes slideUp {{
-            from {{ transform: translateY(20px); opacity: 0; }}
-            to {{ transform: translateY(0); opacity: 1; }}
-        }}
-
-        /* Message animations */
-        .gradio-container .chatbot .message {{
-            animation: slideUp 0.3s ease-out !important;
-        }}
-
-        /* Focus indicators for accessibility */
-        .gradio-container button:focus,
-        .gradio-container input:focus,
-        .gradio-container textarea:focus {{
-            outline: 2px solid var(--accent-color) !important;
-            outline-offset: 2px !important;
-        }}
-
-        /* Status indicators */
-        .chat-status {{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 20px;
-            margin: 10px 20px;
-            font-size: 14px;
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }}
-
-        .chat-status::before {{
-            content: "🟢";
-            font-size: 12px;
-        }}
-
-        /* Enhanced content sections */
+        /* ===== ENHANCED CONTENT SECTIONS - DARK MODE ===== */
         .soothe-content-section {{
-            background: linear-gradient(145deg, white, #f8fafc) !important;
-            border: 1px solid var(--border) !important;
+            background: linear-gradient(145deg, rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.9)) !important;
+            border: 1px solid rgba(71, 85, 105, 0.5) !important;
             border-radius: var(--border-radius-lg) !important;
             padding: 32px !important;
             margin: 24px 0 !important;
-            box-shadow: var(--shadow-md) !important;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
             transition: all 0.3s ease !important;
         }}
 
         .soothe-content-section:hover {{
-            box-shadow: var(--shadow-lg) !important;
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.3),
+                0 6px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
             transform: translateY(-2px) !important;
         }}
 
         .soothe-content-section h2 {{
-            color: var(--primary-color) !important;
+            color: #60a5fa !important;
             font-family: 'Space Grotesk', sans-serif !important;
             font-weight: 600 !important;
             font-size: 28px !important;
@@ -590,15 +626,17 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             gap: 12px !important;
         }}
 
-        /* Feature cards */
+        /* Feature cards - Dark Mode */
         .soothe-feature-card {{
-            background: linear-gradient(145deg, white, #f8fafc) !important;
-            border: 1px solid var(--border) !important;
+            background: linear-gradient(145deg, rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.9)) !important;
+            border: 1px solid rgba(71, 85, 105, 0.5) !important;
             border-radius: var(--border-radius-lg) !important;
             padding: 24px !important;
             text-align: center !important;
             transition: all 0.3s ease !important;
-            box-shadow: var(--shadow-md) !important;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.1) !important;
             min-height: 200px !important;
             display: flex !important;
             flex-direction: column !important;
@@ -607,28 +645,156 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
 
         .soothe-feature-card:hover {{
             transform: translateY(-4px) scale(1.02) !important;
-            box-shadow: var(--shadow-xl) !important;
+            box-shadow: 
+                0 16px 40px rgba(0, 0, 0, 0.3),
+                0 8px 20px rgba(0, 0, 0, 0.2) !important;
             border-color: var(--accent-color) !important;
         }}
 
-        /* Typography improvements */
+        /* ===== TYPOGRAPHY & GENERAL STYLES - DARK MODE ===== */
         h1, h2, h3, h4, h5, h6 {{
             font-family: 'Space Grotesk', sans-serif !important;
-            color: var(--text-primary) !important;
+            color: #f1f5f9 !important;
             line-height: 1.3 !important;
         }}
 
-        /* Links */
         a {{
-            color: var(--primary-color) !important;
+            color: #60a5fa !important;
             text-decoration: none !important;
             font-weight: 500 !important;
             transition: color 0.2s ease !important;
         }}
 
         a:hover {{
-            color: var(--primary-light) !important;
+            color: #93c5fd !important;
             text-decoration: underline !important;
+        }}
+
+        /* Focus indicators for accessibility - Dark Mode */
+        .gradio-container button:focus,
+        .gradio-container input:focus,
+        .gradio-container textarea:focus {{
+            outline: 2px solid #60a5fa !important;
+            outline-offset: 2px !important;
+        }}
+
+        /* ===== MOBILE RESPONSIVENESS ===== */
+        @media (max-width: 768px) {{
+            .gradio-container .gradio-tabs .tab-nav {{
+                padding: 6px !important;
+                margin: 0 10px 20px 10px !important;
+                max-width: calc(100vw - 20px) !important;
+            }}
+            
+            .gradio-container .gradio-tabs .tab-nav button {{
+                min-width: 100px !important;
+                padding: 12px 16px !important;
+                font-size: 13px !important;
+                flex: 1 !important;
+            }}
+
+            .gradio-container .chatbot {{
+                margin: 10px !important;
+                border-radius: 12px !important;
+            }}
+            
+            .gradio-container .chatbot .message:nth-child(odd) {{
+                margin-left: 40px !important;
+            }}
+            
+            .gradio-container .chatbot .message:nth-child(even) {{
+                margin-right: 40px !important;
+            }}
+
+            .gradio-container .chat-interface-input {{
+                margin: 10px !important;
+                padding: 12px 50px 12px 16px !important;
+            }}
+            
+            .gradio-container .examples {{
+                margin: 10px !important;
+                padding: 16px !important;
+            }}
+        }}
+
+        @media (max-width: 480px) {{
+            .gradio-container .gradio-tabs .tab-nav {{
+                flex-direction: column !important;
+                gap: 2px !important;
+                padding: 4px !important;
+            }}
+            
+            .gradio-container .gradio-tabs .tab-nav button {{
+                min-width: auto !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }}
+        }}
+
+        /* ===== ANIMATION KEYFRAMES ===== */
+        @keyframes selectedGlow {{
+            0%, 100% {{ 
+                opacity: 0.3; 
+                transform: scale(1); 
+            }}
+            50% {{ 
+                opacity: 0.6; 
+                transform: scale(1.05); 
+            }}
+        }}
+
+        @keyframes tabSlideIn {{
+            from {{ 
+                opacity: 0; 
+                transform: translateY(15px) scale(0.9); 
+            }}
+            to {{ 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }}
+        }}
+
+        @keyframes contentFadeIn {{
+            from {{ 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }}
+            to {{ 
+                opacity: 1; 
+                transform: translateY(0); 
+            }}
+        }}
+
+        @keyframes messageSlideIn {{
+            from {{ 
+                opacity: 0; 
+                transform: translateY(10px); 
+            }}
+            to {{ 
+                opacity: 1; 
+                transform: translateY(0); 
+            }}
+        }}
+
+        /* Loading indicator for better UX */
+        .gradio-container .chatbot .loading {{
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            color: #9ca3af !important;
+            font-style: italic !important;
+            margin: 16px 0 !important;
+        }}
+
+        .gradio-container .chatbot .loading::after {{
+            content: "●●●";
+            animation: loadingDots 1.5s infinite;
+        }}
+
+        @keyframes loadingDots {{
+            0%, 20% {{ opacity: 0; }}
+            50% {{ opacity: 1; }}
+            80%, 100% {{ opacity: 0; }}
         }}
         """
 
@@ -855,7 +1021,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
         '''
 
     def create_anxiety_education_content(self) -> str:
-        """Create enhanced anxiety education content"""
+        """Create enhanced anxiety education content with readable dark mode colors"""
         return f'''
         <div class="soothe-content-section">
             <h2>
@@ -870,14 +1036,14 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             </h2>
             
             <div style="
-                background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+                background: linear-gradient(135deg, rgba(51, 65, 85, 0.8), rgba(30, 41, 59, 0.8));
                 padding: 24px;
                 border-radius: 16px;
                 border-left: 5px solid {self.colors['accent']};
                 margin: 20px 0;
             ">
-                <h3>What is Anxiety?</h3>
-                <p>Anxiety is a natural response to stress that everyone experiences. However, when anxiety becomes overwhelming or persistent, it can impact daily life and wellbeing. In Singapore's competitive academic environment, many students face anxiety related to performance pressure.</p>
+                <h3 style="color: #93c5fd !important;">What is Anxiety?</h3>
+                <p style="color: #e2e8f0 !important; font-weight: 500 !important;">Anxiety is a natural response to stress that everyone experiences. However, when anxiety becomes overwhelming or persistent, it can impact daily life and wellbeing. In Singapore's competitive academic environment, many students face anxiety related to performance pressure.</p>
             </div>
 
             <div style="
@@ -887,46 +1053,48 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                 margin: 30px 0;
             ">
                 <div style="
-                    background: linear-gradient(135deg, #fef3c7, #fde68a);
+                    background: linear-gradient(135deg, rgba(120, 53, 15, 0.3), rgba(92, 38, 11, 0.3));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['warning']};
+                    border: 1px solid rgba(251, 191, 36, 0.3);
                 ">
-                    <h3 style="color: #92400e;">⚠️ Common Signs</h3>
-                    <ul style="color: #78350f; line-height: 1.8;">
-                        <li><strong>Physical:</strong> Racing heart, sweating, difficulty breathing</li>
-                        <li><strong>Emotional:</strong> Persistent worry, irritability, restlessness</li>
-                        <li><strong>Behavioral:</strong> Avoidance, procrastination, perfectionism</li>
-                        <li><strong>Cognitive:</strong> Racing thoughts, difficulty concentrating</li>
+                    <h3 style="color: #fbbf24 !important;">⚠️ Common Signs</h3>
+                    <ul style="color: #fde68a !important; line-height: 1.8;">
+                        <li style="color: #fde68a !important; font-weight: 500 !important;"><strong style="color: #fbbf24 !important;">Physical:</strong> Racing heart, sweating, difficulty breathing</li>
+                        <li style="color: #fde68a !important; font-weight: 500 !important;"><strong style="color: #fbbf24 !important;">Emotional:</strong> Persistent worry, irritability, restlessness</li>
+                        <li style="color: #fde68a !important; font-weight: 500 !important;"><strong style="color: #fbbf24 !important;">Behavioral:</strong> Avoidance, procrastination, perfectionism</li>
+                        <li style="color: #fde68a !important; font-weight: 500 !important;"><strong style="color: #fbbf24 !important;">Cognitive:</strong> Racing thoughts, difficulty concentrating</li>
                     </ul>
                 </div>
 
                 <div style="
-                    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+                    background: linear-gradient(135deg, rgba(5, 150, 105, 0.3), rgba(4, 120, 87, 0.3));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['success']};
+                    border: 1px solid rgba(52, 211, 153, 0.3);
                 ">
-                    <h3 style="color: #065f46;">💡 Healthy Coping</h3>
-                    <ul style="color: #064e3b; line-height: 1.8;">
-                        <li><strong>Breathing:</strong> Deep, slow breathing exercises</li>
-                        <li><strong>Mindfulness:</strong> Present-moment awareness practices</li>
-                        <li><strong>Exercise:</strong> Regular physical activity</li>
-                        <li><strong>Support:</strong> Talking to trusted friends or professionals</li>
+                    <h3 style="color: #34d399 !important;">💡 Healthy Coping</h3>
+                    <ul style="color: #a7f3d0 !important; line-height: 1.8;">
+                        <li style="color: #a7f3d0 !important; font-weight: 500 !important;"><strong style="color: #34d399 !important;">Breathing:</strong> Deep, slow breathing exercises</li>
+                        <li style="color: #a7f3d0 !important; font-weight: 500 !important;"><strong style="color: #34d399 !important;">Mindfulness:</strong> Present-moment awareness practices</li>
+                        <li style="color: #a7f3d0 !important; font-weight: 500 !important;"><strong style="color: #34d399 !important;">Exercise:</strong> Regular physical activity</li>
+                        <li style="color: #a7f3d0 !important; font-weight: 500 !important;"><strong style="color: #34d399 !important;">Support:</strong> Talking to trusted friends or professionals</li>
                     </ul>
                 </div>
             </div>
 
             <div style="
-                background: linear-gradient(135deg, {self.colors['primary']}15, {self.colors['accent']}15);
+                background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.2));
                 padding: 24px;
                 border-radius: 16px;
-                border: 2px solid {self.colors['primary']}30;
+                border: 2px solid rgba(37, 99, 235, 0.3);
                 text-align: center;
                 margin-top: 30px;
             ">
-                <h3 style="color: {self.colors['primary']};">🎯 Ready to Practice?</h3>
-                <p>Experience these concepts through interactive stories where you can explore different coping strategies in realistic scenarios.</p>
+                <h3 style="color: #60a5fa !important;">🎯 Ready to Practice?</h3>
+                <p style="color: #cbd5e1; font-weight: 500 !important;">Experience these concepts through interactive stories where you can explore different coping strategies in realistic scenarios.</p>
                 <button onclick="
                     Array.from(document.querySelectorAll('button, .tabitem, .tab-nav button')).forEach(btn => {{
                         if (btn.innerText.trim().includes('SootheAI Chat')) btn.click();
@@ -949,7 +1117,7 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
         '''
 
     def create_helpline_content(self) -> str:
-        """Create enhanced helpline content with better visual hierarchy"""
+        """Create enhanced helpline content with readable dark mode colors"""
         return f'''
         <div class="soothe-content-section">
             <h2>
@@ -964,15 +1132,15 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             </h2>
 
             <div style="
-                background: linear-gradient(135deg, #fef2f2, #fee2e2);
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
                 padding: 24px;
                 border-radius: 16px;
-                border: 2px solid #fca5a5;
+                border: 2px solid rgba(248, 113, 113, 0.4);
                 margin: 20px 0;
                 text-align: center;
             ">
-                <h3 style="color: #991b1b; margin-bottom: 15px;">🚨 Emergency Contacts</h3>
-                <p style="color: #7f1d1d; font-weight: 500; margin-bottom: 20px;">
+                <h3 style="color: #fca5a5; margin-bottom: 15px;">🚨 Emergency Contacts</h3>
+                <p style="color: #fed7d7; font-weight: 500; margin-bottom: 20px;">
                     If you or someone you know is experiencing a mental health emergency, please contact these 24/7 helplines:
                 </p>
                 
@@ -983,77 +1151,80 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                     margin-top: 20px;
                 ">
                     <div style="
-                        background: white;
+                        background: rgba(30, 41, 59, 0.9);
                         padding: 16px;
                         border-radius: 12px;
-                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
                         border-left: 4px solid {self.colors['error']};
                     ">
-                        <strong style="color: {self.colors['error']};">Emergency</strong><br>
-                        <span style="font-size: 1.5rem; font-weight: 700; color: {self.colors['error']};">999</span>
+                        <strong style="color: #fca5a5;">Emergency</strong><br>
+                        <span style="font-size: 1.5rem; font-weight: 700; color: #ef4444;">999</span>
                     </div>
                     <div style="
-                        background: white;
+                        background: rgba(30, 41, 59, 0.9);
                         padding: 16px;
                         border-radius: 12px;
-                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
                         border-left: 4px solid {self.colors['error']};
                     ">
-                        <strong style="color: {self.colors['error']};">SOS Helpline</strong><br>
-                        <span style="font-size: 1.5rem; font-weight: 700; color: {self.colors['error']};">1-767</span>
+                        <strong style="color: #fca5a5;">SOS Helpline</strong><br>
+                        <span style="font-size: 1.5rem; font-weight: 700; color: #ef4444;">1-767</span>
                     </div>
                     <div style="
-                        background: white;
+                        background: rgba(30, 41, 59, 0.9);
                         padding: 16px;
                         border-radius: 12px;
-                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+                        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
                         border-left: 4px solid {self.colors['error']};
                     ">
-                        <strong style="color: {self.colors['error']};">National Care</strong><br>
-                        <span style="font-size: 1.2rem; font-weight: 700; color: {self.colors['error']};">1800-202-6868</span>
+                        <strong style="color: #fca5a5;">National Care</strong><br>
+                        <span style="font-size: 1.2rem; font-weight: 700; color: #ef4444;">1800-202-6868</span>
                     </div>
                 </div>
             </div>
 
             <div style="
-                background: linear-gradient(135deg, #eff6ff, #dbeafe);
+                background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(29, 78, 216, 0.2));
                 padding: 24px;
                 border-radius: 16px;
                 border-left: 5px solid {self.colors['primary']};
+                border: 1px solid rgba(96, 165, 250, 0.3);
                 margin: 20px 0;
             ">
-                <h3 style="color: {self.colors['primary']};">🧑‍🎓 Youth-Specific Support</h3>
+                <h3 style="color: #60a5fa;">🧑‍🎓 Youth-Specific Support</h3>
                 
                 <div style="display: grid; gap: 16px; margin-top: 16px;">
                     <div style="
-                        background: white;
+                        background: rgba(30, 41, 59, 0.8);
                         padding: 16px;
                         border-radius: 12px;
-                        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+                        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+                        border: 1px solid rgba(96, 165, 250, 0.2);
                     ">
-                        <h4 style="color: {self.colors['primary']}; margin: 0 0 8px 0;">CHAT (Community Health Assessment Team)</h4>
-                        <p style="margin: 0 0 8px 0; color: {self.colors['text_muted']};">For youth aged 16-30</p>
-                        <p style="margin: 0; font-weight: 600;">📞 6493-6500</p>
+                        <h4 style="color: #93c5fd; margin: 0 0 8px 0;">CHAT (Community Health Assessment Team)</h4>
+                        <p style="margin: 0 0 8px 0; color: #bfdbfe; font-weight: 500;">For youth aged 16-30</p>
+                        <p style="margin: 0; font-weight: 600; color: #60a5fa;">📞 6493-6500</p>
                     </div>
                     
                     <div style="
-                        background: white;
+                        background: rgba(30, 41, 59, 0.8);
                         padding: 16px;
                         border-radius: 12px;
-                        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+                        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+                        border: 1px solid rgba(96, 165, 250, 0.2);
                     ">
-                        <h4 style="color: {self.colors['primary']}; margin: 0 0 8px 0;">Tinkle Friend</h4>
-                        <p style="margin: 0 0 8px 0; color: {self.colors['text_muted']};">For primary school children</p>
-                        <p style="margin: 0; font-weight: 600;">📞 1800-274-4788</p>
+                        <h4 style="color: #93c5fd; margin: 0 0 8px 0;">Tinkle Friend</h4>
+                        <p style="margin: 0 0 8px 0; color: #bfdbfe; font-weight: 500;">For primary school children</p>
+                        <p style="margin: 0; font-weight: 600; color: #60a5fa;">📞 1800-274-4788</p>
                     </div>
                 </div>
             </div>
 
             <div style="
-                background: linear-gradient(135deg, {self.colors['success']}15, {self.colors['accent_light']}15);
+                background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(52, 211, 153, 0.2));
                 padding: 24px;
                 border-radius: 16px;
-                border: 2px solid {self.colors['success']}30;
+                border: 2px solid rgba(52, 211, 153, 0.3);
                 text-align: center;
             ">
                 <div style="
@@ -1067,14 +1238,14 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                     margin: 0 auto 20px auto;
                     font-size: 24px;
                 ">💚</div>
-                <h3 style="color: {self.colors['success']};">You Are Not Alone</h3>
-                <p>Reaching out for support is a sign of strength, not weakness. Mental health professionals are trained to help you navigate difficult emotions and experiences.</p>
+                <h3 style="color: #34d399;">You Are Not Alone</h3>
+                <p style="color: #a7f3d0; font-weight: 500;">Reaching out for support is a sign of strength, not weakness. Mental health professionals are trained to help you navigate difficult emotions and experiences.</p>
             </div>
         </div>
         '''
 
     def create_about_content(self) -> str:
-        """Create enhanced about content"""
+        """Create enhanced about content with readable dark mode colors"""
         return f'''
         <div class="soothe-content-section">
             <h2>
@@ -1094,65 +1265,69 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                 margin: 30px 0;
             ">
                 <div style="
-                    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+                    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(29, 78, 216, 0.2));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['primary']};
+                    border: 1px solid rgba(96, 165, 250, 0.3);
                 ">
-                    <h3 style="color: {self.colors['primary']};">🎯 Our Mission</h3>
-                    <p>SootheAI aims to help Singaporean youths understand, manage, and overcome anxiety through interactive storytelling enhanced by artificial intelligence. We believe that by engaging young people in relatable scenarios and providing them with practical coping strategies, we can make a meaningful impact on youth mental health in Singapore.</p>
+                    <h3 style="color: #60a5fa;">🎯 Our Mission</h3>
+                    <p style="color: #bfdbfe; font-weight: 500;">SootheAI aims to help Singaporean youths understand, manage, and overcome anxiety through interactive storytelling enhanced by artificial intelligence. We believe that by engaging young people in relatable scenarios and providing them with practical coping strategies, we can make a meaningful impact on youth mental health in Singapore.</p>
                 </div>
 
                 <div style="
-                    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+                    background: linear-gradient(135deg, rgba(5, 150, 105, 0.2), rgba(4, 120, 87, 0.2));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['success']};
+                    border: 1px solid rgba(52, 211, 153, 0.3);
                 ">
-                    <h3 style="color: {self.colors['success']};">🤖 Our Approach</h3>
-                    <p>We combine the power of narrative storytelling with AI technology to create personalized learning experiences that adapt to each user's needs. Our stories are set in culturally relevant Singaporean contexts, addressing the unique pressures and challenges that local youth face.</p>
-                    <p>Through interactive fiction, users can explore different scenarios, make choices, and learn about anxiety management techniques in a safe, engaging environment.</p>
+                    <h3 style="color: #34d399;">🤖 Our Approach</h3>
+                    <p style="color: #a7f3d0; font-weight: 500;">We combine the power of narrative storytelling with AI technology to create personalized learning experiences that adapt to each user's needs. Our stories are set in culturally relevant Singaporean contexts, addressing the unique pressures and challenges that local youth face.</p>
+                    <p style="color: #a7f3d0; font-weight: 500;">Through interactive fiction, users can explore different scenarios, make choices, and learn about anxiety management techniques in a safe, engaging environment.</p>
                 </div>
 
                 <div style="
-                    background: linear-gradient(135deg, #fdf4ff, #fae8ff);
+                    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(147, 51, 234, 0.2));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid #a855f7;
+                    border: 1px solid rgba(196, 181, 253, 0.3);
                 ">
-                    <h3 style="color: #7c3aed;">👥 The Team</h3>
-                    <p>SootheAI is developed by a team of mental health professionals, educational technologists, and AI specialists who are passionate about improving youth mental wellbeing in Singapore.</p>
-                    <p>We work closely with psychologists, educators, and youth advisors to ensure that our content is accurate, appropriate, and effective.</p>
+                    <h3 style="color: #c4b5fd;">👥 The Team</h3>
+                    <p style="color: #ddd6fe; font-weight: 500;">SootheAI is developed by a team of mental health professionals, educational technologists, and AI specialists who are passionate about improving youth mental wellbeing in Singapore.</p>
+                    <p style="color: #ddd6fe; font-weight: 500;">We work closely with psychologists, educators, and youth advisors to ensure that our content is accurate, appropriate, and effective.</p>
                 </div>
 
                 <div style="
-                    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+                    background: linear-gradient(135deg, rgba(217, 119, 6, 0.2), rgba(180, 83, 9, 0.2));
                     padding: 24px;
                     border-radius: 16px;
                     border-left: 5px solid {self.colors['warning']};
+                    border: 1px solid rgba(251, 191, 36, 0.3);
                 ">
-                    <h3 style="color: #d97706;">📧 Contact Us</h3>
-                    <p>If you have questions, feedback, or would like to learn more about SootheAI, please reach out to us at 
+                    <h3 style="color: #fbbf24;">📧 Contact Us</h3>
+                    <p style="color: #fde68a; font-weight: 500;">If you have questions, feedback, or would like to learn more about SootheAI, please reach out to us at 
                     <a href="mailto:contact@sootheai.sg" style="
-                        color: {self.colors['primary']};
+                        color: #60a5fa;
                         font-weight: 600;
                         text-decoration: none;
-                        border-bottom: 2px solid {self.colors['primary']}30;
+                        border-bottom: 2px solid rgba(96, 165, 250, 0.3);
                         transition: all 0.2s ease;
-                    " onmouseover="this.style.borderBottomColor = '{self.colors['primary']}'" onmouseout="this.style.borderBottomColor = '{self.colors['primary']}30'">contact@sootheai.sg</a>.</p>
+                    " onmouseover="this.style.borderBottomColor = '#60a5fa'" onmouseout="this.style.borderBottomColor = 'rgba(96, 165, 250, 0.3)'">contact@sootheai.sg</a>.</p>
                 </div>
             </div>
 
             <div style="
-                background: linear-gradient(135deg, {self.colors['accent']}15, {self.colors['primary']}15);
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(37, 99, 235, 0.2));
                 padding: 24px;
                 border-radius: 16px;
-                border: 2px solid {self.colors['accent']}30;
+                border: 2px solid rgba(52, 211, 153, 0.3);
                 text-align: center;
                 margin-top: 30px;
             ">
-                <h3 style="color: {self.colors['accent']};">🚀 Ready to Begin?</h3>
-                <p>Start exploring anxiety management through interactive storytelling designed specifically for Singapore's youth.</p>
+                <h3 style="color: #34d399;">🚀 Ready to Begin?</h3>
+                <p style="color: #cbd5e1; font-weight: 500;">Start exploring anxiety management through interactive storytelling designed specifically for Singapore's youth.</p>
                 <button onclick="
                     Array.from(document.querySelectorAll('button, .tabitem, .tab-nav button')).forEach(btn => {{
                         if (btn.innerText.trim().includes('SootheAI Chat')) btn.click();
@@ -1173,7 +1348,6 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
             </div>
         </div>
         '''
-
     def create_enhanced_theme(self) -> gr.Theme:
         """Create an enhanced Gradio theme"""
         return gr.themes.Soft(
@@ -1247,27 +1421,19 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                     gr.HTML(self.create_enhanced_homepage())
 
                 with gr.Tab("💬 SootheAI Chat", elem_classes="chat-tab"):
-                    # Professional chatbot interface
+                    # Professional chatbot interface with minimal parameters
                     chat_interface = gr.ChatInterface(
-                        self.main_loop,
+                        fn=self.main_loop,
                         chatbot=gr.Chatbot(
                             height="65vh",
                             placeholder="🌸 **Welcome to your safe space!** Your supportive conversation will begin here. Take your time and start when you're ready.",
                             show_copy_button=True,
                             render_markdown=True,
                             value=[[None, self.consent_message]],
-                            avatar_images=None,
-                            bubble_full_width=False,
-                            show_share_button=False,
                             elem_classes="soothe-chatbot",
-                            container=True,
-                            scale=1,
-                            min_width=300,
                         ),
                         textbox=gr.Textbox(
                             placeholder="💭 Share what's on your mind... (e.g., 'I agree with audio' or 'I'm feeling anxious about school')",
-                            container=False,
-                            scale=7,
                             lines=1,
                             max_lines=3,
                             elem_classes="soothe-textbox",
@@ -1275,19 +1441,13 @@ SootheAI is an educational tool designed to help Singapore's youth explore anxie
                         ),
                         examples=[
                             "🎵 I agree with audio",
-                            "📝 I agree without audio",
+                            "📝 I agree without audio", 
                             "🚀 Start my story",
                             "💡 Tell me about anxiety",
                             "🎯 I need help with school stress",
                             "🤝 What coping strategies can you teach me?"
                         ],
                         cache_examples=False,
-                        title=None,
-                        description=None,
-                        submit_btn="Send Message",
-                        retry_btn="↻ Retry",
-                        undo_btn="↶ Undo",
-                        clear_btn="🗑️ Clear",
                     )
 
                 with gr.Tab("📚 Learn About Anxiety"):
